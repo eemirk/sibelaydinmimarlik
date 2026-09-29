@@ -7,7 +7,7 @@ import { join, relative, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-const SKIP = new Set(['assets', 'data', 'api', 'node_modules', 'dist', '.git']);
+const SKIP = new Set(['assets', 'data', 'api', 'node_modules', 'dist', '.git', 'tipografi-test']);
 const BLOCKS = ['HEADER', 'FOOTER'];
 
 const src = readFileSync(join(ROOT, 'index.html'), 'utf8');
