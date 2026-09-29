@@ -1,0 +1,100 @@
+[
+  {
+    "_durum": "ÖRNEK – gerçek projeyle değiştirilecek",
+    "slug": "ornek-proje-01",
+    "baslik": "Örnek Proje 01",
+    "tur": "Villa",
+    "konum": "Konum eklenecek",
+    "alan_m2": null,
+    "hizmetler": [
+      "Mimari Proje",
+      "3D Görselleştirme",
+      "Ruhsat ve İskân Süreçleri"
+    ],
+    "kisa_aciklama": "ÖRNEK – gerçek projeyle değiştirilecek",
+    "kapak": "/assets/img/projeler/ornek-proje-01/kapak.webp",
+    "galeri": [],
+    "yer_tutucu": true
+  },
+  {
+    "_durum": "ÖRNEK – gerçek projeyle değiştirilecek",
+    "slug": "ornek-proje-02",
+    "baslik": "Örnek Proje 02",
+    "tur": "Müstakil Konut",
+    "konum": "Konum eklenecek",
+    "alan_m2": null,
+    "hizmetler": [
+      "Mimari Proje",
+      "Uygulama"
+    ],
+    "kisa_aciklama": "ÖRNEK – gerçek projeyle değiştirilecek",
+    "kapak": "/assets/img/projeler/ornek-proje-02/kapak.webp",
+    "galeri": [],
+    "yer_tutucu": true
+  },
+  {
+    "_durum": "ÖRNEK – gerçek projeyle değiştirilecek",
+    "slug": "ornek-proje-03",
+    "baslik": "Örnek Proje 03",
+    "tur": "İç Mimari",
+    "konum": "Konum eklenecek",
+    "alan_m2": null,
+    "hizmetler": [
+      "İç Mimari",
+      "3D Görselleştirme",
+      "Uygulama"
+    ],
+    "kisa_aciklama": "ÖRNEK – gerçek projeyle değiştirilecek",
+    "kapak": "/assets/img/projeler/ornek-proje-03/kapak.webp",
+    "galeri": [],
+    "yer_tutucu": true
+  },
+  {
+    "_durum": "ÖRNEK – gerçek projeyle değiştirilecek",
+    "slug": "ornek-proje-04",
+    "baslik": "Örnek Proje 04",
+    "tur": "Ticari Yapı",
+    "konum": "Konum eklenecek",
+    "alan_m2": null,
+    "hizmetler": [
+      "Mimari Proje",
+      "Şantiye ve Teknik Hizmetler"
+    ],
+    "kisa_aciklama": "ÖRNEK – gerçek projeyle değiştirilecek",
+    "kapak": "/assets/img/projeler/ornek-proje-04/kapak.webp",
+    "galeri": [],
+    "yer_tutucu": true
+  },
+  {
+    "_durum": "ÖRNEK – gerçek projeyle değiştirilecek",
+    "slug": "ornek-proje-05",
+    "baslik": "Örnek Proje 05",
+    "tur": "Konut",
+    "konum": "Konum eklenecek",
+    "alan_m2": null,
+    "hizmetler": [
+      "Mimari Proje",
+      "Ruhsat ve İskân Süreçleri"
+    ],
+    "kisa_aciklama": "ÖRNEK – gerçek projeyle değiştirilecek",
+    "kapak": "/assets/img/projeler/ornek-proje-05/kapak.webp",
+    "galeri": [],
+    "yer_tutucu": true
+  },
+  {
+    "_durum": "ÖRNEK – gerçek projeyle değiştirilecek",
+    "slug": "ornek-proje-06",
+    "baslik": "Örnek Proje 06",
+    "tur": "Kentsel Dönüşüm",
+    "konum": "Konum eklenecek",
+    "alan_m2": null,
+    "hizmetler": [
+      "Mimari Danışmanlık ve Kentsel Dönüşüm",
+      "Mimari Proje"
+    ],
+    "kisa_aciklama": "ÖRNEK – gerçek projeyle değiştirilecek",
+    "kapak": "/assets/img/projeler/ornek-proje-06/kapak.webp",
+    "galeri": [],
+    "yer_tutucu": true
+  }
+]

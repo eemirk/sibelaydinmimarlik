@@ -1,0 +1,24 @@
+# --- Gizli bilgiler — ASLA commit etmeyin -----------------------------------
+# fal.ai anahtarı ve olası tüm ortam dosyaları
+.env
+.env.*
+/tools/.env
+*.pem
+*.key
+
+# --- Üretilen / yerel dosyalar --------------------------------------------------
+node_modules/
+/tools/node_modules/
+# render, video, kontrol kareleri (büyük; yeniden üretilebilir)
+/tools/output/
+# make-dist.mjs çıktısı (Netlify kendisi derler)
+/dist/
+.netlify/
+*.log
+
+# --- İşletim sistemi / editör ------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
