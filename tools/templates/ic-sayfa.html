@@ -7,6 +7,10 @@
   SEO: ilçe listesini yalnızca iletişim sayfasında kullanın; link metinleri hedef sayfayı
   anlatsın ("Detaylı bilgi" yerine "Ruhsat ve iskân hizmetini inceleyin"); alt metinler
   görselin gerçekte ne gösterdiğini anlatsın.
+  Hizmet sayfalarında <body data-wa-service="Hizmet Adı"> ekleyin: randevu butonlarının WhatsApp
+  mesajına hizmet adı girer ("… İç Mimari hakkında görüşme randevusu almak istiyorum …").
+  Hizmet sayfalarında <body data-wa-service="Hizmet Adı"> ekleyin: randevu butonlarının WhatsApp
+  mesajına hizmet adı girer ("… İç Mimari hakkında görüşme randevusu almak istiyorum …").
   Hizmet sayfalarında data-wa-msg örneği:
   "Merhaba, Sibel Aydın Mimarlık web sitenizden yazıyorum. İç Mimari hizmetiniz hakkında bilgi almak istiyorum."
 -->
@@ -112,13 +116,13 @@
       </ul>
       <div class="nav__mobile-extra">
         <a class="btn btn--primary btn--block" href="/projenizi-anlatin/" data-cta="projenizi_anlatin_menu">Projenizi Anlatın<span class="btn__arrow" aria-hidden="true"><svg><use href="#i-arrow-ne"/></svg></span></a>
-        <a class="btn btn--outline btn--block" href="/randevu/" data-cta="randevu_menu">Randevu Al<span class="btn__arrow" aria-hidden="true"><svg><use href="#i-arrow-ne"/></svg></span></a>
+        <a class="btn btn--outline btn--block btn--wa" href="https://wa.me/905368475640?text=Merhaba%2C%20Sibel%20Ayd%C4%B1n%20Mimarl%C4%B1k%20ile%20g%C3%B6r%C3%BC%C5%9Fme%20randevusu%20almak%20istiyorum.%20Uygun%20oldu%C4%9Fum%20g%C3%BCn%20ve%20saat%3A%20" target="_blank" rel="noopener" aria-label="WhatsApp üzerinden randevu alın" data-appointment data-cta="randevu_menu"><svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>Randevu Al<span class="btn__arrow" aria-hidden="true"><svg><use href="#i-arrow-ne"/></svg></span></a>
         <a class="nav__phone" href="tel:+905368475640">0536 847 56 40</a>
       </div>
     </nav>
 
     <div class="header-cta">
-      <a class="btn btn--outline btn--sm header-cta__secondary" href="/randevu/" data-cta="randevu_header">Randevu Al<span class="btn__arrow" aria-hidden="true"><svg><use href="#i-arrow-ne"/></svg></span></a>
+      <a class="btn btn--outline btn--sm header-cta__secondary btn--wa" href="https://wa.me/905368475640?text=Merhaba%2C%20Sibel%20Ayd%C4%B1n%20Mimarl%C4%B1k%20ile%20g%C3%B6r%C3%BC%C5%9Fme%20randevusu%20almak%20istiyorum.%20Uygun%20oldu%C4%9Fum%20g%C3%BCn%20ve%20saat%3A%20" target="_blank" rel="noopener" aria-label="WhatsApp üzerinden randevu alın" data-appointment data-cta="randevu_header"><svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>Randevu Al<span class="btn__arrow" aria-hidden="true"><svg><use href="#i-arrow-ne"/></svg></span></a>
       <a class="btn btn--primary btn--sm" href="/projenizi-anlatin/" data-cta="projenizi_anlatin_header">Projenizi Anlatın<span class="btn__arrow" aria-hidden="true"><svg><use href="#i-arrow-ne"/></svg></span></a>
     </div>
 
@@ -161,10 +165,8 @@
       </div>
       <div class="btn-row">
         <a class="btn btn--light" href="/projenizi-anlatin/" data-cta="projenizi_anlatin_band">Projenizi Anlatın<span class="btn__arrow" aria-hidden="true"><svg><use href="#i-arrow-ne"/></svg></span></a>
-        <a class="btn btn--ghost-light" href="/randevu/" data-cta="randevu_band">Randevu Alın<span class="btn__arrow" aria-hidden="true"><svg><use href="#i-arrow-ne"/></svg></span></a>
-        <a class="btn btn--ghost-light btn--wa" href="https://wa.me/905368475640" target="_blank" rel="noopener">
-          <svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp
-        </a>
+        <a class="btn btn--ghost-light btn--wa" href="https://wa.me/905368475640?text=Merhaba%2C%20Sibel%20Ayd%C4%B1n%20Mimarl%C4%B1k%20ile%20g%C3%B6r%C3%BC%C5%9Fme%20randevusu%20almak%20istiyorum.%20Uygun%20oldu%C4%9Fum%20g%C3%BCn%20ve%20saat%3A%20" target="_blank" rel="noopener" aria-label="WhatsApp üzerinden randevu alın" data-appointment data-cta="randevu_band"><svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>Randevu Alın<span class="btn__arrow" aria-hidden="true"><svg><use href="#i-arrow-ne"/></svg></span></a>
+        <a class="btn btn--ghost-light" href="tel:+905368475640" data-cta="ara_band"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>Bizi Arayın</a>
       </div>
     </div>
   </section>
@@ -204,7 +206,6 @@
           <li><a href="/projeler/">Projeler</a></li>
           <li><a href="/blog/">Blog</a></li>
           <li><a href="/projenizi-anlatin/">Projenizi Anlatın</a></li>
-          <li><a href="/randevu/">Randevu</a></li>
         </ul>
         <h2 class="footer__title footer__title--sub">Yasal</h2>
         <ul class="footer__links">
@@ -245,7 +246,7 @@
   <a class="mobile-bar__item mobile-bar__item--wa" href="https://wa.me/905368475640" target="_blank" rel="noopener">
     <svg class="mobile-bar__wa" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp
   </a>
-  <a class="mobile-bar__item" href="/randevu/" data-cta="randevu_mobilbar">
+  <a class="mobile-bar__item" href="https://wa.me/905368475640?text=Merhaba%2C%20Sibel%20Ayd%C4%B1n%20Mimarl%C4%B1k%20ile%20g%C3%B6r%C3%BC%C5%9Fme%20randevusu%20almak%20istiyorum.%20Uygun%20oldu%C4%9Fum%20g%C3%BCn%20ve%20saat%3A%20" target="_blank" rel="noopener" aria-label="WhatsApp üzerinden randevu alın" data-appointment data-cta="randevu_mobilbar">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v14H4zM4 10h16M8 3v4M16 3v4"/></svg>Randevu
   </a>
 </nav>
@@ -254,6 +255,7 @@
   <symbol id="i-arrow-ne" viewBox="0 0 16 16"><path d="M4.5 11.5l7-7M5.75 4.5h5.75v5.75" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></symbol>
   <symbol id="i-arrow-r" viewBox="0 0 16 16"><path d="M2.5 8h11M9 3.5 13.5 8 9 12.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></symbol>
   <symbol id="i-arrow-d" viewBox="0 0 16 16"><path d="M8 2.5v11M3.5 9 8 13.5 12.5 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></symbol>
   <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.7.62.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.18-1.42-.08-.12-.27-.2-.57-.34m-5.42 7.4h-.01a9.87 9.87 0 0 1-5.03-1.37l-.36-.22-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.88 9.88m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.89 0-3.18-1.24-6.17-3.48-8.41Z"/></symbol>
 </svg>
 <!-- FOOTER END -->

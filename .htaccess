@@ -23,6 +23,8 @@ AddType image/x-icon .ico
   RewriteRule ^Icerik/Kurumsal/?$   https://www.sibelaydinmimarlik.com.tr/kurumsal/ [R=301,L,NC]
   RewriteRule ^Icerik/Referanslar/?$ https://www.sibelaydinmimarlik.com.tr/projeler/ [R=301,L,NC]
   RewriteRule ^Icerik/.*$           https://www.sibelaydinmimarlik.com.tr/ [R=301,L,NC]
+  # Ayrı randevu sayfası yok (randevu WhatsApp üzerinden) → iletişim
+  RewriteRule ^randevu/?$           https://www.sibelaydinmimarlik.com.tr/iletisim/ [R=301,L,NC]
 
   # --- 2) HTTPS + www (yalnızca gerçek alan adında; geçici cPanel adresi etkilenmez)
   RewriteCond %{HTTP_HOST} sibelaydinmimarlik\.com\.tr$ [NC]

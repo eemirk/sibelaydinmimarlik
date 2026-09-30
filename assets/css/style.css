@@ -179,7 +179,9 @@ a:hover .link-arrow .i-arrow, .link-arrow:hover .i-arrow { transform: translateX
 .btn--ghost-light:hover { color: #fff; }
 .btn .icon { width: 18px; height: 18px; flex: none; }
 .btn--wa .icon { color: var(--wa-dark); }
-.btn--ghost-light.btn--wa .icon { color: var(--wa); }
+.btn--ghost-light.btn--wa .icon,
+.site-header.is-over-hero .btn--wa .icon, .site-header.is-over-dark .btn--wa .icon,
+.nav__mobile-extra .btn--wa .icon { color: var(--wa); }
 .btn-row { display: flex; flex-wrap: wrap; gap: 12px; }
 
 /* 5. Header --------------------------------------------------------------- */

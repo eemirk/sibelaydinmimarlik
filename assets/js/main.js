@@ -59,6 +59,8 @@ function supportsAvif() {
 }
 
 const WA_BASE = 'https://wa.me/905368475640';
+// Ayrı randevu sistemi yok: "Randevu Al/Alın" butonları bu hazır mesajla WhatsApp'a gider
+const WA_APPOINTMENT_MSG = 'Merhaba, Sibel Aydın Mimarlık ile görüşme randevusu almak istiyorum. Uygun olduğum gün ve saat: ';
 const PROJECTS_URL = '/data/projects.json';
 const HOME_PROJECT_LIMIT = 6;
 const REVEAL_STAGGER_MS = 80;
@@ -88,12 +90,19 @@ const REVEAL_STAGGER_MS = 80;
 
   /* ---------------------------------------------------------------- WhatsApp mesajı
      <body data-wa-msg="..."> değeri tüm wa.me linklerine eklenir. */
+  // Randevu butonları ([data-appointment]) kendi mesajını taşır; burada atlanır.
   const waMsg = body.dataset.waMsg;
   if (waMsg) {
-    $$('a[href^="' + WA_BASE + '"]').forEach((a) => {
+    $$('a[href^="' + WA_BASE + '"]:not([data-appointment])').forEach((a) => {
       a.href = WA_BASE + '?text=' + encodeURIComponent(waMsg);
     });
   }
+  // Randevu mesajı: hizmet sayfalarında <body data-wa-service="…"> ile hizmet adı eklenir
+  const service = body.dataset.waService;
+  const apptMsg = service
+    ? 'Merhaba, Sibel Aydın Mimarlık ile ' + service + ' hakkında görüşme randevusu almak istiyorum. Uygun olduğum gün ve saat: '
+    : WA_APPOINTMENT_MSG;
+  $$('a[data-appointment]').forEach((a) => { a.href = WA_BASE + '?text=' + encodeURIComponent(apptMsg); });
 
   /* ---------------------------------------------------------------- dataLayer olayları */
   window.dataLayer = window.dataLayer || [];
@@ -111,7 +120,8 @@ const REVEAL_STAGGER_MS = 80;
     if (!a) return;
     const href = a.getAttribute('href') || '';
     let event = null;
-    if (href.indexOf('https://wa.me/') === 0) event = 'whatsapp_click';
+    if (a.hasAttribute('data-appointment')) event = 'appointment_whatsapp_click';
+    else if (href.indexOf('https://wa.me/') === 0) event = 'whatsapp_click';
     else if (href.indexOf('tel:') === 0) event = 'phone_click';
     else if (a.hasAttribute('data-cta')) event = 'cta_click';
     if (!event) return;
@@ -121,7 +131,8 @@ const REVEAL_STAGGER_MS = 80;
       link_url: a.href,
       link_text: a.textContent.replace(/\s+/g, ' ').trim().slice(0, 80),
       placement: placementOf(a),
-      page_path: location.pathname
+      page_path: location.pathname,
+      page_name: document.title
     });
   });
 

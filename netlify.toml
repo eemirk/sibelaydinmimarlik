@@ -70,6 +70,19 @@
   status = 301
   force = true
 
+# Ayrı randevu sayfası yok (randevu WhatsApp üzerinden) → iletişim
+[[redirects]]
+  from = "/randevu"
+  to = "/iletisim/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/randevu/"
+  to = "/iletisim/"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/Icerik/*"
   to = "/"
