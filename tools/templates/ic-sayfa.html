@@ -2,7 +2,8 @@
 <!--
   İÇ SAYFA ŞABLONU — kopyalayıp /<klasor>/index.html olarak kaydedin, sonra:
     node tools/sync-partials.mjs
-  Değiştirilecekler: <title>, description, canonical, og:*, data-wa-msg,
+  Değiştirilecekler: <title>, description, canonical, og:url, data-wa-msg,
+  (og:title / og:description {{title}} / {{description}} ile tek kaynaktan: make-dist.mjs doldurur)
   breadcrumb (HTML + JSON-LD), H1 ve içerik.
   SEO: ilçe listesini yalnızca iletişim sayfasında kullanın; link metinleri hedef sayfayı
   anlatsın ("Detaylı bilgi" yerine "Ruhsat ve iskân hizmetini inceleyin"); alt metinler
@@ -28,8 +29,8 @@
   <meta property="og:type" content="website">
   <meta property="og:locale" content="tr_TR">
   <meta property="og:site_name" content="Sibel Aydın Mimarlık">
-  <meta property="og:title" content="[[DEĞİŞTİR: <title> ile aynı]]">
-  <meta property="og:description" content="[[DEĞİŞTİR: description ile aynı]]">
+  <meta property="og:title" content="{{title}}">  <!-- derlemede <title> ile doldurulur; farklı bir paylaşım başlığı gerekirse metni doğrudan yazın -->
+  <meta property="og:description" content="{{description}}">  <!-- derlemede meta description ile doldurulur -->
   <meta property="og:url" content="https://www.sibelaydinmimarlik.com.tr/KLASOR/">
   <meta property="og:image" content="https://www.sibelaydinmimarlik.com.tr/assets/img/hero-villa.webp">
   <meta name="twitter:card" content="summary_large_image">

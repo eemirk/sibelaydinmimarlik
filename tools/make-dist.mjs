@@ -6,6 +6,8 @@
 // 1) Siteyi dist/site/ içine kopyalar (tools/, dist/, .git, .env, netlify.toml vb. HARİÇ)
 // 2) Önbellek sürümü: style.css ve main.js'in içerik hash'i (SHA-256, ilk 8 karakter)
 //    hesaplanır; tüm HTML'lerde "?v=dev" bu değerle değiştirilir. Kaynakta ?v=dev kalır.
+//    Paylaşım etiketleri: og:title / og:description içindeki {{title}} ve {{description}},
+//    sayfanın <title> ve meta description değerleriyle doldurulur (tek kaynak).
 // 3) Güvenlik: çıktıda fal anahtarı / FAL_KEY izi aranır; bulunursa paket üretilmez.
 import { createHash } from 'node:crypto';
 import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
@@ -40,12 +42,23 @@ const walk = (dir, out = []) => {
   return out;
 };
 const files = walk(SITE);
-let htmlCount = 0;
+let htmlCount = 0, ogCount = 0;
 for (const f of files.filter((p) => p.endsWith('.html'))) {
   let s = readFileSync(f, 'utf8');
   const before = s;
   for (const [name, rel] of Object.entries(ASSETS)) s = s.split(`/${rel}?v=dev`).join(`/${rel}?v=${hash[name]}`);
   if (s.includes('?v=dev')) { console.error(`HATA: ${relative(SITE, f)} içinde çözülmemiş ?v=dev kaldı.`); process.exit(1); }
+  // Paylaşım etiketleri tek kaynaktan: {{title}} → <title>, {{description}} → meta description
+  // (sayfada açıkça yazılmış og değerleri olduğu gibi kalır)
+  if (s.includes('{{title}}') || s.includes('{{description}}')) {
+    const title = (s.match(/<title>([^<]*)<\/title>/) || [])[1];
+    const desc = (s.match(/<meta name="description" content="([^"]*)">/) || [])[1];
+    if (s.includes('{{title}}') && !title) { console.error(`HATA: ${relative(SITE, f)} {{title}} kullanıyor ama <title> yok.`); process.exit(1); }
+    if (s.includes('{{description}}') && !desc) { console.error(`HATA: ${relative(SITE, f)} {{description}} kullanıyor ama meta description yok.`); process.exit(1); }
+    s = s.split('content="{{title}}"').join(`content="${title}"`).split('content="{{description}}"').join(`content="${desc}"`);
+    if (/\{\{(title|description)\}\}/.test(s)) { console.error(`HATA: ${relative(SITE, f)} içinde çözülmemiş {{…}} kaldı (yalnızca content="…" içinde kullanın).`); process.exit(1); }
+    ogCount++;
+  }
   if (s !== before) { writeFileSync(f, s); htmlCount++; }
 }
 
@@ -61,7 +74,7 @@ if (leaks.length) {
 
 const bytes = walk(SITE).reduce((s, p) => s + statSync(p).size, 0);
 console.log(`✓ dist/site/  ${walk(SITE).length} dosya, ${(bytes / 1048576).toFixed(2)} MB`);
-console.log(`  style.css?v=${hash['style.css']}  main.js?v=${hash['main.js']}  (${htmlCount} HTML güncellendi)`);
+console.log(`  style.css?v=${hash['style.css']}  main.js?v=${hash['main.js']}  (${htmlCount} HTML güncellendi, ${ogCount} sayfada og:title/description dolduruldu)`);
 console.log('  anahtar taraması: temiz');
 
 // 4) İsteğe bağlı ZIP (cPanel). Windows'un bsdtar'ı ZIP'i "/" yollarıyla yazar.
