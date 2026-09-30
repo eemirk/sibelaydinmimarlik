@@ -447,9 +447,9 @@ const REVEAL_STAGGER_MS = 80;
       ctx.fillStyle = 'rgba(30,30,30,.35)';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.font = '600 ' + fs + 'px "Cormorant Garamond", Georgia, serif';
+      ctx.font = '500 ' + fs + 'px "Instrument Sans", system-ui, sans-serif';
       ctx.fillText(String(i + 1).padStart(HERO_SEQ.pad, '0') + ' / ' + N, cw / 2, ch * 0.66);
-      ctx.font = '500 ' + Math.round(fs / 4.5) + 'px "Plus Jakarta Sans", system-ui, sans-serif';
+      ctx.font = '400 ' + Math.round(fs / 4.5) + 'px "Instrument Sans", system-ui, sans-serif';
       ctx.fillText('YER TUTUCU KARE — ' + set.prefix + '*.webp bulunamadı', cw / 2, ch * 0.66 + fs * 0.75);
     }
 
