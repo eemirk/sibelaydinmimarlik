@@ -1,0 +1,534 @@
+<!doctype html>
+<!--
+  HİZMET SAYFASI: Enerji Kimlik Belgesi (EKB) — tools/make-service-page.mjs ile tools/content/enerji-kimlik-belgesi.mjs'den üretildi.
+  Metni içerik dosyasında değiştirip yeniden üretin; sonra: node tools/sync-partials.mjs
+  Görsel yer tutucuları (dosyalar yüklenene kadar gri, etiketli kutu görünür;
+  yüklenince alt metinleri görselin GERÇEKTE gösterdiğine göre güncelleyin):
+    /assets/img/hizmet/enerji-kimlik-belgesi.webp  (hero, 4:3 — ana sayfadaki kartla aynı dosya)
+    /assets/img/hizmet/enerji-kimlik-belgesi/kart-1.webp (kart, 4:3)
+    /assets/img/hizmet/enerji-kimlik-belgesi/kart-2.webp (kart, 4:3)
+    /assets/img/hizmet/enerji-kimlik-belgesi/kart-3.webp (kart, 4:3)
+-->
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Silivri Enerji Kimlik Belgesi (EKB) | İskân ve Satış İçin EKB – Sibel Aydın Mimarlık</title>
+  <meta name="description" content="Silivri ve Büyükçekmece'de yeni ve mevcut binalar için Enerji Kimlik Belgesi (EKB), bina enerji performansı değerlendirmesi ve enerji verimliliği danışmanlığı.">
+  <link rel="canonical" href="https://www.sibelaydinmimarlik.com.tr/hizmetler/enerji-kimlik-belgesi/">
+  <!-- GSC: <meta name="google-site-verification" content="..."> -->
+  <meta name="theme-color" content="#F7F5F2">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="tr_TR">
+  <meta property="og:site_name" content="Sibel Aydın Mimarlık">
+  <meta property="og:title" content="{{title}}">
+  <meta property="og:description" content="{{description}}">
+  <meta property="og:url" content="https://www.sibelaydinmimarlik.com.tr/hizmetler/enerji-kimlik-belgesi/">
+  <meta property="og:image" content="https://www.sibelaydinmimarlik.com.tr/assets/img/hero-villa.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/assets/img/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png" sizes="180x180">
+  <link rel="manifest" href="/site.webmanifest">
+  <script>(function(d){var c=d.documentElement.classList,n=navigator.connection;c.add('js');if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&!(n&&n.saveData))c.add('motion');})(document);</script>
+  <!-- Fontlar kendi sunucumuzdan (Instrument Sans, değişken); latin + latin-ext önceden yüklenir -->
+  <link rel="preload" href="/assets/fonts/instrument-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/instrument-sans-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/style.css?v=dev">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Service",
+        "@id": "https://www.sibelaydinmimarlik.com.tr/hizmetler/enerji-kimlik-belgesi/#hizmet",
+        "name": "Silivri Enerji Kimlik Belgesi",
+        "serviceType": "Enerji Kimlik Belgesi ve bina enerji performansı",
+        "url": "https://www.sibelaydinmimarlik.com.tr/hizmetler/enerji-kimlik-belgesi/",
+        "description": "Silivri ve Büyükçekmece'de yeni ve mevcut binalar için Enerji Kimlik Belgesi (EKB), bina enerji performansı değerlendirmesi ve enerji verimliliği danışmanlığı.",
+        "provider": {
+          "@type": "ProfessionalService",
+          "@id": "https://www.sibelaydinmimarlik.com.tr/#firma",
+          "name": "Sibel Aydın Mimarlık",
+          "url": "https://www.sibelaydinmimarlik.com.tr/"
+        },
+        "areaServed": [
+          {
+            "@type": "City",
+            "name": "Silivri"
+          },
+          {
+            "@type": "City",
+            "name": "Büyükçekmece"
+          },
+          {
+            "@type": "AdministrativeArea",
+            "name": "İstanbul"
+          },
+          {
+            "@type": "AdministrativeArea",
+            "name": "Tekirdağ"
+          }
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Ana Sayfa",
+            "item": "https://www.sibelaydinmimarlik.com.tr/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Hizmetler",
+            "item": "https://www.sibelaydinmimarlik.com.tr/hizmetler/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Enerji Kimlik Belgesi (EKB)",
+            "item": "https://www.sibelaydinmimarlik.com.tr/hizmetler/enerji-kimlik-belgesi/"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Silivri'de Enerji Kimlik Belgesi nasıl alınır?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Binanın proje ve tesisat bilgilerini bize iletmeniz yeterlidir. Gerekirse yerinde inceleme yapıyor, hesaplamayı tamamlayarak belgeyi resmi sistem üzerinden düzenliyoruz."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Enerji Kimlik Belgesi zorunlu mu?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yeni binalarda iskân alınabilmesi için gereklidir. Mevcut binalarda ise satış, kiralama ve bazı resmi işlemlerde talep edilebilir; işleminize göre güncel gerekliliği birlikte kontrol ediyoruz."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "EKB ne kadar süre geçerlidir?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Enerji Kimlik Belgesi düzenlendiği tarihten itibaren 10 yıl geçerlidir. Binada enerji performansını etkileyen önemli bir değişiklik yapılırsa yenilenmesi gerekebilir."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Binamın enerji sınıfını yükseltebilir miyim?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Evet. Isı yalıtımı, doğramaların yenilenmesi ve daha verimli ısıtma sistemleri gibi önlemler sınıfı iyileştirebilir. Hangi önlemin en yüksek faydayı sağlayacağını mevcut durum değerlendirmesiyle belirliyoruz."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "EKB ücreti nasıl belirlenir?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Ücret; binanın büyüklüğüne, türüne ve yerinde inceleme gerekip gerekmediğine göre belirlenir. Bina bilgilerinizi ilettiğinizde size özel teklif hazırlıyoruz."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <!-- İç sayfalarda GSAP gerekmez; yalnızca main.js -->
+  <script src="/assets/js/main.js?v=dev" defer></script>
+</head>
+<body class="page-inner page-service" data-wa-service="Enerji Kimlik Belgesi (EKB)" data-wa-msg="Merhaba, web sitenizden yazıyorum. Enerji Kimlik Belgesi (EKB) hizmetiniz hakkında bilgi almak istiyorum.">
+
+<!-- HEADER START -->
+<a class="skip-link" href="#main">İçeriğe geç</a>
+<header class="site-header" data-header>
+  <div class="container site-header__inner">
+    <a class="logo" href="/">
+      <img class="logo__img logo__img--dark" src="/assets/img/sibelaydinlogo-yatay.svg" width="156" height="52" alt="Sibel Aydın Mimarlık">
+      <img class="logo__img logo__img--light" src="/assets/img/sibelaydinlogo-yatay-white.svg" width="156" height="52" alt="" aria-hidden="true">
+    </a>
+
+    <nav class="nav" id="site-nav" aria-label="Ana menü" data-nav>
+      <ul class="nav__list">
+        <li class="nav__item"><a class="nav__link" href="/">Ana Sayfa</a></li>
+        <li class="nav__item nav__item--sub" data-sub>
+          <a class="nav__link" href="/kurumsal/">Kurumsal</a>
+          <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="sub-kurumsal">
+            <span class="sr-only">Kurumsal alt menüsü</span>
+            <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg>
+          </button>
+          <div class="nav__sub" id="sub-kurumsal">
+            <ul class="nav__sub-list">
+              <li><a href="/kurumsal/">Hakkımızda</a></li>
+              <li><a href="/kurumsal/calisma-anlayisimiz/">Çalışma Anlayışımız</a></li>
+              <li><a href="/kurumsal/ekibimiz/">Ekibimiz</a></li>
+            </ul>
+          </div>
+        </li>
+        <li class="nav__item nav__item--sub nav__item--mega" data-sub>
+          <a class="nav__link" href="/hizmetler/">Hizmetler</a>
+          <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="sub-hizmetler">
+            <span class="sr-only">Hizmetler alt menüsü</span>
+            <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg>
+          </button>
+          <div class="nav__sub nav__sub--mega" id="sub-hizmetler">
+            <ul class="nav__sub-list nav__sub-list--2col">
+              <li><a href="/hizmetler/mimari-proje/">Mimari Proje</a></li>
+              <li><a href="/hizmetler/ic-mimari/">İç Mimari</a></li>
+              <li><a href="/hizmetler/3d-gorsellestirme/">3D Görselleştirme</a></li>
+              <li><a href="/hizmetler/uygulama/">Uygulama</a></li>
+              <li><a href="/hizmetler/santiye-teknik-hizmetler/">Şantiye ve Teknik Hizmetler</a></li>
+              <li><a href="/hizmetler/ruhsat-iskan/">Ruhsat ve İskân Süreçleri</a></li>
+              <li><a href="/hizmetler/mimari-danismanlik/">Mimari Danışmanlık ve Kentsel Dönüşüm</a></li>
+              <li><a href="/hizmetler/enerji-kimlik-belgesi/">Enerji Kimlik Belgesi (EKB)</a></li>
+              <li><a href="/hizmetler/bina-akustigi/">Bina Akustiği</a></li>
+              <li><a href="/hizmetler/bilirkisilik/">Bilirkişilik ve Teknik İnceleme</a></li>
+            </ul>
+            <div class="nav__mega-aside">
+              <p class="nav__mega-title">Projeniz hangi aşamada?</p>
+              <p class="nav__mega-text">Arsa, ruhsat ya da uygulama — ihtiyacınızı kısaca anlatın, size uygun hizmeti birlikte belirleyelim.</p>
+              <a class="link-arrow" href="/projenizi-anlatin/" data-cta="mega_projenizi_anlatin">Projenizi anlatın <svg class="i-arrow" aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
+            </div>
+          </div>
+        </li>
+        <li class="nav__item"><a class="nav__link" href="/projeler/">Projeler</a></li>
+        <li class="nav__item"><a class="nav__link" href="/blog/">Blog</a></li>
+        <li class="nav__item"><a class="nav__link" href="/iletisim/">İletişim</a></li>
+      </ul>
+      <div class="nav__mobile-extra">
+        <a class="btn btn--primary btn--block" href="/projenizi-anlatin/" data-cta="projenizi_anlatin_menu">Projenizi Anlatın<span class="btn__arrow" aria-hidden="true"><svg><use href="#i-arrow-ne"/></svg></span></a>
+        <a class="btn btn--outline btn--block btn--wa" href="https://wa.me/905368475640?text=Merhaba%2C%20Sibel%20Ayd%C4%B1n%20Mimarl%C4%B1k%20ile%20g%C3%B6r%C3%BC%C5%9Fme%20randevusu%20almak%20istiyorum.%20Uygun%20oldu%C4%9Fum%20g%C3%BCn%20ve%20saat%3A%20" target="_blank" rel="noopener" aria-label="WhatsApp üzerinden randevu alın" data-appointment data-cta="randevu_menu"><svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>Randevu Al<span class="btn__arrow" aria-hidden="true"><svg><use href="#i-arrow-ne"/></svg></span></a>
+        <a class="nav__phone" href="tel:+905368475640">0536 847 56 40</a>
+      </div>
+    </nav>
+
+    <div class="header-cta">
+      <a class="btn btn--outline btn--sm header-cta__secondary btn--wa" href="https://wa.me/905368475640?text=Merhaba%2C%20Sibel%20Ayd%C4%B1n%20Mimarl%C4%B1k%20ile%20g%C3%B6r%C3%BC%C5%9Fme%20randevusu%20almak%20istiyorum.%20Uygun%20oldu%C4%9Fum%20g%C3%BCn%20ve%20saat%3A%20" target="_blank" rel="noopener" aria-label="WhatsApp üzerinden randevu alın" data-appointment data-cta="randevu_header"><svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>Randevu Al<span class="btn__arrow" aria-hidden="true"><svg><use href="#i-arrow-ne"/></svg></span></a>
+      <a class="btn btn--primary btn--sm" href="/projenizi-anlatin/" data-cta="projenizi_anlatin_header">Projenizi Anlatın<span class="btn__arrow" aria-hidden="true"><svg><use href="#i-arrow-ne"/></svg></span></a>
+    </div>
+
+    <button class="burger" type="button" aria-expanded="false" aria-controls="site-nav" data-burger>
+      <span class="sr-only" data-burger-label>Menüyü aç</span>
+      <span class="burger__bar" aria-hidden="true"></span>
+    </button>
+  </div>
+</header>
+<!-- HEADER END -->
+
+<main id="main">
+  <nav class="breadcrumb container" aria-label="Sayfa konumu">
+    <ol>
+      <li><a href="/">Ana Sayfa</a></li>
+      <li><a href="/hizmetler/">Hizmetler</a></li>
+      <li aria-current="page">Enerji Kimlik Belgesi (EKB)</li>
+    </ol>
+  </nav>
+
+  <!-- HERO -->
+  <section class="page-hero">
+    <div class="container svc-hero">
+      <div>
+        <p class="eyebrow">Hizmetler</p>
+        <h1 class="page-hero__title">Silivri Enerji Kimlik Belgesi</h1>
+        <p class="page-hero__lead">Silivri enerji kimlik belgesi (EKB) hizmetimizle binanızın enerji performansını belirliyor, iskân ve diğer resmi işlemler için gereken belgeyi hazırlıyoruz. Belgeyle birlikte enerji tüketimini azaltmak için neler yapılabileceğini de gösteriyoruz. Silivri, Büyükçekmece ve çevresinde hizmet veriyoruz.</p>
+        <div class="btn-row">
+          <a class="btn btn--primary" href="/projenizi-anlatin/" data-cta="projenizi_anlatin_hizmet_hero">Projenizi Anlatın<span class="btn__arrow" aria-hidden="true"><svg><use href="#i-arrow-ne"/></svg></span></a>
+          <a class="btn btn--outline btn--wa" href="https://wa.me/905368475640?text=Merhaba%2C%20Sibel%20Ayd%C4%B1n%20Mimarl%C4%B1k%20ile%20g%C3%B6r%C3%BC%C5%9Fme%20randevusu%20almak%20istiyorum.%20Uygun%20oldu%C4%9Fum%20g%C3%BCn%20ve%20saat%3A%20" target="_blank" rel="noopener" aria-label="WhatsApp üzerinden randevu alın" data-appointment data-cta="randevu_hizmet_hero"><svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>Randevu Alın<span class="btn__arrow" aria-hidden="true"><svg><use href="#i-arrow-ne"/></svg></span></a>
+        </div>
+      </div>
+      <div class="media media--4x3" data-ph="Görsel: enerji sınıfı ve konut cephesi">
+        <img src="/assets/img/hizmet/enerji-kimlik-belgesi.webp" width="1200" height="900" fetchpriority="high" decoding="async" alt="Silivri Enerji Kimlik Belgesi – bina enerji sınıfı ölçeği ve konut cephesi">
+      </div>
+    </div>
+  </section>
+
+  <!-- BÖLÜM 1 -->
+  <section class="section" aria-labelledby="kapsam-baslik">
+    <div class="container">
+      <div class="split-head reveal">
+        <div>
+          <p class="eyebrow">Kapsam</p>
+          <h2 id="kapsam-baslik" class="section__title">Silivri enerji kimlik belgesi hizmetimiz neleri kapsar?</h2>
+        </div>
+        <p>Enerji Kimlik Belgesi; bir binanın ısınma, soğutma, sıcak su ve aydınlatma için harcadığı enerjiyi ve buna bağlı karbon salımını A'dan G'ye sınıflandıran resmi belgedir. Belge, yetkili uzmanlar tarafından bakanlığın sistemi üzerinden düzenlenir.</p>
+      </div>
+      <ul class="icon-list">
+        <li class="reveal">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M5 20v-8l6-5 6 5v8M10 20v-5h4v5"/></svg>
+          <span>Yeni binalar için iskân öncesi Enerji Kimlik Belgesi</span>
+        </li>
+        <li class="reveal">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h14v18H5zM9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2M11 21v-3h2v3"/></svg>
+          <span>Mevcut binalar için Enerji Kimlik Belgesi</span>
+        </li>
+        <li class="reveal">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h7l2 2.5L11 9H4zM4 10h10l2 2.5-2 2.5H4zM4 16h13l2 2.5-2 2.5H4z"/></svg>
+          <span>Bina enerji performansı değerlendirmesi</span>
+        </li>
+        <li class="reveal">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3v18M14 3v18M10 3v18M10 6c1.7 1 2.3 1 4 0M10 10c1.7 1 2.3 1 4 0M10 14c1.7 1 2.3 1 4 0M10 18c1.7 1 2.3 1 4 0M18 9l2 3-2 3"/></svg>
+          <span>Isı yalıtımı ve enerji kayıplarının tespiti</span>
+        </li>
+        <li class="reveal">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3z"/></svg>
+          <span>Enerji verimliliğini artıracak iyileştirme önerileri</span>
+        </li>
+        <li class="reveal">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v2M4.9 4.9l1.4 1.4M2 12h2M17.7 6.3l1.4-1.4M20 12h2M8 12a4 4 0 0 1 8 0M3 20h18M6 20v-4h12v4"/></svg>
+          <span>Proje aşamasında enerji verimli tasarım danışmanlığı</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- BÖLÜM 2 -->
+  <section class="section projects" aria-labelledby="turler-baslik">
+    <div class="container">
+      <header class="section__head reveal">
+        <p class="eyebrow">Ne zaman gerekir</p>
+        <h2 id="turler-baslik" class="section__title">EKB hangi durumlarda gerekir?</h2>
+      </header>
+      <div class="cards-3">
+        <article class="info-card reveal">
+          <div class="media media--4x3" data-ph="Görsel: yeni bina">
+            <img src="/assets/img/hizmet/enerji-kimlik-belgesi/kart-1.webp" width="1200" height="900" loading="lazy" decoding="async" alt="İnşaatı yeni tamamlanmış, iskân aşamasındaki bina">
+          </div>
+          <h3>Yeni binalar</h3>
+          <p>Yeni yapılan binalarda yapı kullanma izin belgesi (iskân) alınabilmesi için EKB gereklidir.</p>
+        </article>
+        <article class="info-card reveal">
+          <div class="media media--4x3" data-ph="Görsel: satış ve kiralama">
+            <img src="/assets/img/hizmet/enerji-kimlik-belgesi/kart-2.webp" width="1200" height="900" loading="lazy" decoding="async" alt="Satış veya kiralama için hazırlanan mevcut bir konut">
+          </div>
+          <h3>Satış ve kiralama</h3>
+          <p>Mevcut binaların satış ve kiralama işlemlerinde EKB talep edilebilir; güncel uygulamayı işleminizden önce kontrol etmenizi öneriyoruz.</p>
+        </article>
+        <article class="info-card reveal">
+          <div class="media media--4x3" data-ph="Görsel: ısı yalıtımı uygulaması">
+            <img src="/assets/img/hizmet/enerji-kimlik-belgesi/kart-3.webp" width="1200" height="900" loading="lazy" decoding="async" alt="Dış cephesine ısı yalıtımı uygulanan bina">
+          </div>
+          <h3>Enerji iyileştirme</h3>
+          <p>Isınma giderlerini azaltmak isteyen bina sahipleri için mevcut durumun tespiti ve iyileştirme yol haritası.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- BÖLÜM 3 -->
+  <section class="section" aria-labelledby="surec-baslik">
+    <div class="container">
+      <header class="section__head reveal">
+        <p class="eyebrow">Süreç</p>
+        <h2 id="surec-baslik" class="section__title">Süreç nasıl ilerler?</h2>
+      </header>
+      <ol class="steps">
+        <li class="reveal">
+          <h3>Bilgi ve belge toplama</h3>
+          <p>Binanın projeleri, ruhsat bilgileri ve tesisat özelliklerini topluyoruz.</p>
+        </li>
+        <li class="reveal">
+          <h3>Yerinde inceleme</h3>
+          <p>Gerekli durumlarda yalıtım, doğrama ve tesisat sistemlerini yerinde kontrol ediyoruz.</p>
+        </li>
+        <li class="reveal">
+          <h3>Hesaplama</h3>
+          <p>Binanın verilerini resmi hesaplama sistemine giriyor, enerji sınıfını belirliyoruz.</p>
+        </li>
+        <li class="reveal">
+          <h3>Belgenin düzenlenmesi</h3>
+          <p>Enerji Kimlik Belgesini sistem üzerinden düzenliyoruz.</p>
+        </li>
+        <li class="reveal">
+          <h3>Öneriler</h3>
+          <p>İsterseniz binanın sınıfını iyileştirecek önlemleri ve öncelik sırasını paylaşıyoruz.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- BÖLÜM 4 -->
+  <section class="section process" aria-labelledby="erken-baslik">
+    <div class="container two-col">
+      <div class="reveal">
+        <p class="eyebrow">Doğru başlangıç</p>
+        <h2 id="erken-baslik" class="section__title">Enerji sınıfı proje aşamasında neden önemlidir?</h2>
+        <p class="prose-p">Bir binanın enerji sınıfı büyük ölçüde tasarım aşamasında belirlenir. Yönlenme, pencere oranları, yalıtım detayları ve mekanik sistem seçimi proje sırasında doğru kurgulandığında, hem daha iyi bir EKB sınıfı hem de yıllar boyunca daha düşük enerji giderleri elde edilir.</p>
+      </div>
+      <aside class="note reveal" aria-label="Not">
+        <p>İskân sürecinizi birlikte planlayalım</p>
+        <a class="link-arrow" href="/hizmetler/ruhsat-iskan/">Ruhsat ve iskân süreçlerini inceleyin<svg class="i-arrow" aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
+      </aside>
+    </div>
+  </section>
+
+  <!-- BÖLÜM 5 -->
+  <section class="section section--tight" aria-labelledby="ilgili-baslik">
+    <div class="container">
+      <header class="section__head reveal">
+        <p class="eyebrow">Birlikte düşünülenler</p>
+        <h2 id="ilgili-baslik" class="section__title">İlgili hizmetler</h2>
+      </header>
+      <div class="related">
+        <a class="reveal" href="/hizmetler/ruhsat-iskan/">
+          <h3>Ruhsat ve İskân Süreçleri</h3>
+          <span class="link-arrow">Ruhsat ve iskân süreçlerini inceleyin<svg class="i-arrow" aria-hidden="true"><use href="#i-arrow-r"/></svg></span>
+        </a>
+        <a class="reveal" href="/hizmetler/mimari-proje/">
+          <h3>Mimari Proje</h3>
+          <span class="link-arrow">Mimari proje hizmetini inceleyin<svg class="i-arrow" aria-hidden="true"><use href="#i-arrow-r"/></svg></span>
+        </a>
+        <a class="reveal" href="/hizmetler/bina-akustigi/">
+          <h3>Bina Akustiği</h3>
+          <span class="link-arrow">Bina akustiği hizmetini inceleyin<svg class="i-arrow" aria-hidden="true"><use href="#i-arrow-r"/></svg></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BÖLÜM 6: SSS -->
+  <section class="section faq" id="sss" aria-labelledby="sss-baslik">
+    <div class="container faq__grid">
+      <header class="faq__head reveal">
+        <p class="eyebrow">SSS</p>
+        <h2 id="sss-baslik" class="section__title">Sıkça sorulan sorular</h2>
+      </header>
+      <div class="faq__list reveal">
+        <details class="faq__item">
+          <summary>Silivri'de Enerji Kimlik Belgesi nasıl alınır?</summary>
+          <div class="faq__answer"><p>Binanın proje ve tesisat bilgilerini bize iletmeniz yeterlidir. Gerekirse yerinde inceleme yapıyor, hesaplamayı tamamlayarak belgeyi resmi sistem üzerinden düzenliyoruz.</p></div>
+        </details>
+        <details class="faq__item">
+          <summary>Enerji Kimlik Belgesi zorunlu mu?</summary>
+          <div class="faq__answer"><p>Yeni binalarda iskân alınabilmesi için gereklidir. Mevcut binalarda ise satış, kiralama ve bazı resmi işlemlerde talep edilebilir; işleminize göre güncel gerekliliği birlikte kontrol ediyoruz.</p></div>
+        </details>
+        <details class="faq__item">
+          <summary>EKB ne kadar süre geçerlidir?</summary>
+          <div class="faq__answer"><p>Enerji Kimlik Belgesi düzenlendiği tarihten itibaren 10 yıl geçerlidir. Binada enerji performansını etkileyen önemli bir değişiklik yapılırsa yenilenmesi gerekebilir.</p></div>
+        </details>
+        <details class="faq__item">
+          <summary>Binamın enerji sınıfını yükseltebilir miyim?</summary>
+          <div class="faq__answer"><p>Evet. Isı yalıtımı, doğramaların yenilenmesi ve daha verimli ısıtma sistemleri gibi önlemler sınıfı iyileştirebilir. Hangi önlemin en yüksek faydayı sağlayacağını mevcut durum değerlendirmesiyle belirliyoruz.</p></div>
+        </details>
+        <details class="faq__item">
+          <summary>EKB ücreti nasıl belirlenir?</summary>
+          <div class="faq__answer"><p>Ücret; binanın büyüklüğüne, türüne ve yerinde inceleme gerekip gerekmediğine göre belirlenir. Bina bilgilerinizi ilettiğinizde size özel teklif hazırlıyoruz.</p></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANDI -->
+  <section class="cta-band" aria-labelledby="cta-baslik">
+    <div class="container cta-band__inner reveal">
+      <div>
+        <p class="eyebrow eyebrow--light">İletişim</p>
+        <h2 id="cta-baslik" class="cta-band__title">Enerji Kimlik Belgenizi hızlıca hazırlayalım</h2>
+        <p class="cta-band__text">Binanızın bilgilerini paylaşın, belge sürecini ve gerekli adımları birlikte planlayalım.</p>
+      </div>
+      <div class="btn-row">
+        <a class="btn btn--light" href="/projenizi-anlatin/" data-cta="projenizi_anlatin_band">Projenizi Anlatın<span class="btn__arrow" aria-hidden="true"><svg><use href="#i-arrow-ne"/></svg></span></a>
+        <a class="btn btn--ghost-light btn--wa" href="https://wa.me/905368475640?text=Merhaba%2C%20Sibel%20Ayd%C4%B1n%20Mimarl%C4%B1k%20ile%20g%C3%B6r%C3%BC%C5%9Fme%20randevusu%20almak%20istiyorum.%20Uygun%20oldu%C4%9Fum%20g%C3%BCn%20ve%20saat%3A%20" target="_blank" rel="noopener" aria-label="WhatsApp üzerinden randevu alın" data-appointment data-cta="randevu_band"><svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>Randevu Alın<span class="btn__arrow" aria-hidden="true"><svg><use href="#i-arrow-ne"/></svg></span></a>
+        <a class="btn btn--ghost-light" href="tel:+905368475640" data-cta="ara_band"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>Bizi Arayın</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- FOOTER START -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__col footer__brand">
+        <a class="logo logo--footer" href="/">
+          <img class="logo__img" src="/assets/img/sibelaydinlogo.svg" width="100" height="81" loading="lazy" alt="Sibel Aydın Mimarlık">
+        </a>
+        <p>Konut, villa ve ticari yapılar için mimari proje, iç mimari, ruhsat ve uygulama süreçlerini tek ofisten yönetiyoruz.</p>
+      </div>
+      <nav class="footer__col" aria-label="Hizmetler">
+        <h2 class="footer__title">Hizmetler</h2>
+        <ul class="footer__links">
+          <li><a href="/hizmetler/mimari-proje/">Mimari Proje</a></li>
+          <li><a href="/hizmetler/ic-mimari/">İç Mimari</a></li>
+          <li><a href="/hizmetler/3d-gorsellestirme/">3D Görselleştirme</a></li>
+          <li><a href="/hizmetler/uygulama/">Uygulama</a></li>
+          <li><a href="/hizmetler/santiye-teknik-hizmetler/">Şantiye ve Teknik Hizmetler</a></li>
+          <li><a href="/hizmetler/ruhsat-iskan/">Ruhsat ve İskân Süreçleri</a></li>
+          <li><a href="/hizmetler/mimari-danismanlik/">Mimari Danışmanlık ve Kentsel Dönüşüm</a></li>
+          <li><a href="/hizmetler/enerji-kimlik-belgesi/">Enerji Kimlik Belgesi (EKB)</a></li>
+          <li><a href="/hizmetler/bina-akustigi/">Bina Akustiği</a></li>
+          <li><a href="/hizmetler/bilirkisilik/">Bilirkişilik ve Teknik İnceleme</a></li>
+        </ul>
+      </nav>
+      <nav class="footer__col" aria-label="Kurumsal">
+        <h2 class="footer__title">Kurumsal</h2>
+        <ul class="footer__links">
+          <li><a href="/kurumsal/">Hakkımızda</a></li>
+          <li><a href="/kurumsal/calisma-anlayisimiz/">Çalışma Anlayışımız</a></li>
+          <li><a href="/kurumsal/ekibimiz/">Ekibimiz</a></li>
+          <li><a href="/projeler/">Projeler</a></li>
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="/projenizi-anlatin/">Projenizi Anlatın</a></li>
+        </ul>
+        <h2 class="footer__title footer__title--sub">Yasal</h2>
+        <ul class="footer__links">
+          <li><a href="/kvkk/">KVKK Aydınlatma Metni</a></li>
+          <li><a href="/gizlilik/">Gizlilik Politikası</a></li>
+        </ul>
+      </nav>
+      <div class="footer__col">
+        <h2 class="footer__title">İletişim</h2>
+        <address class="footer__contact">
+          <p class="footer-address">[YER TUTUCU: Açık adres]<br>Silivri / İstanbul</p>
+          <p><a href="tel:+905368475640">0536 847 56 40</a></p>
+          <p><a href="mailto:proje@sibelaydinmimarlik.com.tr">proje@sibelaydinmimarlik.com.tr</a></p>
+          <p>Pazartesi–Cuma 09:00–19:00<br><span class="muted">Cumartesi–Pazar kapalı</span></p>
+        </address>
+        <div class="map-embed" data-map data-map-src="https://www.google.com/maps?q=Silivri,+%C4%B0stanbul&amp;output=embed">
+          <button class="map-embed__btn" type="button" data-map-btn>Haritayı göster</button>
+          <p class="map-embed__note">Harita, Google Haritalar'dan yüklenir.</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>© <span data-year>2026</span> Sibel Aydın İnşaat Mimarlık San. Tic. Ltd. Şti. Tüm hakları saklıdır.</p>
+      <p><a href="/kvkk/">KVKK</a> · <a href="/gizlilik/">Gizlilik</a></p>
+    </div>
+  </div>
+</footer>
+
+<a class="wa-fab" href="https://wa.me/905368475640" target="_blank" rel="noopener" aria-label="WhatsApp'tan yazın">
+  <svg class="wa-fab__icon" aria-hidden="true"><use href="#i-wa"/></svg>
+  <span class="wa-fab__label" aria-hidden="true">WhatsApp'tan yazın</span>
+</a>
+
+<nav class="mobile-bar" aria-label="Hızlı iletişim">
+  <a class="mobile-bar__item" href="tel:+905368475640">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Ara
+  </a>
+  <a class="mobile-bar__item mobile-bar__item--wa" href="https://wa.me/905368475640" target="_blank" rel="noopener">
+    <svg class="mobile-bar__wa" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp
+  </a>
+  <a class="mobile-bar__item" href="/projenizi-anlatin/" data-cta="projenizi_anlatin_mobilbar">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6v18h6M14 3l4 4v3M14 3v4h4M9 12h5M9 16h2.5M19.5 13.5l2 2L16 21h-2v-2z"/></svg>Proje Anlat
+  </a>
+</nav>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-arrow-ne" viewBox="0 0 16 16"><path d="M4.5 11.5l7-7M5.75 4.5h5.75v5.75" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></symbol>
+  <symbol id="i-arrow-r" viewBox="0 0 16 16"><path d="M2.5 8h11M9 3.5 13.5 8 9 12.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></symbol>
+  <symbol id="i-arrow-d" viewBox="0 0 16 16"><path d="M8 2.5v11M3.5 9 8 13.5 12.5 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></symbol>
+  <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.7.62.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.18-1.42-.08-.12-.27-.2-.57-.34m-5.42 7.4h-.01a9.87 9.87 0 0 1-5.03-1.37l-.36-.22-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.88 9.88m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.89 0-3.18-1.24-6.17-3.48-8.41Z"/></symbol>
+</svg>
+<!-- FOOTER END -->
+
+</body>
+</html>
