@@ -223,7 +223,7 @@ ${heroHtml}
       <ul class="icon-list">
 ${c.scope.items.map(([term, text, path]) => `        <li class="reveal">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="${path}"/></svg>
-          <span><strong>${esc(term)}:</strong> ${esc(text)}</span>
+          <span>${term ? `<strong>${esc(term)}:</strong> ` : ''}${esc(text)}</span>
         </li>`).join('\n')}
       </ul>
     </div>
