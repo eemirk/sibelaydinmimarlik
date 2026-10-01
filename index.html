@@ -3,17 +3,12 @@
 ==========================================================================
   YER TUTUCULAR — yayına almadan önce doldurulacak / doğrulanacak
 ==========================================================================
-  1. Açık adres: "Silivri, İstanbul" dışında sokak/no yok; posta kodu 34570
-     (Silivri merkez) varsayıldı — doğrulayın.
-     → footer .footer-address, JSON-LD "address.streetAddress" ve "postalCode".
-  2. Harita koordinatı: JSON-LD "geo" Silivri ilçe merkezini gösteriyor
+  1. Harita koordinatı: JSON-LD "geo" Silivri ilçe merkezini gösteriyor
      (41.0739, 28.2464) → ofisin gerçek koordinatıyla değiştirin.
-     Footer harita iframe'i şimdilik "Silivri, İstanbul" araması yapıyor
-     (data-map-src) → ofis adresi netleşince güncelleyin.
-  3. Sosyal medya: JSON-LD "sameAs" içindeki instagram / linkedin /
+  2. Sosyal medya: JSON-LD "sameAs" içindeki instagram / linkedin /
      facebook adresleri YER-TUTUCU. Footer'da sosyal ikon yok; hesaplar
      netleşince eklenecek.
-  4. Görseller (dosyalar yüklenene kadar gri, etiketli kutu görünür):
+  3. Görseller (dosyalar yüklenene kadar gri, etiketli kutu görünür):
      - /assets/img/hizmet/*.webp (6 hizmet kartı, 4:3, önerilen 1200×900)
      - /assets/img/projeler/<slug>/kapak.webp (6 proje kapağı)
      - /assets/img/ofis.webp (Hakkımızda özeti, 4:5, önerilen 1000×1250)
@@ -21,18 +16,18 @@
        göre güncelleyin (şimdiki alt metinler beklenen içeriği tarif ediyor).
      - /assets/img/og-cover.jpg kullanılmıyor; og:image = hero-villa.webp
        (bazı platformlar WebP OG görselini göstermez → gerekirse 1200×630 JPG ekleyin)
-  5. Projeler: /data/projects.json içindeki 6 kayıt ÖRNEKTİR ("_durum": "ÖRNEK –
+  4. Projeler: /data/projects.json içindeki 6 kayıt ÖRNEKTİR ("_durum": "ÖRNEK –
      gerçek projeyle değiştirilecek"). Gerçek proje adı, türü, konumu, m² ve
      görselleriyle değiştirin; bu dosyadaki statik proje kartlarını da eşleyin.
      hero-villa.webp bir görselleştirmedir, proje olarak KULLANMAYIN.
-  6. Ekip bilgileri: /kurumsal/ekibimiz/ sayfasında (sonraki adım).
-  7. Hero kareleri: /assets/seq/desktop|mobile/villa_XXXX.webp ve
+  5. Ekip bilgileri: /kurumsal/ekibimiz/ sayfasında (sonraki adım).
+  6. Hero kareleri: /assets/seq/desktop|mobile/villa_XXXX.webp ve
      /assets/img/hero-villa.webp → tools/generate-villa.mjs ile üretilecek.
-  8. Analitik: window.dataLayer event'leri hazır; GA4 / Google Ads / GTM kodu
+  7. Analitik: window.dataLayer event'leri hazır; GA4 / Google Ads / GTM kodu
      henüz eklenmedi.
-  9. Google Search Console: <head> içindeki "GSC:" yorumunu doğrulama koduyla
+  8. Google Search Console: <head> içindeki "GSC:" yorumunu doğrulama koduyla
      gerçek <meta> etiketine çevirin.
- 10. Yapay zekâ görselleri: hero-villa.webp ve /assets/seq/ kareleri AI üretimidir;
+  9. Yapay zekâ görselleri: hero-villa.webp ve /assets/seq/ kareleri AI üretimidir;
      IPTC DigitalSourceType = trainedAlgorithmicMedia metadata'sı
      "node tools/generate-villa.mjs metadata" ile yazılır.
 ==========================================================================
@@ -92,7 +87,9 @@
         "@id": "https://www.sibelaydinmimarlik.com.tr/#firma",
         "additionalType": "http://www.productontology.org/id/Architect",
         "name": "Sibel Aydın Mimarlık",
-        "legalName": "Sibel Aydın İnşaat Mimarlık San. Tic. Ltd. Şti.",
+        "legalName": "Sibel Aydın İnşaat Mimarlık Sanayi Ticaret Limited Şirketi",
+        "taxID": "7700475504",
+        "foundingDate": "2017-10-04",
         "url": "https://www.sibelaydinmimarlik.com.tr/",
         "logo": "https://www.sibelaydinmimarlik.com.tr/assets/img/sibelaydinlogo.svg",
         "image": "https://www.sibelaydinmimarlik.com.tr/assets/img/hero-villa.webp",
@@ -101,10 +98,10 @@
         "email": "proje@sibelaydinmimarlik.com.tr",
         "address": {
           "@type": "PostalAddress",
-          "streetAddress": "YER TUTUCU — açık adres eklenecek",
+          "streetAddress": "Piri Mehmet Paşa Mah. Şerif Sk. Osmanoğlu İş Merkezi No:1 İç Kapı No:10",
+          "postalCode": "34570",
           "addressLocality": "Silivri",
           "addressRegion": "İstanbul",
-          "postalCode": "34570",
           "addressCountry": "TR"
         },
         "geo": { "@type": "GeoCoordinates", "latitude": 41.0739, "longitude": 28.2464 },
@@ -536,7 +533,7 @@
       <div class="about__body reveal">
         <p class="eyebrow">Hakkımızda</p>
         <h2 id="hakkimizda-baslik" class="section__title">Sürecin her adımında yanınızda</h2>
-        <p>Sibel Aydın Mimarlık, Silivri merkezli bir mimarlık ofisidir. Konut, villa ve ticari yapılarda ilk eskizden uygulamaya kadar tüm süreci tek bir ekip olarak yönetiyor; tasarım, proje, ruhsat ve saha adımlarının birbirinden kopmadan ilerlemesini sağlıyoruz.</p>
+        <p>2017'den bu yana Silivri merkezli ofisimizde mimari proje, uygulama ve teknik danışmanlık hizmetleri veriyoruz. Sibel Aydın Mimarlık, Silivri merkezli bir mimarlık ofisidir. Konut, villa ve ticari yapılarda ilk eskizden uygulamaya kadar tüm süreci tek bir ekip olarak yönetiyor; tasarım, proje, ruhsat ve saha adımlarının birbirinden kopmadan ilerlemesini sağlıyoruz.</p>
         <p>İmar ve yapı mevzuatına hâkim bir yaklaşımla, belediye ve onay süreçlerini baştan planlıyoruz. Her aşamada ne yapıldığını, neyin beklendiğini ve sıradaki adımı açıkça paylaşıyor; kararları sizinle birlikte, şeffaf bir iletişimle veriyoruz.</p>
         <a class="link-arrow link-arrow--lg" href="/kurumsal/">Ofisimizi ve çalışma şeklimizi tanıyın <svg class="i-arrow" aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
       </div>
@@ -727,19 +724,19 @@
       <div class="footer__col">
         <h2 class="footer__title">İletişim</h2>
         <address class="footer__contact">
-          <p class="footer-address">[YER TUTUCU: Açık adres]<br>Silivri / İstanbul</p>
+          <p class="footer-address">Piri Mehmet Paşa Mah. Şerif Sk.<br>Osmanoğlu İş Merkezi No:1 İç Kapı No:10<br>34570 Silivri / İstanbul</p>
           <p><a href="tel:+905368475640">0536 847 56 40</a></p>
           <p><a href="mailto:proje@sibelaydinmimarlik.com.tr">proje@sibelaydinmimarlik.com.tr</a></p>
           <p>Pazartesi–Cuma 09:00–19:00<br><span class="muted">Cumartesi–Pazar kapalı</span></p>
         </address>
-        <div class="map-embed" data-map data-map-src="https://www.google.com/maps?q=Silivri,+%C4%B0stanbul&amp;output=embed">
+        <div class="map-embed" data-map data-map-src="https://www.google.com/maps?q=Osmano%C4%9Flu+%C4%B0%C5%9F+Merkezi,+Piri+Mehmet+Pa%C5%9Fa+Mah.+%C5%9Eerif+Sk.+No:1,+34570+Silivri+%C4%B0stanbul&amp;output=embed">
           <button class="map-embed__btn" type="button" data-map-btn>Haritayı göster</button>
           <p class="map-embed__note">Harita, Google Haritalar'dan yüklenir.</p>
         </div>
       </div>
     </div>
     <div class="footer__bottom">
-      <p>© <span data-year>2026</span> Sibel Aydın İnşaat Mimarlık San. Tic. Ltd. Şti. Tüm hakları saklıdır.</p>
+      <p>© <span data-year>2026</span> Sibel Aydın İnşaat Mimarlık San. Tic. Ltd. Şti. · Silivri V.D. 7700475504</p>
       <p><a href="/kvkk/">KVKK</a> · <a href="/gizlilik/">Gizlilik</a></p>
     </div>
   </div>

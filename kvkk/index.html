@@ -1,88 +1,49 @@
 <!doctype html>
 <!--
-  BLOG MAKALE ŞABLONU — /blog/<makale-slug>/index.html olarak kopyalayın, sonra:
-    node tools/sync-partials.mjs
-  Doldurulacaklar ([[DEĞİŞTİR: …]] ile işaretli):
-    - <title>, description, canonical, og:* (bu makaleye ÖZGÜ; meta keywords KULLANMAYIN)
-    - Article JSON-LD: headline, description, image, datePublished, dateModified (ISO 8601: 2026-10-01)
-    - Görünür tarihler (<time datetime="…">) JSON-LD ile AYNI olmalı
-    - Yazar kutusu: fotoğraf, unvan, kısa özgeçmiş, Mimarlar Odası sicil no
-    - İçindekiler: her H2'nin id'si ile eşleşmeli
-    - Sondaki ilgili hizmet linki: hedef sayfayı anlatan metin ("Ruhsat ve iskân hizmetimizi inceleyin")
-  İlçe listesi makalelerde tekrarlanmaz; yalnızca konu gerektiriyorsa doğal biçimde geçsin.
+  KVKK AYDINLATMA METNİ — tools/templates/ic-sayfa.html yapısıyla. Metin firmadan geldiği gibidir;
+  değiştirirseniz "Son güncelleme" tarihini (sabit, elle) ve sitemap lastmod'u güncelleyin.
+  Header/footer: node tools/sync-partials.mjs
 -->
 <html lang="tr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <!-- ▼▼▼ ZORUNLU: Bu makaleye ÖZGÜ başlık ve açıklama ▼▼▼ -->
-  <title>[[DEĞİŞTİR: Makale başlığı, ~50–60 karakter]] | Sibel Aydın Mimarlık</title>
-  <meta name="description" content="[[DEĞİŞTİR: Makalenin özeti, 140–160 karakter]]">
-  <!-- ▲▲▲ -->
-  <link rel="canonical" href="https://www.sibelaydinmimarlik.com.tr/blog/[[MAKALE-SLUG]]/">
+  <title>KVKK Aydınlatma Metni | Sibel Aydın Mimarlık</title>
+  <meta name="description" content="Sibel Aydın İnşaat Mimarlık KVKK aydınlatma metni: işlenen kişisel veriler, işleme amaçları ve hukuki sebepleri, aktarım, saklama süresi ve başvuru hakları.">
+  <link rel="canonical" href="https://www.sibelaydinmimarlik.com.tr/kvkk/">
   <!-- GSC: <meta name="google-site-verification" content="..."> -->
   <meta name="theme-color" content="#F7F5F2">
-  <meta property="og:type" content="article">
+  <meta property="og:type" content="website">
   <meta property="og:locale" content="tr_TR">
   <meta property="og:site_name" content="Sibel Aydın Mimarlık">
-  <meta property="og:title" content="{{title}}">  <!-- derlemede <title> ile doldurulur -->
-  <meta property="og:description" content="{{description}}">  <!-- derlemede meta description ile doldurulur -->
-  <meta property="og:url" content="https://www.sibelaydinmimarlik.com.tr/blog/[[MAKALE-SLUG]]/">
-  <meta property="og:image" content="https://www.sibelaydinmimarlik.com.tr/assets/img/blog/[[MAKALE-SLUG]]/kapak.jpg">
-  <meta property="article:published_time" content="[[YYYY-AA-GG]]">
-  <meta property="article:modified_time" content="[[YYYY-AA-GG]]">
+  <meta property="og:title" content="{{title}}">
+  <meta property="og:description" content="{{description}}">
+  <meta property="og:url" content="https://www.sibelaydinmimarlik.com.tr/kvkk/">
+  <meta property="og:image" content="https://www.sibelaydinmimarlik.com.tr/assets/img/hero-villa.webp">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/assets/img/favicon-32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png" sizes="180x180">
   <link rel="manifest" href="/site.webmanifest">
   <script>(function(d){var c=d.documentElement.classList,n=navigator.connection;c.add('js');if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&!(n&&n.saveData))c.add('motion');})(document);</script>
-  <!-- Fontlar kendi sunucumuzdan (Instrument Sans, değişken); hero'nun ilk cümlesi ğ/ş içerdiği için latin + latin-ext önceden yüklenir -->
+  <!-- Fontlar kendi sunucumuzdan (Instrument Sans, değişken); latin + latin-ext önceden yüklenir -->
   <link rel="preload" href="/assets/fonts/instrument-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/instrument-sans-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/assets/css/style.css?v=dev">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Article",
-        "@id": "https://www.sibelaydinmimarlik.com.tr/blog/[[MAKALE-SLUG]]/#makale",
-        "headline": "[[DEĞİŞTİR: H1 ile aynı başlık]]",
-        "description": "[[DEĞİŞTİR: description ile aynı]]",
-        "image": ["https://www.sibelaydinmimarlik.com.tr/assets/img/blog/[[MAKALE-SLUG]]/kapak.jpg"],
-        "datePublished": "[[YYYY-AA-GG]]",
-        "dateModified": "[[YYYY-AA-GG]]",
-        "inLanguage": "tr-TR",
-        "mainEntityOfPage": "https://www.sibelaydinmimarlik.com.tr/blog/[[MAKALE-SLUG]]/",
-        "author": {
-          "@type": "Person",
-          "name": "Sibel Aydın",
-          "jobTitle": "Mimar",
-          "url": "https://www.sibelaydinmimarlik.com.tr/kurumsal/ekibimiz/",
-          "worksFor": { "@id": "https://www.sibelaydinmimarlik.com.tr/#firma" }
-        },
-        "publisher": {
-          "@type": "Organization",
-          "@id": "https://www.sibelaydinmimarlik.com.tr/#firma",
-          "name": "Sibel Aydın Mimarlık",
-          "logo": { "@type": "ImageObject", "url": "https://www.sibelaydinmimarlik.com.tr/assets/img/sibelaydinlogo.svg" }
-        }
-      },
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": "https://www.sibelaydinmimarlik.com.tr/" },
-          { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://www.sibelaydinmimarlik.com.tr/blog/" },
-          { "@type": "ListItem", "position": 3, "name": "[[DEĞİŞTİR: Kısa makale adı]]", "item": "https://www.sibelaydinmimarlik.com.tr/blog/[[MAKALE-SLUG]]/" }
-        ]
-      }
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": "https://www.sibelaydinmimarlik.com.tr/" },
+      { "@type": "ListItem", "position": 2, "name": "KVKK Aydınlatma Metni", "item": "https://www.sibelaydinmimarlik.com.tr/kvkk/" }
     ]
   }
   </script>
+  <!-- İç sayfalarda GSAP gerekmez; yalnızca main.js -->
   <script src="/assets/js/main.js?v=dev" defer></script>
 </head>
-<body class="page-inner page-article" data-wa-msg="Merhaba, Sibel Aydın Mimarlık web sitenizden yazıyorum. Blogdaki yazınızı okudum, projem hakkında bilgi almak istiyorum.">
+<body class="page-inner" data-wa-msg="Merhaba, Sibel Aydın Mimarlık web sitenizden yazıyorum. Projem hakkında bilgi almak istiyorum.">
 
 <!-- HEADER START -->
 <a class="skip-link" href="#main">İçeriğe geç</a>
@@ -164,89 +125,65 @@
   <nav class="breadcrumb container" aria-label="Sayfa konumu">
     <ol>
       <li><a href="/">Ana Sayfa</a></li>
-      <li><a href="/blog/">Blog</a></li>
-      <li aria-current="page">[[DEĞİŞTİR: Kısa makale adı]]</li>
+      <li aria-current="page">KVKK Aydınlatma Metni</li>
     </ol>
   </nav>
-
-  <article class="article">
-    <header class="article__head container">
-      <p class="eyebrow">[[DEĞİŞTİR: Kategori, ör. Ruhsat ve İskân]]</p>
-      <h1 class="article__title">[[DEĞİŞTİR: Makale başlığı (H1, sayfada tek)]]</h1>
-      <p class="article__lead">[[DEĞİŞTİR: 1–2 cümlelik giriş; makalenin neyi cevapladığını söylesin.]]</p>
-      <p class="article__meta">
-        <span>Yazan: <a href="#yazar">Sibel Aydın</a>, Mimar</span>
-        <span>Yayın: <time datetime="[[YYYY-AA-GG]]">[[GG Ay YYYY]]</time></span>
-        <span>Güncelleme: <time datetime="[[YYYY-AA-GG]]">[[GG Ay YYYY]]</time></span>
-      </p>
-    </header>
-
-    <figure class="article__cover container">
-      <div class="media" data-ph="Makale kapak görseli">
-        <img src="/assets/img/blog/[[MAKALE-SLUG]]/kapak.jpg" width="1600" height="900" alt="[[DEĞİŞTİR: Görselin gerçekte ne gösterdiği]]">
-      </div>
-      <figcaption>[[İsteğe bağlı: görsel açıklaması / kaynak]]</figcaption>
-    </figure>
-
-    <div class="article__layout container">
-      <nav class="toc" aria-labelledby="toc-baslik">
-        <p class="toc__title" id="toc-baslik">İçindekiler</p>
-        <ol>
-          <li><a href="#bolum-1">[[1. bölüm başlığı]]</a></li>
-          <li><a href="#bolum-2">[[2. bölüm başlığı]]</a></li>
-          <li><a href="#bolum-3">[[3. bölüm başlığı]]</a></li>
-          <li><a href="#sonuc">Özet</a></li>
-        </ol>
-      </nav>
-
-      <div class="article__body prose">
-        <h2 id="bolum-1">[[1. bölüm başlığı]]</h2>
-        <p>[[Metin…]]</p>
-
-        <h2 id="bolum-2">[[2. bölüm başlığı]]</h2>
-        <p>[[Metin…]]</p>
-        <!-- Görsel gerekiyorsa ilgili paragrafın hemen yanına:
-        <figure><div class="media"><img src="…" width="1200" height="800" loading="lazy" alt="Görselin gösterdiği şey"></div><figcaption>…</figcaption></figure> -->
-
-        <h2 id="bolum-3">[[3. bölüm başlığı]]</h2>
-        <p>[[Metin…]]</p>
-
-        <h2 id="sonuc">Özet</h2>
-        <p>[[Kısa özet…]]</p>
-
-        <!-- İlgili hizmet: açıklayıcı link metni -->
-        <p class="article__related">
-          <a class="link-arrow link-arrow--lg" href="/hizmetler/[[hizmet-slug]]/">[[DEĞİŞTİR: ör. Ruhsat ve iskân hizmetimizi inceleyin]] <svg class="i-arrow" aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
-        </p>
-
-        <!-- Yazar kutusu -->
-        <aside class="author-box" id="yazar" aria-labelledby="yazar-adi">
-          <div class="author-box__photo media" data-ph="Yazar fotoğrafı">
-            <img src="/assets/img/ekip/sibel-aydin.jpg" width="240" height="240" loading="lazy" alt="Mimar Sibel Aydın">
-          </div>
-          <div>
-            <p class="eyebrow">Yazar</p>
-            <p class="author-box__name" id="yazar-adi">Sibel Aydın</p>
-            <p class="author-box__title">Mimar · Mimarlar Odası sicil no: [[YER TUTUCU]]</p>
-            <p class="author-box__bio">[[YER TUTUCU: 2–3 cümlelik kısa özgeçmiş — eğitim, uzmanlık alanları. Uydurma bilgi yazmayın.]]</p>
-            <a class="link-arrow" href="/kurumsal/ekibimiz/">Ekibimizi tanıyın <svg class="i-arrow" aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
-          </div>
-        </aside>
-      </div>
-    </div>
-  </article>
-
-  <!-- Makale sonu CTA -->
-  <section class="section section--tight teaser" aria-labelledby="makale-cta">
+  <section class="page-hero">
     <div class="container">
-      <div class="teaser__box">
-        <div class="teaser__head">
-          <p class="eyebrow">Projenizi anlatın</p>
-          <h2 id="makale-cta" class="teaser__title">Bu konuda bir projeniz mi var?</h2>
-        </div>
-        <p class="muted">Arsanızı, yapınızı veya aklınızdaki fikri kısaca yazın; ön değerlendirmeyle size dönelim.</p>
-        <a class="btn btn--primary teaser__btn" href="/projenizi-anlatin/" data-cta="projenizi_anlatin_blog">Projenizi Anlatın<span class="btn__arrow" aria-hidden="true"><svg><use href="#i-arrow-ne"/></svg></span></a>
-      </div>
+      <p class="eyebrow">Yasal</p>
+      <h1 class="page-hero__title">Kişisel Verilerin Korunması Hakkında Aydınlatma Metni</h1>
+      <p class="page-hero__lead">Bu aydınlatma metni, 6698 sayılı Kişisel Verilerin Korunması Kanunu'nun ("KVKK") 10. maddesi uyarınca, web sitemiz ve iletişim kanallarımız aracılığıyla elde edilen kişisel verilerinizin işlenmesine ilişkin olarak sizi bilgilendirmek amacıyla hazırlanmıştır.</p>
+    </div>
+  </section>
+  <section class="section section--tight">
+    <div class="container prose">
+      <h2>Veri Sorumlusu</h2>
+      <p>Sibel Aydın İnşaat Mimarlık Sanayi Ticaret Limited Şirketi<br>
+        Adres: Piri Mehmet Paşa Mah. Şerif Sk. Osmanoğlu İş Merkezi No:1 İç Kapı No:10, 34570 Silivri / İstanbul<br>
+        Vergi Dairesi / No: Silivri / 7700475504<br>
+        E-posta: <a href="mailto:proje@sibelaydinmimarlik.com.tr">proje@sibelaydinmimarlik.com.tr</a> · Telefon: <a href="tel:+905368475640">0536 847 56 40</a></p>
+
+      <h2>İşlenen Kişisel Verileriniz</h2>
+      <ul>
+        <li>Kimlik bilgileri: ad, soyad</li>
+        <li>İletişim bilgileri: telefon numarası, e-posta adresi</li>
+        <li>Talep ve proje bilgileri: il/ilçe, proje türü ve aşaması, alan bilgileri, proje açıklaması, talep edilen hizmetler</li>
+        <li>Paylaştığınız dosyalar: fotoğraf, çizim, tapu, imar durumu ve benzeri belgeler ile bu belgelerde yer alabilecek bilgiler</li>
+        <li>İşlem güvenliği bilgileri: IP adresi, form gönderim tarihi ve saati</li>
+      </ul>
+
+      <h2>Kişisel Verilerinizin İşlenme Amaçları</h2>
+      <ul>
+        <li>Proje ve hizmet talebinizin değerlendirilmesi, size dönüş yapılması ve teklif hazırlanması</li>
+        <li>Görüşme ve keşif randevularının planlanması</li>
+        <li>Taraflar arasında kurulacak hizmet sözleşmesine ilişkin ön hazırlıkların yürütülmesi</li>
+        <li>Bilgi güvenliğinin sağlanması ve kötüye kullanımın (spam vb.) önlenmesi</li>
+        <li>Hukuki yükümlülüklerin yerine getirilmesi ve olası uyuşmazlıklarda hakların korunması</li>
+      </ul>
+
+      <h2>Kişisel Verilerin Toplanma Yöntemi ve Hukuki Sebebi</h2>
+      <p>Kişisel verileriniz; web sitemizdeki "Projenizi Anlatın" formu, telefon, WhatsApp ve e-posta yoluyla, tarafınızca iletilmesi suretiyle elektronik ortamda toplanmaktadır. Bu veriler KVKK'nın 5. maddesinin 2. fıkrasında yer alan;</p>
+      <ul>
+        <li>(c) bir sözleşmenin kurulması veya ifasıyla doğrudan ilgili olması kaydıyla sözleşmenin taraflarına ait kişisel verilerin işlenmesinin gerekli olması,</li>
+        <li>(ç) veri sorumlusunun hukuki yükümlülüğünü yerine getirebilmesi için zorunlu olması,</li>
+        <li>(e) bir hakkın tesisi, kullanılması veya korunması için veri işlemenin zorunlu olması,</li>
+        <li>(f) ilgili kişinin temel hak ve özgürlüklerine zarar vermemek kaydıyla, veri sorumlusunun meşru menfaatleri için veri işlenmesinin zorunlu olması</li>
+      </ul>
+      <p>hukuki sebeplerine dayanılarak işlenmektedir.</p>
+
+      <h2>Kişisel Verilerin Aktarılması</h2>
+      <p>Kişisel verileriniz, yukarıdaki amaçlarla sınırlı olarak; talebinizin gerektirdiği ölçüde iş birliği yaptığımız mühendislik ve teknik hizmet sağlayıcılarına, yasal olarak yetkili kamu kurum ve kuruluşlarına ve hizmet aldığımız barındırma (hosting) ve e-posta hizmet sağlayıcılarına aktarılabilmektedir. E-posta altyapımızda kullanılan hizmet sağlayıcının sunucularının yurt dışında bulunabilmesi nedeniyle verileriniz, KVKK'nın 9. maddesinde öngörülen usul ve esaslara uygun olarak yurt dışına aktarılabilmektedir. WhatsApp üzerinden bizimle iletişime geçmeniz hâlinde, iletişim ilgili platformun kendi koşulları çerçevesinde gerçekleşmektedir.</p>
+
+      <h2>Saklama Süresi</h2>
+      <p>Kişisel verileriniz, işlenme amaçlarının gerektirdiği süre boyunca ve ilgili mevzuatta öngörülen süreler ile olası uyuşmazlıklara ilişkin zamanaşımı süreleri kadar saklanır; bu sürelerin sonunda silinir, yok edilir veya anonim hâle getirilir.</p>
+
+      <h2>KVKK Kapsamındaki Haklarınız</h2>
+      <p>KVKK'nın 11. maddesi uyarınca; kişisel verilerinizin işlenip işlenmediğini öğrenme, işlenmişse buna ilişkin bilgi talep etme, işlenme amacını ve amacına uygun kullanılıp kullanılmadığını öğrenme, yurt içinde veya yurt dışında aktarıldığı üçüncü kişileri bilme, eksik veya yanlış işlenmişse düzeltilmesini isteme, KVKK'nın 7. maddesinde öngörülen şartlar çerçevesinde silinmesini veya yok edilmesini isteme, bu işlemlerin verilerin aktarıldığı üçüncü kişilere bildirilmesini isteme, münhasıran otomatik sistemlerle analiz edilmesi suretiyle aleyhinize bir sonucun ortaya çıkmasına itiraz etme ve kanuna aykırı işlenmesi sebebiyle zarara uğramanız hâlinde zararın giderilmesini talep etme haklarına sahipsiniz.</p>
+
+      <h2>Başvuru</h2>
+      <p>Haklarınıza ilişkin taleplerinizi, Veri Sorumlusuna Başvuru Usul ve Esasları Hakkında Tebliğ'e uygun olarak; yukarıdaki adresimize yazılı olarak ya da sistemimizde kayıtlı e-posta adresinizden <a href="mailto:proje@sibelaydinmimarlik.com.tr">proje@sibelaydinmimarlik.com.tr</a> adresine iletebilirsiniz. Başvurularınız en geç 30 gün içinde sonuçlandırılır.</p>
+
+      <p class="muted">Son güncelleme: <time datetime="2026-10-01">1 Ekim 2026</time></p>
     </div>
   </section>
 </main>
