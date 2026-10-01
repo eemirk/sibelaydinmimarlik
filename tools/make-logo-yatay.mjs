@@ -36,7 +36,7 @@ for (const [src, cfg] of Object.entries(PARTS)) {
   const out =
     `<?xml version="1.0" encoding="UTF-8"?>` +
     `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 ${W} ${H}">` +
-    `<title>Sibel Aydın Mimarlık</title>` + defs +
+    `<title>Sibel Aydın İnşaat Mimarlık</title>` + defs +
     `<g transform="translate(${f(-ICON.x)} ${f(-ICON.y)})">${pick(cfg.icon)}</g>` +
     `<g transform="translate(${f(textX - LINE1.x)} ${f(textTop - LINE1.y)})">${els[cfg.line1]}</g>` +
     `<g transform="translate(${f(textX - LINE2.x)} ${f(textTop + LINE1.h + LINE_GAP - LINE2.y)})">${els[cfg.line2]}</g>` +

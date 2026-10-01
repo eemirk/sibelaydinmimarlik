@@ -2,8 +2,8 @@
 export default {
   title: 'Silivri İnşaat Firması | Villa ve Konut Uygulama – Sibel Aydın İnşaat Mimarlık',
   description: "Silivri ve Büyükçekmece'de villa, konut ve tadilat projelerinin projeye sadık uygulaması. Mimarlık ve inşaat tek firmada; tasarımdan teslime kadar.",
-  breadcrumb: 'Uygulama',
-  waService: 'Uygulama',
+  breadcrumb: 'İnşaat ve Uygulama',
+  waService: 'İnşaat ve Uygulama',
   waMsg: 'Merhaba, web sitenizden yazıyorum. Uygulama ve inşaat hizmetiniz hakkında bilgi almak istiyorum.',
   service: {
     name: 'Silivri İnşaat ve Uygulama',

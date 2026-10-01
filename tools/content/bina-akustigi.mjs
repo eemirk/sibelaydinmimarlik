@@ -1,6 +1,6 @@
 // /hizmetler/bina-akustigi/ içeriği — tools/make-service-page.mjs ile HTML'e dönüşür.
 export default {
-  title: 'Silivri Bina Akustiği | Akustik Proje, Ses Yalıtımı, Akustik Rapor – Sibel Aydın Mimarlık',
+  title: 'Silivri Bina Akustiği | Akustik Proje, Ses Yalıtımı, Akustik Rapor – Sibel Aydın İnşaat Mimarlık',
   description: "Silivri ve Büyükçekmece'de bina akustik projesi, akustik performans raporu, ses yalıtımı ve gürültü kontrolü danışmanlığı. Yönetmeliğe uygun çözümler.",
   breadcrumb: 'Bina Akustiği',
   waService: 'Bina Akustiği',

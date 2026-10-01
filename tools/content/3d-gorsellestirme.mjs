@@ -1,6 +1,6 @@
 // /hizmetler/3d-gorsellestirme/ içeriği — tools/make-service-page.mjs ile HTML'e dönüşür.
 export default {
-  title: 'Silivri 3D Görselleştirme | Mimari Render ve İç Mekân Görselleri – Sibel Aydın Mimarlık',
+  title: 'Silivri 3D Görselleştirme | Mimari Render ve İç Mekân Görselleri – Sibel Aydın İnşaat Mimarlık',
   description: "Silivri ve Büyükçekmece'de villa, konut ve iç mekân projeleri için gerçekçi 3D görselleştirme ve render. Projenizi inşa edilmeden önce görün.",
   breadcrumb: '3D Görselleştirme',
   waService: '3D Görselleştirme',
@@ -79,7 +79,7 @@ export default {
   related: [
     ['Mimari Proje', 'Mimari proje hizmetini inceleyin', '/hizmetler/mimari-proje/'],
     ['İç Mimari', 'İç mimari hizmetini inceleyin', '/hizmetler/ic-mimari/'],
-    ['Uygulama', 'Uygulama hizmetini inceleyin', '/hizmetler/uygulama/']
+    ['İnşaat ve Uygulama', 'İnşaat ve uygulama hizmetini inceleyin', '/hizmetler/uygulama/']
   ],
   faq: [
     ["Silivri'de 3D görselleştirme için hangi bilgiler gerekiyor?", 'Varsa mimari proje çizimleri (DWG veya PDF), yoksa ölçülü bir kroki ve mekânın fotoğrafları yeterlidir. Beğendiğiniz referans görselleri de paylaşırsanız beklentinizi daha hızlı yakalarız.'],

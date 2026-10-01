@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Sibel Aydın Mimarlık — main.js (vanilla JS, GSAP + ScrollTrigger yalnızca hero'da)
+   Sibel Aydın İnşaat Mimarlık — main.js (vanilla JS, GSAP + ScrollTrigger yalnızca hero'da)
    ========================================================================== */
 
 /* ---- Hero görsel dizisi ayarları (dosya adı/sayısı değişirse sadece burayı düzenleyin) ---- */
@@ -60,7 +60,7 @@ function supportsAvif() {
 
 const WA_BASE = 'https://wa.me/905368475640';
 // Ayrı randevu sistemi yok: "Randevu Al/Alın" butonları bu hazır mesajla WhatsApp'a gider
-const WA_APPOINTMENT_MSG = 'Merhaba, Sibel Aydın Mimarlık ile görüşme randevusu almak istiyorum. Uygun olduğum gün ve saat: ';
+const WA_APPOINTMENT_MSG = 'Merhaba, Sibel Aydın İnşaat Mimarlık ile görüşme randevusu almak istiyorum. Uygun olduğum gün ve saat: ';
 const PROJECTS_URL = '/data/projects.json';
 const HOME_PROJECT_LIMIT = 6;
 const REVEAL_STAGGER_MS = 80;
@@ -104,7 +104,7 @@ const PF_SERVICE_MAP = { 'ruhsat-iskan': 'ruhsat', 'santiye-teknik-hizmetler': '
   // Randevu mesajı: hizmet sayfalarında <body data-wa-service="…"> ile hizmet adı eklenir
   const service = body.dataset.waService;
   const apptMsg = service
-    ? 'Merhaba, Sibel Aydın Mimarlık ile ' + service + ' hakkında görüşme randevusu almak istiyorum. Uygun olduğum gün ve saat: '
+    ? 'Merhaba, Sibel Aydın İnşaat Mimarlık ile ' + service + ' hakkında görüşme randevusu almak istiyorum. Uygun olduğum gün ve saat: '
     : WA_APPOINTMENT_MSG;
   $$('a[data-appointment]').forEach((a) => { a.href = WA_BASE + '?text=' + encodeURIComponent(apptMsg); });
 
@@ -298,7 +298,7 @@ const PF_SERVICE_MAP = { 'ruhsat-iskan': 'ruhsat', 'santiye-teknik-hizmetler': '
     btn.addEventListener('click', () => {
       const f = document.createElement('iframe');
       f.src = box.dataset.mapSrc;
-      f.title = 'Sibel Aydın Mimarlık konumu — Google Haritalar';
+      f.title = 'Sibel Aydın İnşaat Mimarlık konumu — Google Haritalar';
       f.loading = 'lazy';
       f.referrerPolicy = 'no-referrer-when-downgrade';
       f.setAttribute('allowfullscreen', '');

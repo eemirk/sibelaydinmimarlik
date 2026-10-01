@@ -1,6 +1,6 @@
 // /hizmetler/bilirkisilik/ içeriği — tools/make-service-page.mjs ile HTML'e dönüşür.
 export default {
-  title: 'Silivri Mimari Bilirkişi ve Teknik İnceleme | Yapı Ayıpları, Uzman Görüşü – Sibel Aydın Mimarlık',
+  title: 'Silivri Mimari Bilirkişi ve Teknik İnceleme | Yapı Ayıpları, Uzman Görüşü – Sibel Aydın İnşaat Mimarlık',
   description: "Silivri ve Büyükçekmece'de yapı ayıp ve eksikliklerinin tespiti, proje–uygulama karşılaştırması, teknik inceleme raporu ve mimari bilirkişilik hizmetleri.",
   breadcrumb: 'Bilirkişilik ve Teknik İnceleme',
   waService: 'Bilirkişilik ve Teknik İnceleme',

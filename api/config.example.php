@@ -19,7 +19,7 @@ return [
     'SMTP_USER'      => '',
     'SMTP_PASS'      => '',
     'MAIL_FROM'      => 'proje@sibelaydinmimarlik.com.tr',
-    'MAIL_FROM_NAME' => 'Sibel Aydın Mimarlık',
+    'MAIL_FROM_NAME' => 'Sibel Aydın İnşaat Mimarlık',
     'NOTIFY_TO'      => 'proje@sibelaydinmimarlik.com.tr',
     'DATA_DIR'       => '',
 ];

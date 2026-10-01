@@ -19,7 +19,7 @@ const c = (await import(pathToFileURL(join(ROOT, 'tools', 'content', `${slug}.mj
 const SITE = 'https://www.sibelaydinmimarlik.com.tr';
 const URL = `${SITE}/hizmetler/${slug}/`;
 const WA = 'https://wa.me/905368475640';
-const APPT = WA + '?text=' + encodeURIComponent('Merhaba, Sibel Aydın Mimarlık ile görüşme randevusu almak istiyorum. Uygun olduğum gün ve saat: ');
+const APPT = WA + '?text=' + encodeURIComponent('Merhaba, Sibel Aydın İnşaat Mimarlık ile görüşme randevusu almak istiyorum. Uygun olduğum gün ve saat: ');
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const attr = (s) => esc(s).replace(/"/g, '&quot;');
 const arrow = '<span class="btn__arrow" aria-hidden="true"><svg><use href="#i-arrow-ne"/></svg></span>';
@@ -131,7 +131,7 @@ const ld = {
     {
       '@type': 'Service', '@id': `${URL}#hizmet`,
       name: c.service.name, serviceType: c.service.type, url: URL, description: c.service.description,
-      provider: { '@type': 'ProfessionalService', '@id': `${SITE}/#firma`, name: 'Sibel Aydın Mimarlık', url: `${SITE}/` },
+      provider: { '@type': 'ProfessionalService', '@id': `${SITE}/#firma`, name: 'Sibel Aydın İnşaat Mimarlık', url: `${SITE}/` },
       areaServed: [
         ...(c.service.cities || []).map((n) => ({ '@type': 'City', name: n })),
         { '@type': 'AdministrativeArea', name: 'İstanbul' }, { '@type': 'AdministrativeArea', name: 'Tekirdağ' }
@@ -173,7 +173,7 @@ ${imgComment}
   <meta name="theme-color" content="#F7F5F2">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="tr_TR">
-  <meta property="og:site_name" content="Sibel Aydın Mimarlık">
+  <meta property="og:site_name" content="Sibel Aydın İnşaat Mimarlık">
   <meta property="og:title" content="{{title}}">
   <meta property="og:description" content="{{description}}">
   <meta property="og:url" content="${URL}">

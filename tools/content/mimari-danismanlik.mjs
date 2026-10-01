@@ -1,6 +1,6 @@
 // /hizmetler/mimari-danismanlik/ içeriği — tools/make-service-page.mjs ile HTML'e dönüşür.
 export default {
-  title: 'Silivri Mimari Danışmanlık ve Kentsel Dönüşüm | İmar ve Yapılaşma – Sibel Aydın Mimarlık',
+  title: 'Silivri Mimari Danışmanlık ve Kentsel Dönüşüm | İmar ve Yapılaşma – Sibel Aydın İnşaat Mimarlık',
   description: "Silivri ve Büyükçekmece'de imar durumu analizi, arsa değerlendirme, yapılaşma danışmanlığı ve kentsel dönüşüm süreçlerinde mimari danışmanlık.",
   breadcrumb: 'Mimari Danışmanlık ve Kentsel Dönüşüm',
   waService: 'Mimari Danışmanlık ve Kentsel Dönüşüm',

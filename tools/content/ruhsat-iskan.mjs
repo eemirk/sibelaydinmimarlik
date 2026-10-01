@@ -1,6 +1,6 @@
 // /hizmetler/ruhsat-iskan/ içeriği — tools/make-service-page.mjs ile HTML'e dönüşür.
 export default {
-  title: 'Silivri Ruhsat ve İskân İşlemleri | Yapı Ruhsatı, Yapı Kullanma İzni – Sibel Aydın Mimarlık',
+  title: 'Silivri Ruhsat ve İskân İşlemleri | Yapı Ruhsatı, Yapı Kullanma İzni – Sibel Aydın İnşaat Mimarlık',
   description: "Silivri ve Büyükçekmece'de yapı ruhsatı, tadilat ruhsatı ve iskân (yapı kullanma izin belgesi) süreçleri. Projelendirmeden belediye onayına kadar takip.",
   breadcrumb: 'Ruhsat ve İskân Süreçleri',
   waService: 'Ruhsat ve İskân Süreçleri',

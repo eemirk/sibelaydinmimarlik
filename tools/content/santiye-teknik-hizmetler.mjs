@@ -1,6 +1,6 @@
 // /hizmetler/santiye-teknik-hizmetler/ içeriği — tools/make-service-page.mjs ile HTML'e dönüşür.
 export default {
-  title: 'Silivri Şantiye ve Teknik Hizmetler | Kontrollük, Metraj, Keşif – Sibel Aydın Mimarlık',
+  title: 'Silivri Şantiye ve Teknik Hizmetler | Kontrollük, Metraj, Keşif – Sibel Aydın İnşaat Mimarlık',
   description: "Silivri ve Büyükçekmece'de mimari kontrollük, şantiye takibi, metraj, keşif ve hakediş hizmetleri. Projenin sahada doğru uygulanması için teknik destek.",
   breadcrumb: 'Şantiye ve Teknik Hizmetler',
   waService: 'Şantiye ve Teknik Hizmetler',
@@ -54,11 +54,11 @@ export default {
     h2: 'Kontrollük neden inşaatın başında planlanmalı?',
     text: 'Temel, karkas ve tesisat gibi aşamalar kapandıktan sonra hataları görmek ve düzeltmek zorlaşır, maliyeti de artar. Kontrollük hizmetini inşaat başlamadan planlamak, kritik aşamaların zamanında denetlenmesini ve sonradan yaşanabilecek anlaşmazlıkların önlenmesini sağlar.',
     note: 'Uygulamayı bizimle yapmak ister misiniz?',
-    link: 'Uygulama hizmetini inceleyin',
+    link: 'İnşaat ve uygulama hizmetini inceleyin',
     href: '/hizmetler/uygulama/'
   },
   related: [
-    ['Uygulama', 'Uygulama hizmetini inceleyin', '/hizmetler/uygulama/'],
+    ['İnşaat ve Uygulama', 'İnşaat ve uygulama hizmetini inceleyin', '/hizmetler/uygulama/'],
     ['Mimari Proje', 'Mimari proje hizmetini inceleyin', '/hizmetler/mimari-proje/'],
     ['Bilirkişilik ve Teknik İnceleme', 'Bilirkişilik hizmetini inceleyin', '/hizmetler/bilirkisilik/']
   ],

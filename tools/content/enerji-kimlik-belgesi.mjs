@@ -1,6 +1,6 @@
 // /hizmetler/enerji-kimlik-belgesi/ içeriği — tools/make-service-page.mjs ile HTML'e dönüşür.
 export default {
-  title: 'Silivri Enerji Kimlik Belgesi (EKB) | İskân ve Satış İçin EKB – Sibel Aydın Mimarlık',
+  title: 'Silivri Enerji Kimlik Belgesi (EKB) | İskân ve Satış İçin EKB – Sibel Aydın İnşaat Mimarlık',
   description: "Silivri ve Büyükçekmece'de yeni ve mevcut binalar için Enerji Kimlik Belgesi (EKB), bina enerji performansı değerlendirmesi ve enerji verimliliği danışmanlığı.",
   breadcrumb: 'Enerji Kimlik Belgesi (EKB)',
   waService: 'Enerji Kimlik Belgesi (EKB)',

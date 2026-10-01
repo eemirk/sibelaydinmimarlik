@@ -1,6 +1,6 @@
 <?php
 /**
- * Sibel Aydın Mimarlık — form uç noktası
+ * Sibel Aydın İnşaat Mimarlık — form uç noktası
  *
  *   POST /api/form.php   form_type=iletisim   İletişim sayfası kısa formu        talep no SA-ILT-YIL-####
  *                        form_type=proje      Projenizi Anlatın (dosya yüklemeli) talep no SA-YIL-####
@@ -37,7 +37,7 @@ $CONFIG = [
     'SMTP_USER'      => '',
     'SMTP_PASS'      => '',
     'MAIL_FROM'      => 'proje@sibelaydinmimarlik.com.tr',
-    'MAIL_FROM_NAME' => 'Sibel Aydın Mimarlık',
+    'MAIL_FROM_NAME' => 'Sibel Aydın İnşaat Mimarlık',
     'NOTIFY_TO'      => 'proje@sibelaydinmimarlik.com.tr',
     'DATA_DIR'       => '',
 ];
@@ -79,7 +79,7 @@ const EXEC_EXT = ['php', 'php3', 'php4', 'php5', 'php7', 'php8', 'phtml', 'phar'
 
 const PROJE_TURLERI = ['villa' => 'Villa / Müstakil', 'konut' => 'Konut / Apartman', 'ticari' => 'Ticari Yapı', 'tadilat' => 'Tadilat', 'ic-mekan' => 'İç Mekân', 'diger' => 'Diğer'];
 const HIZMETLER = ['mimari-proje' => 'Mimari Proje', 'ruhsat' => 'Ruhsat', 'iskan' => 'İskân', 'ic-mimari' => 'İç Mimari', '3d-gorsellestirme' => '3D Görselleştirme',
-    'uygulama' => 'Uygulama', 'santiye-teknik' => 'Şantiye / Teknik', 'mimari-danismanlik' => 'Mimari Danışmanlık', 'kentsel-donusum' => 'Kentsel Dönüşüm',
+    'uygulama' => 'İnşaat ve Uygulama', 'santiye-teknik' => 'Şantiye / Teknik', 'mimari-danismanlik' => 'Mimari Danışmanlık', 'kentsel-donusum' => 'Kentsel Dönüşüm',
     'ekb' => 'EKB', 'bina-akustigi' => 'Bina Akustiği', 'bilirkisilik' => 'Bilirkişilik'];
 const ASAMALAR = ['arsa' => 'Arsam var, proje aşamasındayım', 'ruhsat' => 'Ruhsat aşamasındayım', 'insaat' => 'İnşaat sürüyor',
     'mevcut' => 'Mevcut yapı (tadilat, iskân vb.)', 'fikir' => 'Henüz fikir aşamasında'];
@@ -187,7 +187,7 @@ function respond(int $status, array $data): void
     if (!$ok) $lines[] = h($data['message'] ?? 'Lütfen bilgileri kontrol edip tekrar deneyin.');
     foreach ($data['errors'] ?? [] as $msg) $lines[] = h($msg);
     echo '<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">'
-        . '<meta name="robots" content="noindex"><title>' . h($title) . ' | Sibel Aydın Mimarlık</title>'
+        . '<meta name="robots" content="noindex"><title>' . h($title) . ' | Sibel Aydın İnşaat Mimarlık</title>'
         . '<link rel="stylesheet" href="/assets/css/style.css"></head><body class="page-inner"><main class="section"><div class="container prose">'
         . '<h1>' . h($title) . '</h1><p>' . implode('</p><p>', $lines) . '</p>'
         . '<p><a href="javascript:history.back()">Forma geri dönün</a> · <a href="tel:+905368475640">' . PHONE_DISPLAY . '</a> · <a href="' . WA_URL . '">WhatsApp</a></p>'
@@ -467,13 +467,13 @@ if ($type === 'iletisim') {
 
     $m = mailer();
     $m->addAddress($c['eposta'], $c['ad']);
-    $m->addReplyTo(notify_addresses()[0], 'Sibel Aydın Mimarlık');
+    $m->addReplyTo(notify_addresses()[0], 'Sibel Aydın İnşaat Mimarlık');
     $m->Subject = "Mesajınızı aldık – Talep No: $no";
     $m->isHTML(false);
     $m->Body = "Merhaba {$c['ad']},\n\n"
-        . "Sibel Aydın Mimarlık web sitesi üzerinden gönderdiğiniz mesaj bize ulaştı. Talep numaranız: $no\n\n"
+        . "Sibel Aydın İnşaat Mimarlık web sitesi üzerinden gönderdiğiniz mesaj bize ulaştı. Talep numaranız: $no\n\n"
         . 'En kısa sürede size dönüş yapacağız. Acil durumlar için ' . PHONE_DISPLAY . " numarasından bize ulaşabilirsiniz.\n\n"
-        . "Sibel Aydın Mimarlık\nPiri Mehmet Paşa Mah. Şerif Sk. Osmanoğlu İş Merkezi No:1 İç Kapı No:10, 34570 Silivri / İstanbul\n" . SITE_URL . "\n\n"
+        . "Sibel Aydın İnşaat Mimarlık\nPiri Mehmet Paşa Mah. Şerif Sk. Osmanoğlu İş Merkezi No:1 İç Kapı No:10, 34570 Silivri / İstanbul\n" . SITE_URL . "\n\n"
         . 'Kişisel verileriniz KVKK Aydınlatma Metni kapsamında işlenmektedir: ' . SITE_URL . "/kvkk/\n";
     $record['musteri_eposta'] = deliver($m, "$no-musteri");
     save_request($no, $record);
@@ -563,16 +563,16 @@ $waText = rawurlencode("Merhaba, web sitenizden $no numaralı proje talebini gö
 $summary = ['Talep No' => $no, 'Proje türü' => PROJE_TURLERI[$turu], 'Hizmetler' => $hizmetText, 'Konum' => $ilceText, 'Yüklenen dosya' => count($stored) . ' dosya'];
 $m = mailer();
 $m->addAddress($c['eposta'], $c['ad']);
-$m->addReplyTo(notify_addresses()[0], 'Sibel Aydın Mimarlık');
-$m->Subject = "Talebiniz alındı – $no | Sibel Aydın Mimarlık";
+$m->addReplyTo(notify_addresses()[0], 'Sibel Aydın İnşaat Mimarlık');
+$m->Subject = "Talebiniz alındı – $no | Sibel Aydın İnşaat Mimarlık";
 $m->isHTML(true);
 $m->Body = html_table('Talebiniz alındı', $summary,
     'Merhaba ' . h($c['ad']) . ', proje talebiniz bize ulaştı. <strong>1 iş günü içinde</strong> size dönüş yapacağız.',
     'Bize <a href="tel:+905368475640" style="color:#7A5F44">' . PHONE_DISPLAY . '</a> numarasından ya da <a href="' . WA_URL . '?text=' . $waText . '" style="color:#7A5F44">WhatsApp</a> üzerinden de ulaşabilirsiniz.<br>'
-    . 'Sibel Aydın Mimarlık · Piri Mehmet Paşa Mah. Şerif Sk. Osmanoğlu İş Merkezi No:1 İç Kapı No:10, 34570 Silivri / İstanbul<br>'
+    . 'Sibel Aydın İnşaat Mimarlık · Piri Mehmet Paşa Mah. Şerif Sk. Osmanoğlu İş Merkezi No:1 İç Kapı No:10, 34570 Silivri / İstanbul<br>'
     . 'Kişisel verileriniz <a href="' . SITE_URL . '/kvkk/" style="color:#7A5F44">KVKK Aydınlatma Metni</a> kapsamında işlenmektedir.');
 $m->AltBody = "Merhaba {$c['ad']},\n\nProje talebiniz bize ulaştı. 1 iş günü içinde size dönüş yapacağız.\n\n" . text_table($summary)
-    . "\nTelefon: " . PHONE_DISPLAY . "\nWhatsApp: " . WA_URL . "?text=$waText\n\nSibel Aydın Mimarlık\nPiri Mehmet Paşa Mah. Şerif Sk. Osmanoğlu İş Merkezi No:1 İç Kapı No:10, 34570 Silivri / İstanbul\n"
+    . "\nTelefon: " . PHONE_DISPLAY . "\nWhatsApp: " . WA_URL . "?text=$waText\n\nSibel Aydın İnşaat Mimarlık\nPiri Mehmet Paşa Mah. Şerif Sk. Osmanoğlu İş Merkezi No:1 İç Kapı No:10, 34570 Silivri / İstanbul\n"
     . 'Kişisel verileriniz KVKK Aydınlatma Metni kapsamında işlenmektedir: ' . SITE_URL . "/kvkk/\n";
 $record['musteri_eposta'] = deliver($m, "$no-musteri");
 save_request($no, $record);
