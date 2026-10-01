@@ -8,25 +8,28 @@
 //    hesaplanır; tüm HTML'lerde "?v=dev" bu değerle değiştirilir. Kaynakta ?v=dev kalır.
 //    Paylaşım etiketleri: og:title / og:description içindeki {{title}} ve {{description}},
 //    sayfanın <title> ve meta description değerleriyle doldurulur (tek kaynak).
-// 3) Güvenlik: çıktıda fal anahtarı / FAL_KEY izi aranır; bulunursa paket üretilmez.
+// 3) Güvenlik: çıktıda fal anahtarı / FAL_KEY izi ve dolu SMTP şifresi aranır; bulunursa paket üretilmez.
+//    api/config.local.php (SMTP şifresi) ve form çalışma verisi (_data, private_data) hiçbir derinlikte kopyalanmaz.
 import { createHash } from 'node:crypto';
 import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
-import { dirname, join, relative, resolve } from 'node:path';
+import { basename, dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = join(ROOT, 'dist');
 const SITE = join(DIST, 'site');
-const EXCLUDE = new Set(['tools', 'dist', 'node_modules', '.git', '.gitignore', '.env', '.claude', '.vscode', '.netlify', 'netlify.toml', 'README.md', '_data']);  // _data: form uç noktasının yerel çalışma verisi
+const EXCLUDE = new Set(['tools', 'dist', 'node_modules', '.git', '.gitignore', '.env', '.claude', '.vscode', '.netlify', 'netlify.toml', 'README.md']);
+// Her derinlikte hariç: SMTP şifresi içeren yerel ayar dosyası ve form çalışma verisi
+const NESTED_EXCLUDE = new Set(['config.local.php', '_data', 'private_data']);
 const ASSETS = { 'style.css': 'assets/css/style.css', 'main.js': 'assets/js/main.js' };
 
 // 1) Kopyala
 rmSync(SITE, { recursive: true, force: true });
 mkdirSync(SITE, { recursive: true });
 for (const name of readdirSync(ROOT)) {
-  if (EXCLUDE.has(name) || name.startsWith('.env')) continue;
-  cpSync(join(ROOT, name), join(SITE, name), { recursive: true });
+  if (EXCLUDE.has(name) || NESTED_EXCLUDE.has(name) || name.startsWith('.env')) continue;
+  cpSync(join(ROOT, name), join(SITE, name), { recursive: true, filter: (src) => !NESTED_EXCLUDE.has(basename(src)) });
 }
 
 // 2) İçerik hash'i ile sürümle
@@ -63,9 +66,14 @@ for (const f of files.filter((p) => p.endsWith('.html'))) {
 }
 
 // 3) Anahtar taraması (metin dosyaları)
-const KEY = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}:[0-9a-f]{32}|FAL_KEY/i;
-const leaks = files.filter((p) => /\.(html|css|js|mjs|json|txt|xml|webmanifest|md|env|toml|htaccess)$|\/\.[^/]+$/.test(p.replace(/\\/g, '/')))
-  .filter((p) => KEY.test(readFileSync(p, 'utf8')));
+const KEY = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}:[0-9a-f]{32}|FAL_KEY|SMTP_PASS'\s*=>\s*'[^']+'/i;
+// Google uygulama şifresi biçimi (16 küçük harf, boşluklu ya da bitişik) — yalnızca api/config*.php içinde aranır
+const APP_PASS = /(^|[^a-z])([a-z]{4} [a-z]{4} [a-z]{4} [a-z]{4}|[a-z]{16})([^a-z]|$)/m;
+const leaks = files.filter((p) => /\.(html|css|js|mjs|json|txt|xml|webmanifest|md|env|toml|htaccess|php|ini)$|\/\.[^/]+$/.test(p.replace(/\\/g, '/')))
+  .filter((p) => {
+    const t = readFileSync(p, 'utf8');
+    return KEY.test(t) || (/config[^\\/]*\.php$/.test(p) && APP_PASS.test(t.replace(/\/\/.*|#.*|\/\*[^]*?\*\//g, '')));
+  });
 if (leaks.length) {
   rmSync(SITE, { recursive: true, force: true });
   console.error('GÜVENLİK: anahtar izi bulundu, paket silindi:\n  ' + leaks.map((p) => relative(ROOT, p)).join('\n  '));

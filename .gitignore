@@ -24,3 +24,7 @@ desktop.ini
 .idea/
 # Form uç noktasının çalışma verisi (sayaç, hız sınırı) — sunucuda oluşur
 api/_data/
+# Form SMTP ayarları (uygulama şifresi) — ASLA commit etmeyin; şablon: api/config.example.php
+api/config.local.php
+# Form verisi (public_html dışında tutulur; yerelde oluşursa)
+private_data/

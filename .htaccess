@@ -40,7 +40,7 @@ AddType image/x-icon .ico
   # --- 4) Gizli/geliştirme dosyalarını dışarı kapat
   RewriteRule (^|/)\.(?!well-known/) - [F,L]
   RewriteRule ^(tools|_dev|node_modules)(/|$) - [R=404,L,NC]
-  RewriteRule ^api/_data(/|$) - [R=404,L,NC]
+  RewriteRule ^api/(_data|lib)(/|$) - [R=404,L,NC]
 </IfModule>
 
 # Nokta dosyaları (.env, .git vb.) — mod_rewrite yoksa da kapalı

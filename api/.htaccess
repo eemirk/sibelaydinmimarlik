@@ -1,1 +1,7 @@
 Options -Indexes
+
+# Ayar dosyaları ve kütüphane doğrudan çağrılamaz (yalnızca form.php tarafından include edilir)
+<FilesMatch "^config(\.local|\.example)?\.php$">
+  Require all denied
+</FilesMatch>
+RedirectMatch 404 ^/api/(lib|_data)(/|$)
