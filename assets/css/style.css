@@ -728,6 +728,109 @@ html:not(.motion) .hero__progress { display: none; }
 .related .link-arrow { margin-top: auto; }
 @media (max-width: 899px) { .related { grid-template-columns: 1fr; } }
 
+/* Röntgen merceği (3D Görselleştirme hero) -------------------------------------
+   Modlar (JS): .xray--lens (imleç + mercek) · .xray--slider (dokunmatik/dar: kaydırıcı)
+   · .xray--static (hareket kapalı: yan yana). Hareket yalnızca transform / mask-position / opacity. */
+.page-hero--xray { padding-bottom: clamp(40px, 6vw, 80px); }
+.svc-hero--stacked { max-width: 820px; margin-bottom: clamp(28px, 4vw, 48px); }
+.svc-hero--stacked .btn-row { margin-top: 28px; }
+.xray__stage { position: relative; aspect-ratio: 1920 / 1072; overflow: hidden; border-radius: var(--radius); background: #0E1624; }
+.xray__layer { position: absolute; inset: 0; }
+.xray__layer picture, .xray__layer img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.xray__top { overflow: hidden; transition: opacity .7s var(--ease); }
+.xray__top-inner { width: 100%; height: 100%; }
+.xray__cap { display: none; }
+.xray__ring, .xray__handle, .xray__range { display: none; }
+.xray__bar { display: flex; align-items: center; gap: 16px 24px; flex-wrap: wrap; margin-top: 16px; }
+.xray__toggle {
+  display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 16px;
+  border: 1px solid var(--ink); border-radius: var(--radius); font-size: .875rem; font-weight: 500; background: transparent;
+}
+.xray__toggle svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linejoin: round; }
+.xray__toggle[aria-pressed="true"] { background: var(--ink); color: #fff; }
+.xray__hint { margin: 0; font-size: .875rem; color: var(--muted); transition: opacity .5s var(--ease); }
+.xray__hint.is-hidden { opacity: 0; }
+
+/* Mercek: üst katmanda maske deliği (2W×2H maske, merkez = imleç) */
+.xray--lens .xray__stage { cursor: none; }
+.xray--lens .xray__top {
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, transparent 0 109px, #000 110px);
+          mask-image: radial-gradient(circle at 50% 50%, transparent 0 109px, #000 110px);
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+}
+.xray--lens .xray__ring { display: block; position: absolute; left: 0; top: 0; width: 0; height: 0; pointer-events: none; will-change: transform; }
+.xray__ring-circle {
+  position: absolute; left: -110px; top: -110px; width: 220px; height: 220px; border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, .9); box-shadow: 0 0 0 1px rgba(14, 22, 36, .25), 0 8px 30px rgba(0, 0, 0, .25);
+  transition: transform .8s var(--ease), opacity .6s var(--ease);
+}
+.xray__label {
+  position: absolute; left: 50%; top: 122px; transform: translateX(-50%); white-space: nowrap;
+  padding: 4px 9px; border-radius: var(--radius); background: rgba(14, 22, 36, .82); color: #fff;
+  font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; transition: opacity .4s var(--ease);
+}
+.xray--full .xray__top { opacity: 0; }
+.xray--full .xray__ring-circle { transform: scale(9); opacity: 0; }
+.xray--full .xray__label { opacity: 0; }
+
+/* Kaydırıcı: üst katman sağa kayar, içi ters yöne (yalnızca transform) */
+.xray--slider .xray__top-inner { will-change: transform; }
+.xray--slider .xray__top { will-change: transform; transition: none; }
+.xray--slider .xray__handle { display: block; position: absolute; top: 0; bottom: 0; left: 0; width: 0; pointer-events: none; will-change: transform; }
+.xray--slider .xray__handle::before { content: ""; position: absolute; top: 0; bottom: 0; left: -1px; width: 2px; background: #fff; box-shadow: 0 0 8px rgba(0, 0, 0, .35); }
+.xray--slider .xray__handle span {
+  position: absolute; top: 50%; left: -22px; width: 44px; height: 44px; margin-top: -22px; border-radius: 50%;
+  background: #fff; box-shadow: 0 4px 14px rgba(0, 0, 0, .25);
+}
+.xray--slider .xray__handle span::before, .xray--slider .xray__handle span::after {
+  content: ""; position: absolute; top: 50%; width: 7px; height: 7px; margin-top: -3.5px; border: solid var(--ink); border-width: 0 0 1.5px 1.5px;
+}
+.xray--slider .xray__handle span::before { left: 11px; transform: rotate(45deg); }
+.xray--slider .xray__handle span::after { right: 11px; transform: rotate(-135deg); }
+.xray--slider .xray__range {
+  display: block; position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; touch-action: pan-y;
+}
+.xray--slider .xray__stage:has(.xray__range:focus-visible) { outline: 2px solid var(--accent-dark); outline-offset: 3px; }
+.xray--slider .xray__cap { display: block; position: absolute; top: 12px; padding: 4px 9px; border-radius: var(--radius); background: rgba(14, 22, 36, .82); color: #fff; font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
+.xray--slider .xray__base .xray__cap { left: 12px; }
+.xray--slider .xray__top .xray__cap { right: 12px; }
+
+/* Hareket kapalı: iki görsel yan yana, etiketli */
+.xray--static .xray__stage { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; aspect-ratio: auto; background: none; overflow: visible; }
+.xray--static .xray__layer { position: relative; inset: auto; min-width: 0; overflow: visible; }
+.xray--static .xray__top-inner { height: auto; }
+.xray--static .xray__layer picture { aspect-ratio: 1920 / 1072; height: auto; overflow: hidden; border-radius: var(--radius); }
+.xray--static .xray__cap { display: block; margin-top: 8px; font-size: .8125rem; color: var(--muted); }
+.xray--static .xray__toggle { display: none; }
+@media (max-width: 599px) { .xray--static .xray__stage { grid-template-columns: minmax(0, 1fr); } }
+
+/* Stüdyo: malzeme × ışık ----------------------------------------------------------- */
+.studio-section { background: var(--surface); border-top: 1px solid var(--line); }
+.studio__stage { position: relative; aspect-ratio: 1920 / 1072; overflow: hidden; border-radius: var(--radius); background: #ECE8E2; }
+.studio__img { position: absolute; inset: 0; opacity: 0; transition: opacity .5s var(--ease); }
+.studio__img.is-active { opacity: 1; }
+.studio__img img { width: 100%; height: 100%; object-fit: cover; }
+.studio__badge {
+  position: absolute; right: 12px; bottom: 12px; padding: 5px 10px; border-radius: var(--radius);
+  background: rgba(20, 18, 16, .66); color: #fff; font-size: 11px; font-weight: 500; letter-spacing: .06em;
+}
+.studio__controls { display: flex; flex-wrap: wrap; gap: 20px 40px; margin-top: 20px; }
+.seg { border: 0; margin: 0; padding: 0; min-width: 0; }
+.seg legend { padding: 0; margin-bottom: 10px; font-size: 11px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--accent-dark); }
+.seg__opts { display: flex; border: 1px solid var(--ink); border-radius: var(--radius); overflow: hidden; }
+.seg label { position: relative; flex: 1; }
+.seg label + label { border-left: 1px solid var(--ink); }
+.seg input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.seg span { display: flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 18px; font-size: .9375rem; font-weight: 500; white-space: nowrap; }
+.seg input:checked + span { background: var(--ink); color: #fff; }
+.seg input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: -5px; }
+@media (max-width: 767px) {
+  .studio__controls { flex-direction: column; }
+  .seg, .seg__opts { width: 100%; }
+  .seg span { padding: 0 8px; font-size: .875rem; }
+  .studio__badge { right: 8px; bottom: 8px; font-size: 10px; }
+}
+
 /* Blog makalesi */
 .article__head { padding-block: clamp(40px, 6vw, 88px) clamp(24px, 4vw, 48px); }
 .article__title { font-size: clamp(1.95rem, 3.5vw, 3.5rem); max-width: 18em; letter-spacing: -0.02em; }

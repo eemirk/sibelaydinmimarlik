@@ -18,6 +18,25 @@ export default {
     alt: 'Silivri 3D görselleştirme – villa dış cephe render',
     ph: 'Görsel: villa dış cephe render'
   },
+  // Hero "röntgen merceği": alt katman tel kafes, üst katman render 3 (tools/build-studio-assets.mjs)
+  xray: {
+    base: '/assets/img/hizmet/3d-gorsellestirme/xray/telkafes',
+    baseAlt: 'Aynı villanın tel kafes görünümü: taşıyıcı sistem, döşemeler ve doğrama çizgileri',
+    top: '/assets/img/hizmet/3d-gorsellestirme/xray/render',
+    label: 'İskelet',
+    hint: 'Merceği görselin üzerinde gezdirin; tıklayınca tüm yapı tel kafese döner.'
+  },
+  // Stüdyo: aynı salon, 3 malzeme × 2 ışık (Kapsam bölümünden sonra)
+  studio: {
+    eyebrow: 'Stüdyo',
+    h2: 'Kararı görerek verin',
+    text: 'Aynı salonu farklı malzeme ve ışık seçenekleriyle deneyin. 3D görselleştirme, bu kararları inşaat başlamadan ve hiçbir masraf yapmadan vermenizi sağlar.',
+    dir: '/assets/img/hizmet/3d-gorsellestirme/studyo/',
+    materials: [['acik-mese', 'Açık Meşe'], ['koyu-ceviz', 'Koyu Ceviz'], ['traverten', 'Traverten & Taş']],
+    lights: [['gunduz', 'Gündüz'], ['aksam', 'Akşam']],
+    alt: (m, l) => `Çift yükseklikte villa salonunun 3D görselleştirmesi: ${m} malzeme seti, ${l.toLocaleLowerCase('tr')} ışığı`,
+    badge: 'Temsilî görselleştirme örneği'
+  },
   scope: {
     h2: 'Silivri 3D görselleştirme hizmetimiz neleri kapsar?',
     text: 'Plan ve kesitleri okumak herkes için kolay değildir. 3D görselleştirme; malzeme, renk, ışık ve oranları gerçeğe yakın biçimde göstererek sizin, ailenizin ya da yatırım ortaklarınızın projeyi aynı şekilde anlamasını sağlar.',

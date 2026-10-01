@@ -27,6 +27,104 @@ const linkArrow = '<svg class="i-arrow" aria-hidden="true"><use href="#i-arrow-r
 const apptBtn = (cls, cta) => `<a class="btn ${cls} btn--wa" href="${APPT}" target="_blank" rel="noopener" aria-label="WhatsApp üzerinden randevu alın" data-appointment data-cta="${cta}"><svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>Randevu Alın${arrow}</a>`;
 const ind = (s, n) => s.split('\n').map((l) => (l ? ' '.repeat(n) + l : l)).join('\n');
 
+// AVIF + WebP srcset (768/1280/1920). defer: true → data-* (bölüm görünür olunca JS yükler)
+const SIZES = '(min-width: 1376px) 1280px, 94vw';
+const set = (base, ext) => [768, 1280, 1920].map((w) => `${base}-${w}.${ext} ${w}w`).join(', ');
+function pic(base, alt, { cls = '', eager = false, priority = false, defer = false, attrs = '' } = {}) {
+  const s = defer ? 'data-srcset' : 'srcset';
+  const img = defer
+    ? `<img data-src="${base}-1280.webp" data-srcset="${set(base, 'webp')}" sizes="${SIZES}" width="1920" height="1072" decoding="async" alt="${attr(alt)}">`
+    : `<img src="${base}-1280.webp" srcset="${set(base, 'webp')}" sizes="${SIZES}" width="1920" height="1072" decoding="async"${eager ? '' : ' loading="lazy"'}${priority ? ' fetchpriority="high"' : ''} alt="${attr(alt)}">`;
+  return `<picture${cls ? ` class="${cls}"` : ''}${attrs}><source type="image/avif" ${s}="${set(base, 'avif')}" sizes="${SIZES}">${img}</picture>`;
+}
+
+// HERO: standart (görsel sağda) veya röntgen merceği (metin üstte, tam genişlik tel kafes + render)
+const heroText = `<p class="eyebrow">Hizmetler</p>
+        <h1 class="page-hero__title">${esc(c.hero.h1)}</h1>
+        <p class="page-hero__lead">${esc(c.hero.lead)}</p>
+        <div class="btn-row">
+          <a class="btn btn--primary" href="/projenizi-anlatin/" data-cta="projenizi_anlatin_hizmet_hero">Projenizi Anlatın${arrow}</a>
+          ${apptBtn('btn--outline', 'randevu_hizmet_hero')}
+        </div>`;
+const heroHtml = c.xray ? `  <!-- HERO: röntgen merceği (masaüstü: imleci takip eden mercek · dokunmatik/dar: kaydırıcı · reduced-motion: yan yana) -->
+  <section class="page-hero page-hero--xray">
+    <div class="container">
+      <div class="svc-hero--stacked">
+        ${heroText}
+      </div>
+      <div class="xray" data-xray>
+        <div class="xray__stage" data-xray-stage>
+          <div class="xray__layer xray__base">
+            ${pic(c.xray.base, c.xray.baseAlt, { eager: true })}
+            <span class="xray__cap">Tel kafes</span>
+          </div>
+          <div class="xray__layer xray__top" data-xray-top>
+            <div class="xray__top-inner" data-xray-top-inner>
+              ${pic(c.xray.top, c.hero.alt, { eager: true, priority: true })}
+            </div>
+            <span class="xray__cap">Render</span>
+          </div>
+          <span class="xray__ring" data-xray-ring aria-hidden="true"><span class="xray__ring-circle"></span><span class="xray__label">${esc(c.xray.label)}</span></span>
+          <span class="xray__handle" data-xray-handle aria-hidden="true"><span></span></span>
+          <input class="xray__range" type="range" min="0" max="100" value="50" step="1" aria-label="Karşılaştırma: solda tel kafes, sağda render" data-xray-range>
+        </div>
+        <div class="xray__bar">
+          <button class="xray__toggle" type="button" aria-pressed="false" data-xray-toggle><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9zM12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg><span data-xray-toggle-label>Tel kafes görünümünü aç</span></button>
+          <p class="xray__hint" data-xray-hint>${esc(c.xray.hint)}</p>
+        </div>
+      </div>
+    </div>
+  </section>` : `  <!-- HERO -->
+  <section class="page-hero">
+    <div class="container svc-hero">
+      <div>
+        ${heroText}
+      </div>
+      <div class="media media--4x3" data-ph="${attr(c.hero.ph)}">
+        <img src="${c.hero.img}" width="1200" height="900" fetchpriority="high" decoding="async" alt="${attr(c.hero.alt)}">
+      </div>
+    </div>
+  </section>`;
+
+// STÜDYO: aynı salon, malzeme × ışık (radio grupları, 500 ms crossfade)
+const st = c.studio;
+const studioHtml = st ? `
+  <!-- STÜDYO -->
+  <section class="section studio-section" id="studyo" aria-labelledby="studyo-baslik">
+    <div class="container">
+      <header class="section__head reveal">
+        <p class="eyebrow">${esc(st.eyebrow)}</p>
+        <h2 id="studyo-baslik" class="section__title">${esc(st.h2)}</h2>
+        <p class="section__intro">${esc(st.text)}</p>
+      </header>
+      <div class="studio" data-studio>
+        <div class="studio__stage">
+${st.materials.flatMap(([m, mName], mi) => st.lights.map(([l, lName], li) => {
+  const first = mi === 0 && li === 0;
+  return `          ${pic(st.dir + `${m}-${l}`, st.alt(mName, lName), { cls: `studio__img${first ? ' is-active' : ''}`, defer: !first, attrs: ` data-combo="${m}-${l}"${first ? '' : ' aria-hidden="true"'}` })}`;
+})).join('\n')}
+          <span class="studio__badge">${esc(st.badge)}</span>
+        </div>
+        <p class="sr-only" aria-live="polite" data-studio-live></p>
+        <div class="studio__controls">
+          <fieldset class="seg">
+            <legend>Malzeme</legend>
+            <div class="seg__opts">
+${st.materials.map(([v, n], i) => `              <label><input type="radio" name="studyo-malzeme" value="${v}" data-label="${attr(n)}"${i === 0 ? ' checked' : ''}><span>${esc(n)}</span></label>`).join('\n')}
+            </div>
+          </fieldset>
+          <fieldset class="seg">
+            <legend>Işık</legend>
+            <div class="seg__opts">
+${st.lights.map(([v, n], i) => `              <label><input type="radio" name="studyo-isik" value="${v}" data-label="${attr(n)}"${i === 0 ? ' checked' : ''}><span>${esc(n)}</span></label>`).join('\n')}
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+  </section>
+` : '';
+
 const ld = {
   '@context': 'https://schema.org',
   '@graph': [
@@ -110,23 +208,7 @@ ${ind(JSON.stringify(ld, null, 2), 2)}
     </ol>
   </nav>
 
-  <!-- HERO -->
-  <section class="page-hero">
-    <div class="container svc-hero">
-      <div>
-        <p class="eyebrow">Hizmetler</p>
-        <h1 class="page-hero__title">${esc(c.hero.h1)}</h1>
-        <p class="page-hero__lead">${esc(c.hero.lead)}</p>
-        <div class="btn-row">
-          <a class="btn btn--primary" href="/projenizi-anlatin/" data-cta="projenizi_anlatin_hizmet_hero">Projenizi Anlatın${arrow}</a>
-          ${apptBtn('btn--outline', 'randevu_hizmet_hero')}
-        </div>
-      </div>
-      <div class="media media--4x3" data-ph="${attr(c.hero.ph)}">
-        <img src="${c.hero.img}" width="1200" height="900" fetchpriority="high" decoding="async" alt="${attr(c.hero.alt)}">
-      </div>
-    </div>
-  </section>
+${heroHtml}
 
   <!-- BÖLÜM 1 -->
   <section class="section" aria-labelledby="kapsam-baslik">
@@ -146,7 +228,7 @@ ${c.scope.items.map(([term, text, path]) => `        <li class="reveal">
       </ul>
     </div>
   </section>
-
+${studioHtml}
   <!-- BÖLÜM 2 -->
   <section class="section projects" aria-labelledby="turler-baslik">
     <div class="container">

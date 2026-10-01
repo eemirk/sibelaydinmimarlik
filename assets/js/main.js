@@ -358,6 +358,123 @@ const REVEAL_STAGGER_MS = 80;
 
   /* ---------------------------------------------------------------- HERO */
   initHero();
+  initXray();
+  initStudio();
+
+  /* ---------------------------------------------------------------- RÖNTGEN MERCEĞİ (3D Görselleştirme)
+     lens: imleci yumuşak takip eden mercek (mask-position + transform)
+     slider: dokunmatik/dar ekranda karşılaştırma kaydırıcısı (transform)
+     static: hareket kapalı → iki görsel yan yana (yalnız CSS) */
+  function initXray() {
+    const root = $('[data-xray]');
+    if (!root) return;
+    const stage = $('[data-xray-stage]', root), top = $('[data-xray-top]', root), inner = $('[data-xray-top-inner]', root);
+    const ring = $('[data-xray-ring]', root), handle = $('[data-xray-handle]', root), range = $('[data-xray-range]', root);
+    const toggle = $('[data-xray-toggle]', root), toggleLabel = $('[data-xray-toggle-label]', root), hint = $('[data-xray-hint]', root);
+    const lensMQ = matchMedia('(hover: hover) and (pointer: fine) and (min-width: 900px)');
+    const motion = doc.classList.contains('motion');
+    let mode = '', W = 0, H = 0, full = false, raf = 0;
+    let tx = 0.5, ty = 0.42, cx = tx, cy = ty;          // mercek hedefi / mevcut (0–1)
+
+    const measure = () => {
+      const r = stage.getBoundingClientRect(); W = r.width; H = r.height;
+      if (mode === 'lens') top.style.webkitMaskSize = top.style.maskSize = `${2 * W}px ${2 * H}px`;
+    };
+    const drawLens = () => {
+      const x = cx * W, y = cy * H;
+      top.style.webkitMaskPosition = top.style.maskPosition = `${x - W}px ${y - H}px`;
+      ring.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+    };
+    const tick = () => {
+      raf = 0;
+      cx += (tx - cx) * 0.2; cy += (ty - cy) * 0.2;
+      if (Math.abs(tx - cx) < 0.0005 && Math.abs(ty - cy) < 0.0005) { cx = tx; cy = ty; }
+      drawLens();
+      if (cx !== tx || cy !== ty) raf = requestAnimationFrame(tick);
+    };
+    const setSlider = (p) => {
+      top.style.transform = `translate3d(${p}%, 0, 0)`;
+      inner.style.transform = `translate3d(${-p}%, 0, 0)`;
+      handle.style.transform = `translate3d(${(p / 100) * W}px, 0, 0)`;
+    };
+    const setFull = (on) => {
+      full = on;
+      root.classList.toggle('xray--full', on);
+      toggle.setAttribute('aria-pressed', String(on));
+      toggleLabel.textContent = on ? 'Tel kafes görünümünü kapat' : 'Tel kafes görünümünü aç';
+      if (mode === 'slider') { range.value = on ? 100 : 50; setSlider(+range.value); }
+    };
+    const setMode = () => {
+      const next = !motion ? 'static' : lensMQ.matches ? 'lens' : 'slider';
+      if (next === mode) {
+        measure();
+        if (mode === 'lens') drawLens(); else if (mode === 'slider') setSlider(+range.value);
+        return;
+      }
+      mode = next;
+      root.classList.remove('xray--lens', 'xray--slider', 'xray--static');
+      root.classList.add('xray--' + mode);
+      top.style.transform = inner.style.transform = top.style.maskPosition = top.style.webkitMaskPosition = '';
+      measure();
+      if (mode === 'lens') { hint.textContent = 'Merceği görselin üzerinde gezdirin; tıklayınca tüm yapı tel kafese döner.'; drawLens(); }
+      if (mode === 'slider') { hint.textContent = 'Kaydırıcıyı sürükleyin: solda tel kafes, sağda render.'; setSlider(+range.value); }
+      if (mode === 'static') hint.textContent = 'Solda tel kafes, sağda render görünümü.';
+    };
+
+    stage.addEventListener('pointermove', (e) => {
+      if (mode !== 'lens') return;
+      const r = stage.getBoundingClientRect();
+      tx = clamp01((e.clientX - r.left) / r.width); ty = clamp01((e.clientY - r.top) / r.height);
+      hint.classList.add('is-hidden');
+      if (!raf) raf = requestAnimationFrame(tick);
+    });
+    stage.addEventListener('click', () => { if (mode === 'lens') setFull(!full); });
+    toggle.addEventListener('click', () => setFull(!full));          // Enter/Space: yerel buton davranışı
+    range.addEventListener('input', () => { setSlider(+range.value); if (full && +range.value !== 100) setFull(false); hint.classList.add('is-hidden'); });
+    lensMQ.addEventListener('change', setMode);
+    window.addEventListener('resize', () => requestAnimationFrame(setMode));
+    setMode();
+  }
+
+  /* ---------------------------------------------------------------- STÜDYO (malzeme × ışık)
+     Radio grupları (yerel klavye desteği); seçim değişince 500 ms crossfade.
+     İlk kombinasyon dışındaki görseller bölüm görünür olunca yüklenir. */
+  function initStudio() {
+    const root = $('[data-studio]');
+    if (!root) return;
+    const pics = $$('[data-combo]', root);
+    const live = $('[data-studio-live]', root);
+    const load = (pic) => {
+      $$('[data-srcset]', pic).forEach((el) => { el.srcset = el.dataset.srcset; el.removeAttribute('data-srcset'); });
+      const img = $('img', pic);
+      if (img.dataset.src) { img.src = img.dataset.src; img.removeAttribute('data-src'); }
+      return img;
+    };
+    const loadAll = () => pics.forEach(load);
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((en) => { if (en.some((e) => e.isIntersecting)) { io.disconnect(); loadAll(); } }, { rootMargin: '400px 0px' });
+      io.observe(root);
+    } else loadAll();
+
+    const current = () => {
+      const m = $('input[name="studyo-malzeme"]:checked', root), l = $('input[name="studyo-isik"]:checked', root);
+      return { m: m.value, l: l.value, mName: m.dataset.label, lName: l.dataset.label };
+    };
+    let seq = 0;
+    root.addEventListener('change', (e) => {
+      if (!e.target.matches('input[type="radio"]')) return;
+      const s = current(), key = `${s.m}-${s.l}`, my = ++seq;
+      const pic = pics.find((p) => p.dataset.combo === key);
+      const img = load(pic);
+      const show = () => {
+        if (my !== seq) return;                                    // hızlı ardışık seçimlerde son seçim kazanır
+        pics.forEach((p) => { const on = p === pic; p.classList.toggle('is-active', on); on ? p.removeAttribute('aria-hidden') : p.setAttribute('aria-hidden', 'true'); });
+        live.textContent = `Gösterilen: ${s.mName}, ${s.lName.toLocaleLowerCase('tr')} ışığı`;
+      };
+      (img.decode ? img.decode().catch(() => {}) : Promise.resolve()).then(show);
+      window.dataLayer.push({ event: 'studio_interaction', malzeme: s.m, isik: s.l, page_path: location.pathname });
+    });
+  }
 
   function initHero() {
     const hero = $('[data-hero]');
