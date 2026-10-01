@@ -947,7 +947,7 @@ const PF_SERVICE_MAP = { 'ruhsat-iskan': 'ruhsat', 'santiye-teknik-hizmetler': '
     function drawPlaceholder(i) {
       const t = i / (N - 1);
       const g = Math.round(222 - t * 40);
-      ctx.fillStyle = 'rgb(' + g + ',' + (g - 2) + ',' + (g - 6) + ')';
+      ctx.fillStyle = 'rgb(' + (g - 2) + ',' + g + ',' + g + ')';
       ctx.fillRect(0, 0, cw, ch);
       ctx.strokeStyle = 'rgba(30,30,30,.12)';
       ctx.lineWidth = Math.max(1, cw / 1200);

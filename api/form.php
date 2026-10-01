@@ -384,11 +384,11 @@ function html_table(string $title, array $rows, string $intro = '', string $outr
 {
     $tr = '';
     foreach ($rows as $k => $v) {
-        $tr .= '<tr><th style="text-align:left;vertical-align:top;padding:8px 16px 8px 0;color:#6B6B6B;font-weight:500;white-space:nowrap;border-top:1px solid #E2DED8">' . h($k)
-            . '</th><td style="padding:8px 0;border-top:1px solid #E2DED8;color:#1E1E1E">' . nl2br(h($v)) . '</td></tr>';
+        $tr .= '<tr><th style="text-align:left;vertical-align:top;padding:8px 16px 8px 0;color:#6B6B6B;font-weight:500;white-space:nowrap;border-top:1px solid #E1E5E5">' . h($k)
+            . '</th><td style="padding:8px 0;border-top:1px solid #E1E5E5;color:#1E1E1E">' . nl2br(h($v)) . '</td></tr>';
     }
-    return '<!doctype html><html lang="tr"><body style="margin:0;padding:24px;background:#F7F5F2;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.5;color:#1E1E1E">'
-        . '<div style="max-width:640px;margin:0 auto;background:#fff;border:1px solid #E2DED8;padding:28px">'
+    return '<!doctype html><html lang="tr"><body style="margin:0;padding:24px;background:#F6F7F6;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.5;color:#1E1E1E">'
+        . '<div style="max-width:640px;margin:0 auto;background:#fff;border:1px solid #E1E5E5;padding:28px">'
         . '<h1 style="font-size:20px;margin:0 0 16px">' . h($title) . '</h1>'
         . ($intro !== '' ? '<p style="margin:0 0 16px">' . $intro . '</p>' : '')
         . '<table style="border-collapse:collapse;width:100%">' . $tr . '</table>'
@@ -568,9 +568,9 @@ $m->Subject = "Talebiniz alındı – $no | Sibel Aydın İnşaat Mimarlık";
 $m->isHTML(true);
 $m->Body = html_table('Talebiniz alındı', $summary,
     'Merhaba ' . h($c['ad']) . ', proje talebiniz bize ulaştı. <strong>1 iş günü içinde</strong> size dönüş yapacağız.',
-    'Bize <a href="tel:+905368475640" style="color:#7A5F44">' . PHONE_DISPLAY . '</a> numarasından ya da <a href="' . WA_URL . '?text=' . $waText . '" style="color:#7A5F44">WhatsApp</a> üzerinden de ulaşabilirsiniz.<br>'
+    'Bize <a href="tel:+905368475640" style="color:#12636D">' . PHONE_DISPLAY . '</a> numarasından ya da <a href="' . WA_URL . '?text=' . $waText . '" style="color:#12636D">WhatsApp</a> üzerinden de ulaşabilirsiniz.<br>'
     . 'Sibel Aydın İnşaat Mimarlık · Piri Mehmet Paşa Mah. Şerif Sk. Osmanoğlu İş Merkezi No:1 İç Kapı No:10, 34570 Silivri / İstanbul<br>'
-    . 'Kişisel verileriniz <a href="' . SITE_URL . '/kvkk/" style="color:#7A5F44">KVKK Aydınlatma Metni</a> kapsamında işlenmektedir.');
+    . 'Kişisel verileriniz <a href="' . SITE_URL . '/kvkk/" style="color:#12636D">KVKK Aydınlatma Metni</a> kapsamında işlenmektedir.');
 $m->AltBody = "Merhaba {$c['ad']},\n\nProje talebiniz bize ulaştı. 1 iş günü içinde size dönüş yapacağız.\n\n" . text_table($summary)
     . "\nTelefon: " . PHONE_DISPLAY . "\nWhatsApp: " . WA_URL . "?text=$waText\n\nSibel Aydın İnşaat Mimarlık\nPiri Mehmet Paşa Mah. Şerif Sk. Osmanoğlu İş Merkezi No:1 İç Kapı No:10, 34570 Silivri / İstanbul\n"
     . 'Kişisel verileriniz KVKK Aydınlatma Metni kapsamında işlenmektedir: ' . SITE_URL . "/kvkk/\n";

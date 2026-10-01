@@ -170,7 +170,7 @@ ${imgComment}
   <meta name="description" content="${attr(c.description)}">
   <link rel="canonical" href="${URL}">
   <!-- GSC: <meta name="google-site-verification" content="..."> -->
-  <meta name="theme-color" content="#F7F5F2">
+  <meta name="theme-color" content="#F6F7F6">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="tr_TR">
   <meta property="og:site_name" content="Sibel Aydın İnşaat Mimarlık">
