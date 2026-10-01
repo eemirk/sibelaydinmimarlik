@@ -12,6 +12,7 @@
      - /assets/img/hizmet/*.webp (6 hizmet kartı, 4:3, önerilen 1200×900)
      - /assets/img/projeler/<slug>/kapak.webp (6 proje kapağı)
      - /assets/img/ofis.webp (Hakkımızda özeti, 4:5, önerilen 1000×1250)
+     - /assets/img/kurumsal/ofis.webp (/kurumsal/ Hakkımızda, 4:5, önerilen 1000×1250)
      → Görseller yüklenince her <img> alt metnini görselin GERÇEKTE gösterdiğine
        göre güncelleyin (şimdiki alt metinler beklenen içeriği tarif ediyor).
      - /assets/img/og-cover.jpg kullanılmıyor; og:image = hero-villa.webp
@@ -20,7 +21,9 @@
      gerçek projeyle değiştirilecek"). Gerçek proje adı, türü, konumu, m² ve
      görselleriyle değiştirin; bu dosyadaki statik proje kartlarını da eşleyin.
      hero-villa.webp bir görselleştirmedir, proje olarak KULLANMAYIN.
-  5. Ekip bilgileri: /kurumsal/ekibimiz/ sayfasında (sonraki adım).
+  5. Ekip bilgileri: /kurumsal/ekibimiz/ henüz yok; header ve footer'daki "Ekibimiz"
+     linkleri "GİZLİ:" yorumuyla kapalı (sayfa yapılınca yorumu kaldırın, sitemap'e ekleyin).
+     Kurumsal sayfalardaki alt menüye (.subnav) de eklenecek.
   6. Hero kareleri: /assets/seq/desktop|mobile/villa_XXXX.webp ve
      /assets/img/hero-villa.webp → tools/generate-villa.mjs ile üretilecek.
   7. Analitik: window.dataLayer event'leri hazır; GA4 / Google Ads / GTM kodu
@@ -222,7 +225,7 @@
             <ul class="nav__sub-list">
               <li><a href="/kurumsal/">Hakkımızda</a></li>
               <li><a href="/kurumsal/calisma-anlayisimiz/">Çalışma Anlayışımız</a></li>
-              <li><a href="/kurumsal/ekibimiz/">Ekibimiz</a></li>
+              <!-- GİZLİ: Ekibimiz sayfası bilgiler gelince açılacak — <li><a href="/kurumsal/ekibimiz/">Ekibimiz</a></li> -->
             </ul>
           </div>
         </li>
@@ -710,7 +713,7 @@
         <ul class="footer__links">
           <li><a href="/kurumsal/">Hakkımızda</a></li>
           <li><a href="/kurumsal/calisma-anlayisimiz/">Çalışma Anlayışımız</a></li>
-          <li><a href="/kurumsal/ekibimiz/">Ekibimiz</a></li>
+          <!-- GİZLİ: Ekibimiz sayfası bilgiler gelince açılacak — <li><a href="/kurumsal/ekibimiz/">Ekibimiz</a></li> -->
           <li><a href="/projeler/">Projeler</a></li>
           <li><a href="/blog/">Blog</a></li>
           <li><a href="/projenizi-anlatin/">Projenizi Anlatın</a></li>
