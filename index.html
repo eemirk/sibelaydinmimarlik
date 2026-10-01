@@ -21,6 +21,10 @@
      gerçek projeyle değiştirilecek"). Gerçek proje adı, türü, konumu, m² ve
      görselleriyle değiştirin; bu dosyadaki statik proje kartlarını da eşleyin.
      hero-villa.webp bir görselleştirmedir, proje olarak KULLANMAYIN.
+     /projeler/ ve /blog/ henüz yok: header/footer linkleri, "Tüm projelerimizi görün"
+     butonu ve eski site yönlendirmesi (/Icerik/Referanslar — .htaccess + netlify.toml)
+     "GİZLİ:" yorumuyla kapalı; kartlar link değil (<article>). Sayfalar yapılınca
+     yorumları kaldırın, kartları tekrar <a> yapın (main.js renderProjects) ve sitemap'e ekleyin.
   5. Ekip bilgileri: /kurumsal/ekibimiz/ henüz yok; header ve footer'daki "Ekibimiz"
      linkleri "GİZLİ:" yorumuyla kapalı (sayfa yapılınca yorumu kaldırın, sitemap'e ekleyin).
      Kurumsal sayfalardaki alt menüye (.subnav) de eklenecek.
@@ -255,8 +259,8 @@
             </div>
           </div>
         </li>
-        <li class="nav__item"><a class="nav__link" href="/projeler/">Projeler</a></li>
-        <li class="nav__item"><a class="nav__link" href="/blog/">Blog</a></li>
+        <!-- GİZLİ: içerik gelince açılacak — <li class="nav__item"><a class="nav__link" href="/projeler/">Projeler</a></li> -->
+        <!-- GİZLİ: içerik gelince açılacak — <li class="nav__item"><a class="nav__link" href="/blog/">Blog</a></li> -->
         <li class="nav__item"><a class="nav__link" href="/iletisim/">İletişim</a></li>
       </ul>
       <div class="nav__mobile-extra">
@@ -444,12 +448,12 @@
           <p class="eyebrow">Seçili işler</p>
           <h2 id="projeler-baslik" class="section__title">Projelerimiz</h2>
         </div>
-        <a class="btn btn--outline" href="/projeler/" data-cta="tum_projeler">Tüm projelerimizi görün<span class="btn__arrow" aria-hidden="true"><svg><use href="#i-arrow-ne"/></svg></span></a>
+        <!-- GİZLİ: proje sayfaları yayına girince açılacak — <a class="btn btn--outline" href="/projeler/" data-cta="tum_projeler">Tüm projelerimizi görün<span class="btn__arrow" aria-hidden="true"><svg><use href="#i-arrow-ne"/></svg></span></a> -->
       </header>
 
       <ul class="projects__grid" data-projects>
         <li class="project-card reveal">
-          <a href="/projeler/ornek-proje-01/">
+          <article>
             <div class="project-card__frame">
               <div class="media" data-ph="Proje kapağı: Örnek Proje 01">
                 <img src="/assets/img/projeler/ornek-proje-01/kapak.webp" width="1600" height="1200" loading="lazy" decoding="async" alt="ÖRNEK proje kapak görseli — gerçek proje görseliyle değiştirilecek">
@@ -459,10 +463,10 @@
               <h3 class="project-card__title">Örnek Proje 01</h3>
               <p class="project-card__info"><span>Villa</span><span>Konum eklenecek</span><span>— m²</span></p>
             </div>
-          </a>
+          </article>
         </li>
         <li class="project-card reveal">
-          <a href="/projeler/ornek-proje-02/">
+          <article>
             <div class="project-card__frame">
               <div class="media" data-ph="Proje kapağı: Örnek Proje 02">
                 <img src="/assets/img/projeler/ornek-proje-02/kapak.webp" width="1600" height="1200" loading="lazy" decoding="async" alt="ÖRNEK proje kapak görseli — gerçek proje görseliyle değiştirilecek">
@@ -472,10 +476,10 @@
               <h3 class="project-card__title">Örnek Proje 02</h3>
               <p class="project-card__info"><span>Müstakil Konut</span><span>Konum eklenecek</span><span>— m²</span></p>
             </div>
-          </a>
+          </article>
         </li>
         <li class="project-card reveal">
-          <a href="/projeler/ornek-proje-03/">
+          <article>
             <div class="project-card__frame">
               <div class="media" data-ph="Proje kapağı: Örnek Proje 03">
                 <img src="/assets/img/projeler/ornek-proje-03/kapak.webp" width="1600" height="1200" loading="lazy" decoding="async" alt="ÖRNEK proje kapak görseli — gerçek proje görseliyle değiştirilecek">
@@ -485,10 +489,10 @@
               <h3 class="project-card__title">Örnek Proje 03</h3>
               <p class="project-card__info"><span>İç Mimari</span><span>Konum eklenecek</span><span>— m²</span></p>
             </div>
-          </a>
+          </article>
         </li>
         <li class="project-card reveal">
-          <a href="/projeler/ornek-proje-04/">
+          <article>
             <div class="project-card__frame">
               <div class="media" data-ph="Proje kapağı: Örnek Proje 04">
                 <img src="/assets/img/projeler/ornek-proje-04/kapak.webp" width="1600" height="1200" loading="lazy" decoding="async" alt="ÖRNEK proje kapak görseli — gerçek proje görseliyle değiştirilecek">
@@ -498,10 +502,10 @@
               <h3 class="project-card__title">Örnek Proje 04</h3>
               <p class="project-card__info"><span>Ticari Yapı</span><span>Konum eklenecek</span><span>— m²</span></p>
             </div>
-          </a>
+          </article>
         </li>
         <li class="project-card reveal">
-          <a href="/projeler/ornek-proje-05/">
+          <article>
             <div class="project-card__frame">
               <div class="media" data-ph="Proje kapağı: Örnek Proje 05">
                 <img src="/assets/img/projeler/ornek-proje-05/kapak.webp" width="1600" height="1200" loading="lazy" decoding="async" alt="ÖRNEK proje kapak görseli — gerçek proje görseliyle değiştirilecek">
@@ -511,10 +515,10 @@
               <h3 class="project-card__title">Örnek Proje 05</h3>
               <p class="project-card__info"><span>Konut</span><span>Konum eklenecek</span><span>— m²</span></p>
             </div>
-          </a>
+          </article>
         </li>
         <li class="project-card reveal">
-          <a href="/projeler/ornek-proje-06/">
+          <article>
             <div class="project-card__frame">
               <div class="media" data-ph="Proje kapağı: Örnek Proje 06">
                 <img src="/assets/img/projeler/ornek-proje-06/kapak.webp" width="1600" height="1200" loading="lazy" decoding="async" alt="ÖRNEK proje kapak görseli — gerçek proje görseliyle değiştirilecek">
@@ -524,9 +528,10 @@
               <h3 class="project-card__title">Örnek Proje 06</h3>
               <p class="project-card__info"><span>Kentsel Dönüşüm</span><span>Konum eklenecek</span><span>— m²</span></p>
             </div>
-          </a>
+          </article>
         </li>
       </ul>
+      <p class="projects__note reveal">Projelerimizin detay sayfaları yakında yayında.</p>
     </div>
   </section>
 
@@ -714,8 +719,8 @@
           <li><a href="/kurumsal/">Hakkımızda</a></li>
           <li><a href="/kurumsal/calisma-anlayisimiz/">Çalışma Anlayışımız</a></li>
           <!-- GİZLİ: Ekibimiz sayfası bilgiler gelince açılacak — <li><a href="/kurumsal/ekibimiz/">Ekibimiz</a></li> -->
-          <li><a href="/projeler/">Projeler</a></li>
-          <li><a href="/blog/">Blog</a></li>
+          <!-- GİZLİ: içerik gelince açılacak — <li><a href="/projeler/">Projeler</a></li> -->
+          <!-- GİZLİ: içerik gelince açılacak — <li><a href="/blog/">Blog</a></li> -->
           <li><a href="/projenizi-anlatin/">Projenizi Anlatın</a></li>
         </ul>
         <h2 class="footer__title footer__title--sub">Yasal</h2>

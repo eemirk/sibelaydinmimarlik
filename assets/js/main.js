@@ -304,7 +304,8 @@ const REVEAL_STAGGER_MS = 80;
   });
 
   /* ---------------------------------------------------------------- Projeler (JSON ile zenginleştirme)
-     Kartlar HTML'de statik durur (SEO); JSON gelirse içerik JSON'dan güncellenir. */
+     Kartlar HTML'de statik durur (SEO); JSON gelirse içerik JSON'dan güncellenir.
+     Proje detay sayfaları yayına girene kadar kartlar link değildir (<article>). */
   const projectList = $('[data-projects]');
   if (projectList && 'fetch' in window) {
     fetch(PROJECTS_URL, { credentials: 'same-origin' })
@@ -320,8 +321,8 @@ const REVEAL_STAGGER_MS = 80;
     const li = document.createElement('li');
     li.className = 'project-card reveal';
     li.innerHTML =
-      '<a><div class="project-card__frame"><div class="media"><img width="1600" height="1200" loading="lazy" decoding="async"></div></div>' +
-      '<div class="project-card__meta"><h3 class="project-card__title"></h3><p class="project-card__info"></p></div></a>';
+      '<article><div class="project-card__frame"><div class="media"><img width="1600" height="1200" loading="lazy" decoding="async"></div></div>' +
+      '<div class="project-card__meta"><h3 class="project-card__title"></h3><p class="project-card__info"></p></div></article>';
     return li;
   }
   function renderProjects(list, items) {
@@ -329,11 +330,9 @@ const REVEAL_STAGGER_MS = 80;
     items.forEach((p, i) => {
       let li = cards[i];
       if (!li) { li = projectCard(p); list.appendChild(li); }
-      const a = $('a', li);
       const media = $('.media', li);
       const img = $('img', li);
       const area = typeof p.alan_m2 === 'number' ? p.alan_m2.toLocaleString('tr-TR') + ' m²' : '— m²';
-      a.href = '/projeler/' + encodeURIComponent(p.slug) + '/';
       $('.project-card__title', li).textContent = p.baslik;
       const info = $('.project-card__info', li);
       info.textContent = '';

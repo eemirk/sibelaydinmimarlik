@@ -64,11 +64,12 @@
   status = 301
   force = true
 
-[[redirects]]
-  from = "/Icerik/Referanslar"
-  to = "/projeler/"
-  status = 301
-  force = true
+# GİZLİ: /projeler/ yayına girince açın (o zamana kadar /Icerik/* kuralı ana sayfaya yönlendirir)
+# [[redirects]]
+#   from = "/Icerik/Referanslar"
+#   to = "/projeler/"
+#   status = 301
+#   force = true
 
 # Ayrı randevu sayfası yok (randevu WhatsApp üzerinden) → iletişim
 [[redirects]]
