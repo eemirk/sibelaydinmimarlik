@@ -43,7 +43,7 @@ const heroText = `<p class="eyebrow">Hizmetler</p>
         <h1 class="page-hero__title">${esc(c.hero.h1)}</h1>
         <p class="page-hero__lead">${esc(c.hero.lead)}</p>
         <div class="btn-row">
-          <a class="btn btn--primary" href="/projenizi-anlatin/" data-cta="projenizi_anlatin_hizmet_hero">Projenizi Anlatın${arrow}</a>
+          <a class="btn btn--primary" href="/projenizi-anlatin/?hizmet=${slug}" data-cta="projenizi_anlatin_hizmet_hero">Projenizi Anlatın${arrow}</a>
           ${apptBtn('btn--outline', 'randevu_hizmet_hero')}
         </div>`;
 const heroHtml = c.xray ? `  <!-- HERO: röntgen merceği (masaüstü: imleci takip eden mercek · dokunmatik/dar: kaydırıcı · reduced-motion: yan yana) -->
@@ -320,7 +320,7 @@ ${c.faq.map(([q, a]) => `        <details class="faq__item">
         <p class="cta-band__text">${esc(c.cta.text)}</p>
       </div>
       <div class="btn-row">
-        <a class="btn btn--light" href="/projenizi-anlatin/" data-cta="projenizi_anlatin_band">Projenizi Anlatın${arrow}</a>
+        <a class="btn btn--light" href="/projenizi-anlatin/?hizmet=${slug}" data-cta="projenizi_anlatin_band">Projenizi Anlatın${arrow}</a>
         ${apptBtn('btn--ghost-light', 'randevu_band')}
         <a class="btn btn--ghost-light" href="tel:+905368475640" data-cta="ara_band"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>Bizi Arayın</a>
       </div>
