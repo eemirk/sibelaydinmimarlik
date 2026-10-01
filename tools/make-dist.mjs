@@ -18,7 +18,7 @@ import { spawnSync } from 'node:child_process';
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = join(ROOT, 'dist');
 const SITE = join(DIST, 'site');
-const EXCLUDE = new Set(['tools', 'dist', 'node_modules', '.git', '.gitignore', '.env', '.claude', '.vscode', '.netlify', 'netlify.toml', 'README.md']);
+const EXCLUDE = new Set(['tools', 'dist', 'node_modules', '.git', '.gitignore', '.env', '.claude', '.vscode', '.netlify', 'netlify.toml', 'README.md', '_data']);  // _data: form uç noktasının yerel çalışma verisi
 const ASSETS = { 'style.css': 'assets/css/style.css', 'main.js': 'assets/js/main.js' };
 
 // 1) Kopyala

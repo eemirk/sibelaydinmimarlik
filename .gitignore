@@ -22,3 +22,5 @@ Thumbs.db
 desktop.ini
 .vscode/
 .idea/
+# Form uç noktasının çalışma verisi (sayaç, hız sınırı) — sunucuda oluşur
+api/_data/

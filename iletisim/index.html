@@ -1,0 +1,391 @@
+<!doctype html>
+<!--
+  İLETİŞİM — tools/templates/ic-sayfa.html yapısıyla. Header/footer: node tools/sync-partials.mjs
+  Form: POST /api/form.php (form_type=iletisim) → firma e-postası + müşteriye otomatik yanıt, talep no SA-ILT-YIL-####.
+  JS: main.js initContactForm (doğrulama, gönderim, teşekkür mesajı, dataLayer contact_submit).
+  Bölgeler bölümü ana sayfadaki ilçe chip bileşeninin aynısıdır.
+-->
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>İletişim | Sibel Aydın Mimarlık – Silivri Mimarlık Ofisi</title>
+  <meta name="description" content="Sibel Aydın Mimarlık Silivri ofisi adres, telefon, WhatsApp ve e-posta bilgileri. Piri Mehmet Paşa Mah., Silivri / İstanbul.">
+  <link rel="canonical" href="https://www.sibelaydinmimarlik.com.tr/iletisim/">
+  <!-- GSC: <meta name="google-site-verification" content="..."> -->
+  <meta name="theme-color" content="#F7F5F2">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="tr_TR">
+  <meta property="og:site_name" content="Sibel Aydın Mimarlık">
+  <meta property="og:title" content="{{title}}">
+  <meta property="og:description" content="{{description}}">
+  <meta property="og:url" content="https://www.sibelaydinmimarlik.com.tr/iletisim/">
+  <meta property="og:image" content="https://www.sibelaydinmimarlik.com.tr/assets/img/hero-villa.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/assets/img/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png" sizes="180x180">
+  <link rel="manifest" href="/site.webmanifest">
+  <script>(function(d){var c=d.documentElement.classList,n=navigator.connection;c.add('js');if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&!(n&&n.saveData))c.add('motion');})(document);</script>
+  <!-- Fontlar kendi sunucumuzdan (Instrument Sans, değişken); latin + latin-ext önceden yüklenir -->
+  <link rel="preload" href="/assets/fonts/instrument-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/instrument-sans-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/style.css?v=dev">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "ContactPage",
+        "@id": "https://www.sibelaydinmimarlik.com.tr/iletisim/#sayfa",
+        "url": "https://www.sibelaydinmimarlik.com.tr/iletisim/",
+        "name": "İletişim",
+        "description": "Sibel Aydın Mimarlık Silivri ofisi adres, telefon, WhatsApp ve e-posta bilgileri. Piri Mehmet Paşa Mah., Silivri / İstanbul.",
+        "inLanguage": "tr-TR",
+        "isPartOf": { "@type": "WebSite", "@id": "https://www.sibelaydinmimarlik.com.tr/#site" },
+        "mainEntity": { "@id": "https://www.sibelaydinmimarlik.com.tr/#firma" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": "https://www.sibelaydinmimarlik.com.tr/" },
+          { "@type": "ListItem", "position": 2, "name": "İletişim", "item": "https://www.sibelaydinmimarlik.com.tr/iletisim/" }
+        ]
+      }
+    ]
+  }
+  </script>
+  <!-- İç sayfalarda GSAP gerekmez; yalnızca main.js -->
+  <script src="/assets/js/main.js?v=dev" defer></script>
+</head>
+<body class="page-inner" data-wa-msg="Merhaba, Sibel Aydın Mimarlık web sitenizden yazıyorum. Projem hakkında bilgi almak istiyorum.">
+
+<!-- HEADER START -->
+<a class="skip-link" href="#main">İçeriğe geç</a>
+<header class="site-header" data-header>
+  <div class="container site-header__inner">
+    <a class="logo" href="/">
+      <img class="logo__img logo__img--dark" src="/assets/img/sibelaydinlogo-yatay.svg" width="156" height="52" alt="Sibel Aydın Mimarlık">
+      <img class="logo__img logo__img--light" src="/assets/img/sibelaydinlogo-yatay-white.svg" width="156" height="52" alt="" aria-hidden="true">
+    </a>
+
+    <nav class="nav" id="site-nav" aria-label="Ana menü" data-nav>
+      <ul class="nav__list">
+        <li class="nav__item"><a class="nav__link" href="/">Ana Sayfa</a></li>
+        <li class="nav__item nav__item--sub" data-sub>
+          <a class="nav__link" href="/kurumsal/">Kurumsal</a>
+          <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="sub-kurumsal">
+            <span class="sr-only">Kurumsal alt menüsü</span>
+            <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg>
+          </button>
+          <div class="nav__sub" id="sub-kurumsal">
+            <ul class="nav__sub-list">
+              <li><a href="/kurumsal/">Hakkımızda</a></li>
+              <li><a href="/kurumsal/calisma-anlayisimiz/">Çalışma Anlayışımız</a></li>
+              <!-- GİZLİ: Ekibimiz sayfası bilgiler gelince açılacak — <li><a href="/kurumsal/ekibimiz/">Ekibimiz</a></li> -->
+            </ul>
+          </div>
+        </li>
+        <li class="nav__item nav__item--sub nav__item--mega" data-sub>
+          <a class="nav__link" href="/hizmetler/">Hizmetler</a>
+          <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="sub-hizmetler">
+            <span class="sr-only">Hizmetler alt menüsü</span>
+            <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg>
+          </button>
+          <div class="nav__sub nav__sub--mega" id="sub-hizmetler">
+            <ul class="nav__sub-list nav__sub-list--2col">
+              <li><a href="/hizmetler/mimari-proje/">Mimari Proje</a></li>
+              <li><a href="/hizmetler/ic-mimari/">İç Mimari</a></li>
+              <li><a href="/hizmetler/3d-gorsellestirme/">3D Görselleştirme</a></li>
+              <li><a href="/hizmetler/uygulama/">Uygulama</a></li>
+              <li><a href="/hizmetler/santiye-teknik-hizmetler/">Şantiye ve Teknik Hizmetler</a></li>
+              <li><a href="/hizmetler/ruhsat-iskan/">Ruhsat ve İskân Süreçleri</a></li>
+              <li><a href="/hizmetler/mimari-danismanlik/">Mimari Danışmanlık ve Kentsel Dönüşüm</a></li>
+              <li><a href="/hizmetler/enerji-kimlik-belgesi/">Enerji Kimlik Belgesi (EKB)</a></li>
+              <li><a href="/hizmetler/bina-akustigi/">Bina Akustiği</a></li>
+              <li><a href="/hizmetler/bilirkisilik/">Bilirkişilik ve Teknik İnceleme</a></li>
+            </ul>
+            <div class="nav__mega-aside">
+              <p class="nav__mega-title">Projeniz hangi aşamada?</p>
+              <p class="nav__mega-text">Arsa, ruhsat ya da uygulama — ihtiyacınızı kısaca anlatın, size uygun hizmeti birlikte belirleyelim.</p>
+              <a class="link-arrow" href="/projenizi-anlatin/" data-cta="mega_projenizi_anlatin">Projenizi anlatın <svg class="i-arrow" aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
+            </div>
+          </div>
+        </li>
+        <li class="nav__item"><a class="nav__link" href="/projeler/">Projeler</a></li>
+        <li class="nav__item"><a class="nav__link" href="/blog/">Blog</a></li>
+        <li class="nav__item"><a class="nav__link" href="/iletisim/">İletişim</a></li>
+      </ul>
+      <div class="nav__mobile-extra">
+        <a class="btn btn--primary btn--block" href="/projenizi-anlatin/" data-cta="projenizi_anlatin_menu">Projenizi Anlatın<span class="btn__arrow" aria-hidden="true"><svg><use href="#i-arrow-ne"/></svg></span></a>
+        <a class="btn btn--outline btn--block btn--wa" href="https://wa.me/905368475640?text=Merhaba%2C%20Sibel%20Ayd%C4%B1n%20Mimarl%C4%B1k%20ile%20g%C3%B6r%C3%BC%C5%9Fme%20randevusu%20almak%20istiyorum.%20Uygun%20oldu%C4%9Fum%20g%C3%BCn%20ve%20saat%3A%20" target="_blank" rel="noopener" aria-label="WhatsApp üzerinden randevu alın" data-appointment data-cta="randevu_menu"><svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>Randevu Al<span class="btn__arrow" aria-hidden="true"><svg><use href="#i-arrow-ne"/></svg></span></a>
+        <a class="nav__phone" href="tel:+905368475640">0536 847 56 40</a>
+      </div>
+    </nav>
+
+    <div class="header-cta">
+      <a class="btn btn--outline btn--sm header-cta__secondary btn--wa" href="https://wa.me/905368475640?text=Merhaba%2C%20Sibel%20Ayd%C4%B1n%20Mimarl%C4%B1k%20ile%20g%C3%B6r%C3%BC%C5%9Fme%20randevusu%20almak%20istiyorum.%20Uygun%20oldu%C4%9Fum%20g%C3%BCn%20ve%20saat%3A%20" target="_blank" rel="noopener" aria-label="WhatsApp üzerinden randevu alın" data-appointment data-cta="randevu_header"><svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>Randevu Al<span class="btn__arrow" aria-hidden="true"><svg><use href="#i-arrow-ne"/></svg></span></a>
+      <a class="btn btn--primary btn--sm" href="/projenizi-anlatin/" data-cta="projenizi_anlatin_header">Projenizi Anlatın<span class="btn__arrow" aria-hidden="true"><svg><use href="#i-arrow-ne"/></svg></span></a>
+    </div>
+
+    <button class="burger" type="button" aria-expanded="false" aria-controls="site-nav" data-burger>
+      <span class="sr-only" data-burger-label>Menüyü aç</span>
+      <span class="burger__bar" aria-hidden="true"></span>
+    </button>
+  </div>
+</header>
+<!-- HEADER END -->
+
+<main id="main">
+  <nav class="breadcrumb container" aria-label="Sayfa konumu">
+    <ol>
+      <li><a href="/">Ana Sayfa</a></li>
+      <li aria-current="page">İletişim</li>
+    </ol>
+  </nav>
+
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">İletişim</p>
+      <h1 class="page-hero__title">İletişim</h1>
+      <p class="page-hero__lead">Projenizi konuşmak, randevu almak ya da bir soru sormak için bize dilediğiniz kanaldan ulaşabilirsiniz.</p>
+    </div>
+  </section>
+
+  <section class="section" aria-label="İletişim bilgileri ve form">
+    <div class="container contact-grid">
+      <!-- SOL: iletişim kanalları -->
+      <div class="contact-info reveal">
+        <h2 class="sr-only">İletişim bilgileri</h2>
+        <div class="contact-item">
+          <svg aria-hidden="true"><use href="#i-phone"/></svg>
+          <p class="contact-item__label">Telefon</p>
+          <p class="contact-item__value"><a href="tel:+905368475640">0536 847 56 40</a></p>
+          <a class="link-arrow contact-item__action" href="tel:+905368475640" data-cta="ara_iletisim">Bizi Arayın<svg class="i-arrow" aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
+        </div>
+        <div class="contact-item">
+          <svg class="is-fill" aria-hidden="true"><use href="#i-wa"/></svg>
+          <p class="contact-item__label">WhatsApp</p>
+          <p class="contact-item__value">0536 847 56 40</p>
+          <a class="link-arrow contact-item__action" href="https://wa.me/905368475640" target="_blank" rel="noopener" aria-label="WhatsApp'tan yazın">Yazın<svg class="i-arrow" aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
+        </div>
+        <div class="contact-item">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v14H3zM3 6l9 7 9-7"/></svg>
+          <p class="contact-item__label">E-posta</p>
+          <p class="contact-item__value"><a href="mailto:proje@sibelaydinmimarlik.com.tr">proje@sibelaydinmimarlik.com.tr</a></p>
+        </div>
+        <div class="contact-item">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21zM12 7a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5z"/></svg>
+          <p class="contact-item__label">Adres</p>
+          <p class="contact-item__value">Piri Mehmet Paşa Mah. Şerif Sk. Osmanoğlu İş Merkezi No:1 İç Kapı No:10, 34570 Silivri / İstanbul</p>
+          <a class="link-arrow contact-item__action" href="https://www.google.com/maps/dir/?api=1&amp;destination=Osmano%C4%9Flu+%C4%B0%C5%9F+Merkezi%2C+Piri+Mehmet+Pa%C5%9Fa+Mah.+%C5%9Eerif+Sk.+No%3A1%2C+34570+Silivri+%C4%B0stanbul" target="_blank" rel="noopener" data-cta="yol_tarifi">Yol tarifi alın<svg class="i-arrow" aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
+        </div>
+        <div class="contact-item">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 1 0 18 9 9 0 0 1 0-18zM12 7v5l3 2"/></svg>
+          <p class="contact-item__label">Çalışma saatleri</p>
+          <p class="contact-item__value">Pazartesi–Cuma 09:00–19:00<br><span class="muted">Cumartesi–Pazar kapalı</span></p>
+        </div>
+        <div class="contact-note">
+          <p>Ofis ziyaretleri için önceden randevu almanızı öneririz.</p>
+          <a class="btn btn--outline btn--wa" href="https://wa.me/905368475640?text=Merhaba%2C%20Sibel%20Ayd%C4%B1n%20Mimarl%C4%B1k%20ile%20g%C3%B6r%C3%BC%C5%9Fme%20randevusu%20almak%20istiyorum.%20Uygun%20oldu%C4%9Fum%20g%C3%BCn%20ve%20saat%3A%20" target="_blank" rel="noopener" aria-label="WhatsApp üzerinden randevu alın" data-appointment data-cta="randevu_iletisim"><svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>Randevu Alın<span class="btn__arrow" aria-hidden="true"><svg><use href="#i-arrow-ne"/></svg></span></a>
+        </div>
+      </div>
+
+      <!-- SAĞ: kısa iletişim formu -->
+      <div class="form-card reveal" id="iletisim-formu">
+        <h2 class="sr-only">İletişim formu</h2>
+        <p class="form-card__lead">Projeniz için detaylı bilgi ve dosya paylaşmak isterseniz → <a href="/projenizi-anlatin/" data-cta="projenizi_anlatin_iletisim">Projenizi Anlatın</a></p>
+        <form action="/api/form.php" method="post" novalidate data-contact-form>
+          <input type="hidden" name="form_type" value="iletisim">
+          <input type="hidden" name="ts" value="" data-form-ts>
+          <div class="hp-field" aria-hidden="true">
+            <label for="f-website">Web siteniz</label>
+            <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off">
+          </div>
+          <div class="form-grid">
+            <div class="field field--full">
+              <label for="f-ad">Ad Soyad <span class="field__req" aria-hidden="true">*</span></label>
+              <input id="f-ad" name="ad_soyad" type="text" autocomplete="name" maxlength="100" required aria-describedby="f-ad-err">
+              <p class="field__error" id="f-ad-err"></p>
+            </div>
+            <div class="field">
+              <label for="f-tel">Telefon <span class="field__req" aria-hidden="true">*</span></label>
+              <input id="f-tel" name="telefon" type="tel" autocomplete="tel" inputmode="tel" maxlength="20" required aria-describedby="f-tel-err">
+              <p class="field__error" id="f-tel-err"></p>
+            </div>
+            <div class="field">
+              <label for="f-eposta">E-posta <span class="field__req" aria-hidden="true">*</span></label>
+              <input id="f-eposta" name="eposta" type="email" autocomplete="email" maxlength="150" required aria-describedby="f-eposta-err">
+              <p class="field__error" id="f-eposta-err"></p>
+            </div>
+            <div class="field field--full">
+              <label for="f-konu">Konu</label>
+              <select id="f-konu" name="konu" aria-describedby="f-konu-err">
+                <option>Genel bilgi</option>
+                <option>Teklif</option>
+                <option>Randevu</option>
+                <option>Diğer</option>
+              </select>
+              <p class="field__error" id="f-konu-err"></p>
+            </div>
+            <div class="field field--full">
+              <label for="f-mesaj">Mesaj <span class="field__req" aria-hidden="true">*</span></label>
+              <textarea id="f-mesaj" name="mesaj" rows="6" minlength="10" maxlength="2000" required aria-describedby="f-mesaj-meta f-mesaj-err"></textarea>
+              <div class="field__meta" id="f-mesaj-meta"><span>En az 10 karakter</span><span data-counter aria-live="off">0 / 2000</span></div>
+              <p class="field__error" id="f-mesaj-err"></p>
+            </div>
+            <div class="field field--full">
+              <label class="check" for="f-kvkk"><input id="f-kvkk" name="kvkk" type="checkbox" value="1" required aria-describedby="f-kvkk-err"><span><a href="/kvkk/" target="_blank" rel="noopener">KVKK Aydınlatma Metni</a>'ni okudum ve anladım.</span></label>
+              <p class="field__error" id="f-kvkk-err"></p>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn--primary" type="submit" data-form-submit>Mesajı Gönder<span class="btn__arrow" aria-hidden="true"><svg><use href="#i-arrow-ne"/></svg></span></button>
+            <p class="form-status" role="status" aria-live="polite" data-form-status></p>
+          </div>
+          <p class="form-note"><span aria-hidden="true">*</span> Zorunlu alanlar</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- KONUM -->
+  <section class="section section--surface" aria-labelledby="konum-baslik">
+    <div class="container">
+      <header class="section__head reveal">
+        <p class="eyebrow">Konum</p>
+        <h2 id="konum-baslik" class="section__title">Ofisimiz</h2>
+      </header>
+      <div class="map-embed map-embed--lg reveal" data-map data-map-src="https://www.google.com/maps?q=Osmano%C4%9Flu+%C4%B0%C5%9F+Merkezi,+Piri+Mehmet+Pa%C5%9Fa+Mah.+%C5%9Eerif+Sk.+No:1,+34570+Silivri+%C4%B0stanbul&amp;output=embed">
+        <button class="map-embed__btn" type="button" data-map-btn>Haritayı göster</button>
+        <p class="map-embed__note">Haritayı yüklediğinizde Google'ın gizlilik koşulları geçerli olur.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BÖLGELER (ana sayfadaki bileşenin aynısı) -->
+  <section class="section regions" aria-labelledby="bolgeler-baslik">
+    <div class="container regions__grid">
+      <header class="regions__head reveal">
+        <p class="eyebrow">Bölgeler</p>
+        <h2 id="bolgeler-baslik" class="section__title">Hizmet verdiğimiz bölgeler</h2>
+        <p class="section__intro">Silivri'deki ofisimizden İstanbul'un batı ilçelerine ve Tekirdağ'a hizmet veriyoruz; yerel imar uygulamalarını ve belediye süreçlerini yakından tanıyoruz.</p>
+      </header>
+      <div class="regions__groups">
+        <div class="regions__group reveal">
+          <h3 class="regions__city">İstanbul</h3>
+          <ul class="chips">
+            <li class="chip">Silivri</li>
+            <li class="chip chip--accent">Büyükçekmece – Mimaroba</li>
+            <li class="chip">Beylikdüzü</li>
+            <li class="chip">Çatalca</li>
+            <li class="chip">Esenyurt</li>
+            <li class="chip">Avcılar</li>
+          </ul>
+        </div>
+        <div class="regions__group reveal">
+          <h3 class="regions__city">Tekirdağ</h3>
+          <ul class="chips">
+            <li class="chip">Çorlu</li>
+            <li class="chip">Çerkezköy</li>
+            <li class="chip">Kapaklı</li>
+            <li class="chip">Ergene</li>
+            <li class="chip">Marmaraereğlisi</li>
+            <li class="chip">Saray</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- FOOTER START -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__col footer__brand">
+        <a class="logo logo--footer" href="/">
+          <img class="logo__img" src="/assets/img/sibelaydinlogo.svg" width="100" height="81" loading="lazy" alt="Sibel Aydın Mimarlık">
+        </a>
+        <p>Konut, villa ve ticari yapılar için mimari proje, iç mimari, ruhsat ve uygulama süreçlerini tek ofisten yönetiyoruz.</p>
+      </div>
+      <nav class="footer__col" aria-label="Hizmetler">
+        <h2 class="footer__title">Hizmetler</h2>
+        <ul class="footer__links">
+          <li><a href="/hizmetler/mimari-proje/">Mimari Proje</a></li>
+          <li><a href="/hizmetler/ic-mimari/">İç Mimari</a></li>
+          <li><a href="/hizmetler/3d-gorsellestirme/">3D Görselleştirme</a></li>
+          <li><a href="/hizmetler/uygulama/">Uygulama</a></li>
+          <li><a href="/hizmetler/santiye-teknik-hizmetler/">Şantiye ve Teknik Hizmetler</a></li>
+          <li><a href="/hizmetler/ruhsat-iskan/">Ruhsat ve İskân Süreçleri</a></li>
+          <li><a href="/hizmetler/mimari-danismanlik/">Mimari Danışmanlık ve Kentsel Dönüşüm</a></li>
+          <li><a href="/hizmetler/enerji-kimlik-belgesi/">Enerji Kimlik Belgesi (EKB)</a></li>
+          <li><a href="/hizmetler/bina-akustigi/">Bina Akustiği</a></li>
+          <li><a href="/hizmetler/bilirkisilik/">Bilirkişilik ve Teknik İnceleme</a></li>
+        </ul>
+      </nav>
+      <nav class="footer__col" aria-label="Kurumsal">
+        <h2 class="footer__title">Kurumsal</h2>
+        <ul class="footer__links">
+          <li><a href="/kurumsal/">Hakkımızda</a></li>
+          <li><a href="/kurumsal/calisma-anlayisimiz/">Çalışma Anlayışımız</a></li>
+          <!-- GİZLİ: Ekibimiz sayfası bilgiler gelince açılacak — <li><a href="/kurumsal/ekibimiz/">Ekibimiz</a></li> -->
+          <li><a href="/projeler/">Projeler</a></li>
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="/projenizi-anlatin/">Projenizi Anlatın</a></li>
+        </ul>
+        <h2 class="footer__title footer__title--sub">Yasal</h2>
+        <ul class="footer__links">
+          <li><a href="/kvkk/">KVKK Aydınlatma Metni</a></li>
+          <li><a href="/gizlilik/">Gizlilik Politikası</a></li>
+        </ul>
+      </nav>
+      <div class="footer__col">
+        <h2 class="footer__title">İletişim</h2>
+        <address class="footer__contact">
+          <p class="footer-address">Piri Mehmet Paşa Mah. Şerif Sk.<br>Osmanoğlu İş Merkezi No:1 İç Kapı No:10<br>34570 Silivri / İstanbul</p>
+          <p><a href="tel:+905368475640">0536 847 56 40</a></p>
+          <p><a href="mailto:proje@sibelaydinmimarlik.com.tr">proje@sibelaydinmimarlik.com.tr</a></p>
+          <p>Pazartesi–Cuma 09:00–19:00<br><span class="muted">Cumartesi–Pazar kapalı</span></p>
+        </address>
+        <div class="map-embed" data-map data-map-src="https://www.google.com/maps?q=Osmano%C4%9Flu+%C4%B0%C5%9F+Merkezi,+Piri+Mehmet+Pa%C5%9Fa+Mah.+%C5%9Eerif+Sk.+No:1,+34570+Silivri+%C4%B0stanbul&amp;output=embed">
+          <button class="map-embed__btn" type="button" data-map-btn>Haritayı göster</button>
+          <p class="map-embed__note">Harita, Google Haritalar'dan yüklenir.</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>© <span data-year>2026</span> Sibel Aydın İnşaat Mimarlık San. Tic. Ltd. Şti. · Silivri V.D. 7700475504</p>
+      <p><a href="/kvkk/">KVKK</a> · <a href="/gizlilik/">Gizlilik</a></p>
+    </div>
+  </div>
+</footer>
+
+<a class="wa-fab" href="https://wa.me/905368475640" target="_blank" rel="noopener" aria-label="WhatsApp'tan yazın">
+  <svg class="wa-fab__icon" aria-hidden="true"><use href="#i-wa"/></svg>
+  <span class="wa-fab__label" aria-hidden="true">WhatsApp'tan yazın</span>
+</a>
+
+<nav class="mobile-bar" aria-label="Hızlı iletişim">
+  <a class="mobile-bar__item" href="tel:+905368475640">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Ara
+  </a>
+  <a class="mobile-bar__item mobile-bar__item--wa" href="https://wa.me/905368475640" target="_blank" rel="noopener">
+    <svg class="mobile-bar__wa" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp
+  </a>
+  <a class="mobile-bar__item" href="/projenizi-anlatin/" data-cta="projenizi_anlatin_mobilbar">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6v18h6M14 3l4 4v3M14 3v4h4M9 12h5M9 16h2.5M19.5 13.5l2 2L16 21h-2v-2z"/></svg>Proje Anlat
+  </a>
+</nav>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-arrow-ne" viewBox="0 0 16 16"><path d="M4.5 11.5l7-7M5.75 4.5h5.75v5.75" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></symbol>
+  <symbol id="i-arrow-r" viewBox="0 0 16 16"><path d="M2.5 8h11M9 3.5 13.5 8 9 12.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></symbol>
+  <symbol id="i-arrow-d" viewBox="0 0 16 16"><path d="M8 2.5v11M3.5 9 8 13.5 12.5 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></symbol>
+  <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.7.62.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.18-1.42-.08-.12-.27-.2-.57-.34m-5.42 7.4h-.01a9.87 9.87 0 0 1-5.03-1.37l-.36-.22-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.88 9.88m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.89 0-3.18-1.24-6.17-3.48-8.41Z"/></symbol>
+</svg>
+<!-- FOOTER END -->
+
+</body>
+</html>

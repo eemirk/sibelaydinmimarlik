@@ -776,6 +776,72 @@ html:not(.motion) .hero__progress { display: none; }
 @media (max-width: 767px) { .principles { grid-template-columns: 1fr; } .principles li { grid-template-columns: 44px 1fr; } .principles__num { font-size: 1.5rem; } }
 .process__more { margin-top: clamp(32px, 4vw, 48px); }
 
+/* Hizmetler ana sayfası: gruplar (kartlar .related bileşeni) ----------------- */
+.svc-group + .svc-group { margin-top: clamp(56px, 7vw, 96px); }
+.svc-group__title { font-size: clamp(1.6rem, 2.6vw, 2.25rem); padding-bottom: 20px; margin-bottom: 24px; border-bottom: 1px solid var(--line); }
+.related p { color: var(--muted); font-size: .9375rem; margin: 0; }
+
+/* İletişim sayfası ------------------------------------------------------------ */
+.contact-grid { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(40px, 6vw, 96px); align-items: start; }
+@media (max-width: 899px) { .contact-grid { grid-template-columns: 1fr; } }
+.contact-item { display: grid; grid-template-columns: 28px 1fr; gap: 4px 16px; padding: 22px 0; border-top: 1px solid var(--line); }
+.contact-item:last-of-type { border-bottom: 1px solid var(--line); }
+.contact-item > svg {
+  grid-row: 1 / span 3; width: 24px; height: 24px; margin-top: 2px; color: var(--accent);
+  fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+}
+.contact-item > svg.is-fill { stroke: none; }
+.contact-item__label { margin: 0; font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.contact-item__value { margin: 0; font-size: 1.0625rem; font-variant-numeric: tabular-nums; }
+.contact-item__value a { text-decoration: none; }
+.contact-item__action { display: inline-flex; align-items: center; min-height: 44px; justify-self: start; }
+.contact-note { margin-top: 28px; padding: 24px; background: var(--surface); border: 1px solid var(--line); border-left: 2px solid var(--accent); border-radius: var(--radius); }
+.contact-note p { margin: 0 0 16px; font-weight: 500; }
+.map-embed--lg { margin-top: 0; aspect-ratio: 16 / 7; gap: 10px; }
+.map-embed--lg .map-embed__btn { min-height: 44px; padding: 10px 20px; font-size: .9375rem; }
+.map-embed--lg .map-embed__note { font-size: .8125rem; }
+@media (max-width: 767px) { .map-embed--lg { aspect-ratio: 4 / 3; } }
+
+/* Form ---------------------------------------------------------------------- */
+.form-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: clamp(24px, 4vw, 48px); }
+.form-card__lead { margin: 0 0 28px; color: var(--muted); }
+.form-card__lead a { color: var(--accent-dark); font-weight: 600; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 24px; }
+@media (max-width: 599px) { .form-grid { grid-template-columns: 1fr; } }
+.field { display: grid; gap: 8px; align-content: start; }
+.field--full { grid-column: 1 / -1; }
+.field label { font-size: .875rem; font-weight: 500; }
+.field__req { color: var(--accent-dark); }
+.field input, .field select, .field textarea {
+  width: 100%; min-height: 48px; padding: 12px 14px; font: inherit; font-size: 1rem; color: var(--ink);
+  background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius);
+  transition: border-color .3s var(--ease), background-color .3s var(--ease);
+}
+.field textarea { min-height: 168px; resize: vertical; }
+.field select {
+  appearance: none; padding-right: 44px;
+  background: var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 4.5 6 8l3.5-3.5' fill='none' stroke='%231E1E1E' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 16px center / 12px;
+}
+.field input:hover, .field select:hover, .field textarea:hover { border-color: #CFC9C0; }
+.field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible { outline: 2px solid var(--accent-dark); outline-offset: 1px; border-color: var(--accent-dark); background-color: var(--surface); }
+.field [aria-invalid="true"] { border-color: #A33A2B; }
+.field__meta { display: flex; justify-content: space-between; gap: 12px; font-size: .8125rem; color: var(--muted); }
+.field__error { margin: 0; font-size: .8125rem; color: #A33A2B; }
+.field__error:empty { display: none; }
+.check { display: flex; gap: 12px; align-items: flex-start; font-size: .9375rem; font-weight: 400 !important; cursor: pointer; }
+.check input { flex: none; width: 20px; height: 20px; min-height: 0; margin: 2px 0 0; padding: 0; accent-color: var(--accent-dark); }
+.check a { color: var(--accent-dark); font-weight: 600; }
+.hp-field { position: absolute !important; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+.form-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; margin-top: 28px; }
+.form-status { margin: 0; font-size: .9375rem; }
+.form-status--error { color: #A33A2B; }
+.btn[aria-disabled="true"] { opacity: .65; pointer-events: none; }
+.form-note { margin: 16px 0 0; font-size: .8125rem; color: var(--muted); }
+.form-success:focus { outline: none; }
+.form-success h3 { font-size: clamp(1.5rem, 2.4vw, 2rem); margin-bottom: 14px; }
+.form-success p { color: var(--muted); margin: 0 0 10px; }
+.form-success strong { color: var(--ink); font-variant-numeric: tabular-nums; }
+
 /* Röntgen merceği (3D Görselleştirme hero) -------------------------------------
    Modlar (JS): .xray--lens (imleç + mercek) · .xray--slider (dokunmatik/dar: kaydırıcı)
    · .xray--static (hareket kapalı: yan yana). Hareket yalnızca transform / mask-position / opacity. */

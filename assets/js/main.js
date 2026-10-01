@@ -360,6 +360,107 @@ const REVEAL_STAGGER_MS = 80;
   initHero();
   initXray();
   initStudio();
+  initContactForm();
+
+  /* ---------------------------------------------------------------- İLETİŞİM FORMU
+     İstemci doğrulaması (sunucu aynı kuralları tekrar uygular) → POST /api/form.php (JSON).
+     Başarıda formun yerine teşekkür mesajı; dataLayer: contact_submit. */
+  function initContactForm() {
+    const form = $('[data-contact-form]');
+    if (!form) return;
+    const card = form.closest('.form-card');
+    const status = $('[data-form-status]', form);
+    const submit = $('[data-form-submit]', form);
+    const counter = $('[data-counter]', form);
+    const ts = $('[data-form-ts]', form);
+    if (ts) ts.value = String(Math.floor(Date.now() / 1000));
+
+    const RULES = {
+      ad_soyad: (v) => (v.trim().length >= 2 ? '' : 'Lütfen adınızı ve soyadınızı yazın.'),
+      telefon: (v) => { const d = v.replace(/\D/g, ''); return d.length >= 10 && d.length <= 13 ? '' : 'Lütfen geçerli bir telefon numarası yazın.'; },
+      eposta: (v) => (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) ? '' : 'Lütfen geçerli bir e-posta adresi yazın.'),
+      mesaj: (v) => { const n = v.trim().length; return n >= 10 && n <= 2000 ? '' : 'Mesajınız 10 ile 2000 karakter arasında olmalı.'; },
+      kvkk: (v, el) => (el.checked ? '' : 'Devam etmek için KVKK Aydınlatma Metni\'ni okuduğunuzu onaylayın.')
+    };
+    const setError = (name, msg) => {
+      const el = form.elements[name];
+      if (!el) return;
+      const err = $('#' + el.id + '-err', form);
+      if (msg) el.setAttribute('aria-invalid', 'true'); else el.removeAttribute('aria-invalid');
+      if (err) err.textContent = msg || '';
+    };
+    const check = (name) => {
+      const el = form.elements[name];
+      const msg = RULES[name] ? RULES[name](el.value, el) : '';
+      setError(name, msg);
+      return !msg;
+    };
+
+    // Alan terk edilince (ve hatalıyken her değişiklikte) doğrula
+    Object.keys(RULES).forEach((name) => {
+      const el = form.elements[name];
+      el.addEventListener('blur', () => { if (el.value || el.type === 'checkbox') check(name); });
+      el.addEventListener(el.type === 'checkbox' ? 'change' : 'input', () => { if (el.getAttribute('aria-invalid')) check(name); });
+    });
+    const msgEl = form.elements.mesaj;
+    const count = () => { counter.textContent = msgEl.value.length + ' / 2000'; };
+    msgEl.addEventListener('input', count);
+    count();
+
+    let sending = false;
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (sending) return;
+      const invalid = Object.keys(RULES).filter((name) => !check(name));
+      if (invalid.length) {
+        status.className = 'form-status form-status--error';
+        status.textContent = 'Lütfen işaretli alanları kontrol edin.';
+        form.elements[invalid[0]].focus();
+        return;
+      }
+      sending = true;
+      submit.setAttribute('aria-disabled', 'true');
+      status.className = 'form-status';
+      status.textContent = 'Gönderiliyor…';
+      const konu = form.elements.konu.value;
+
+      fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' }, credentials: 'same-origin' })
+        .then((r) => r.json().catch(() => ({ ok: false })).then((data) => ({ status: r.status, data })))
+        .then(({ status: code, data }) => {
+          if (data && data.ok) {
+            window.dataLayer.push({ event: 'contact_submit', konu: konu, talep_no: data.talep_no || null, page_path: location.pathname });
+            showSuccess(data.talep_no);
+            return;
+          }
+          if (code === 422 && data.errors) Object.keys(data.errors).forEach((name) => setError(name, data.errors[name]));
+          fail(data && data.message);
+        })
+        .catch(() => fail());
+    });
+
+    function fail(message) {
+      sending = false;
+      submit.removeAttribute('aria-disabled');
+      status.className = 'form-status form-status--error';
+      status.textContent = message || 'Mesajınız şu anda gönderilemedi. Lütfen tekrar deneyin ya da 0536 847 56 40 numarasından bize ulaşın.';
+      const firstInvalid = $('[aria-invalid="true"]', form);
+      if (firstInvalid) firstInvalid.focus();
+    }
+    function showSuccess(no) {
+      const box = document.createElement('div');
+      box.className = 'form-success';
+      box.tabIndex = -1;
+      box.setAttribute('role', 'status');
+      box.innerHTML = '<h3>Teşekkürler, mesajınız bize ulaştı.</h3>' +
+        (no ? '<p>Talep numaranız: <strong></strong></p>' : '') +
+        '<p>En kısa sürede size dönüş yapacağız. Acil durumlar için <a href="tel:+905368475640">0536 847 56 40</a> numarasından bize ulaşabilirsiniz.</p>';
+      if (no) $('strong', box).textContent = no;
+      card.replaceChildren(box);
+      box.focus({ preventScroll: true });
+      const top = card.getBoundingClientRect().top;
+      if (top < 80 || top > innerHeight) card.scrollIntoView({ block: 'start', behavior: motionOK ? 'smooth' : 'auto' });
+    }
+  }
 
   /* ---------------------------------------------------------------- RÖNTGEN MERCEĞİ (3D Görselleştirme)
      lens: imleci yumuşak takip eden mercek (mask-position + transform)
