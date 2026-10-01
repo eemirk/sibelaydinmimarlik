@@ -124,6 +124,10 @@ const PF_SERVICE_MAP = { 'ruhsat-iskan': 'ruhsat', 'santiye-teknik-hizmetler': '
     if (!a) return;
     const href = a.getAttribute('href') || '';
     let event = null;
+    if (a.hasAttribute('data-social')) {
+      window.dataLayer.push({ event: 'social_click', platform: a.dataset.social, link_url: a.href, placement: placementOf(a), page_path: location.pathname });
+      return;
+    }
     if (a.hasAttribute('data-appointment')) event = 'appointment_whatsapp_click';
     else if (href.indexOf('https://wa.me/') === 0) event = 'whatsapp_click';
     else if (href.indexOf('tel:') === 0) event = 'phone_click';

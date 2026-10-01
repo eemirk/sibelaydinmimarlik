@@ -179,6 +179,7 @@ ${imgComment}
   <meta property="og:url" content="${URL}">
   <meta property="og:image" content="${SITE}/assets/img/hero-villa.webp">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@mimarsibelaydin">
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/assets/img/favicon-32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png" sizes="180x180">
