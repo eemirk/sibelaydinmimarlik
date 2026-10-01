@@ -64,6 +64,10 @@ const WA_APPOINTMENT_MSG = 'Merhaba, Sibel Aydın Mimarlık ile görüşme rande
 const PROJECTS_URL = '/data/projects.json';
 const HOME_PROJECT_LIMIT = 6;
 const REVEAL_STAGGER_MS = 80;
+// Projenizi Anlatın: dosya kuralları (api/form.php ile aynı) ve ?hizmet=<hizmet sayfası slug'ı> → form seçeneği
+const PF_FILE_TYPES = ['jpg', 'jpeg', 'png', 'heic', 'webp', 'pdf', 'dwg', 'dxf'];
+const PF_MAX_FILES = 10, PF_MAX_FILE = 15 * 1024 * 1024, PF_MAX_TOTAL = 25 * 1024 * 1024;
+const PF_SERVICE_MAP = { 'ruhsat-iskan': 'ruhsat', 'santiye-teknik-hizmetler': 'santiye-teknik', 'enerji-kimlik-belgesi': 'ekb' };
 
 (function () {
   'use strict';
@@ -90,10 +94,10 @@ const REVEAL_STAGGER_MS = 80;
 
   /* ---------------------------------------------------------------- WhatsApp mesajı
      <body data-wa-msg="..."> değeri tüm wa.me linklerine eklenir. */
-  // Randevu butonları ([data-appointment]) kendi mesajını taşır; burada atlanır.
+  // Randevu butonları ([data-appointment]) ve kendi mesajını JS ile alan linkler ([data-wa-keep]) atlanır.
   const waMsg = body.dataset.waMsg;
   if (waMsg) {
-    $$('a[href^="' + WA_BASE + '"]:not([data-appointment])').forEach((a) => {
+    $$('a[href^="' + WA_BASE + '"]:not([data-appointment]):not([data-wa-keep])').forEach((a) => {
       a.href = WA_BASE + '?text=' + encodeURIComponent(waMsg);
     });
   }
@@ -360,6 +364,8 @@ const REVEAL_STAGGER_MS = 80;
   initXray();
   initStudio();
   initContactForm();
+  initProjectForm();
+  initThanks();
 
   /* ---------------------------------------------------------------- İLETİŞİM FORMU
      İstemci doğrulaması (sunucu aynı kuralları tekrar uygular) → POST /api/form.php (JSON).
@@ -459,6 +465,281 @@ const REVEAL_STAGGER_MS = 80;
       const top = card.getBoundingClientRect().top;
       if (top < 80 || top > innerHeight) card.scrollIntoView({ block: 'start', behavior: motionOK ? 'smooth' : 'auto' });
     }
+  }
+
+  /* ---------------------------------------------------------------- PROJENİZİ ANLATIN (3 adımlı form)
+     JS kapalıysa tüm adımlar tek sayfada görünür ve form normal POST eder.
+     Adım geçişinde yalnızca o adım doğrulanır; gönderim XHR (yükleme yüzdesi) → /api/form.php.
+     dataLayer: form_step {step}, form_submit {proje_turu, hizmet_sayisi}. */
+
+  function initProjectForm() {
+    const form = $('[data-project-form]');
+    if (!form) return;
+    form.classList.add('pf-enhanced');
+    const steps = $$('.pf-step', form);
+    const back = $('[data-pf-back]', form), next = $('[data-pf-next]', form), submit = $('[data-pf-submit]', form);
+    const alertBox = $('[data-pf-alert]', form), status = $('[data-form-status]', form);
+    const el = (name) => form.elements[name];
+    const ts = $('[data-form-ts]', form);
+    if (ts) ts.value = String(Math.floor(Date.now() / 1000));
+    let current = 0;
+    let files = [];
+
+    // ?hizmet=<slug> → ilgili hizmet seçili gelsin
+    const want = new URLSearchParams(location.search).get('hizmet');
+    if (want) {
+      const box = $('input[name="hizmetler[]"][value="' + CSS.escape(PF_SERVICE_MAP[want] || want) + '"]', form);
+      if (box) box.checked = true;
+    }
+
+    // İl → ilçe listesi (JS kapalıyken tüm ilçeler optgroup'larla tek listede)
+    const il = el('il'), ilce = el('ilce');
+    const ilceField = $('[data-ilce-select]', form), digerField = $('[data-ilce-diger]', form);
+    const ilceByIl = {};
+    $$('optgroup', ilce).forEach((g) => { ilceByIl[g.label] = $$('option', g).map((o) => o.value); });
+    function syncIlce() {
+      const v = il.value;
+      const isOther = v === 'Diğer';
+      digerField.hidden = !isOther;
+      ilceField.hidden = isOther || !v;
+      if (isOther || !v) return;
+      const keep = ilce.value;
+      ilce.replaceChildren(new Option('İlçe seçin', ''), ...(ilceByIl[v] || []).map((d) => new Option(d, d)));
+      if ((ilceByIl[v] || []).includes(keep)) ilce.value = keep;
+    }
+    il.addEventListener('change', () => { syncIlce(); setError('il', ''); setError('ilce', ''); setError('ilce_diger', ''); });
+    $('label[for="f-ilce-diger"] .field__opt', form)?.remove();
+    syncIlce();
+
+    // Telefon: 0532 123 45 67 / +90 532 123 45 67 biçiminde otomatik boşluk
+    const tel = el('telefon');
+    tel.addEventListener('input', () => {
+      const raw = tel.value;
+      const plus = raw.trim().startsWith('+');
+      let d = raw.replace(/\D/g, '').slice(0, plus ? 12 : 11);
+      let out;
+      if (plus) out = '+' + [d.slice(0, 2), d.slice(2, 5), d.slice(5, 8), d.slice(8, 10), d.slice(10, 12)].filter(Boolean).join(' ');
+      else if (d.startsWith('0')) out = [d.slice(0, 4), d.slice(4, 7), d.slice(7, 9), d.slice(9, 11)].filter(Boolean).join(' ');
+      else out = [d.slice(0, 3), d.slice(3, 6), d.slice(6, 8), d.slice(8, 10)].filter(Boolean).join(' ');
+      if (out !== raw) tel.value = out;
+    });
+
+    // Açıklama sayacı
+    const desc = el('aciklama'), counter = $('[data-counter]', form);
+    const count = () => { counter.textContent = desc.value.length + ' / 3000'; };
+    desc.addEventListener('input', count);
+    count();
+
+    // Dosyalar: sürükle-bırak + seç, önizleme listesi, tek tek kaldırma
+    const input = $('#f-dosyalar', form), zone = $('[data-dropzone]', form);
+    const list = $('[data-file-list]', form), total = $('[data-file-total]', form);
+    const fmt = (b) => (b >= 1048576 ? (b / 1048576).toFixed(1).replace('.', ',') + ' MB' : Math.max(1, Math.round(b / 1024)) + ' KB');
+    function addFiles(incoming) {
+      const msgs = [];
+      Array.from(incoming).forEach((f) => {
+        const ext = (f.name.split('.').pop() || '').toLowerCase();
+        if (!PF_FILE_TYPES.includes(ext) || f.name.indexOf('.') < 0) { msgs.push(f.name + ': bu dosya türü kabul edilmiyor (JPG, PNG, HEIC, WEBP, PDF, DWG, DXF).'); return; }
+        if (f.size > PF_MAX_FILE) { msgs.push(f.name + ': dosya başına en fazla 15 MB yükleyebilirsiniz.'); return; }
+        if (files.some((x) => x.name === f.name && x.size === f.size)) return;
+        if (files.length >= PF_MAX_FILES) { msgs.push(f.name + ': en fazla 10 dosya yükleyebilirsiniz.'); return; }
+        if (files.reduce((s, x) => s + x.size, 0) + f.size > PF_MAX_TOTAL) { msgs.push(f.name + ': toplam boyut 25 MB\'ı aşıyor.'); return; }
+        files.push(f);
+      });
+      renderFiles();
+      setError('dosyalar', msgs.join(' '));
+    }
+    function renderFiles() {
+      list.replaceChildren(...files.map((f, i) => {
+        const li = document.createElement('li');
+        li.innerHTML = '<span class="file-list__name"></span><span class="file-list__size"></span>' +
+          '<button type="button"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg></button>';
+        $('.file-list__name', li).textContent = f.name;
+        $('.file-list__size', li).textContent = fmt(f.size);
+        const btn = $('button', li);
+        btn.setAttribute('aria-label', f.name + ' dosyasını kaldır');
+        btn.addEventListener('click', () => {
+          files.splice(i, 1);
+          renderFiles();
+          setError('dosyalar', '');
+          (list.children[Math.min(i, files.length - 1)]?.querySelector('button') || input).focus();
+        });
+        return li;
+      }));
+      const sum = files.reduce((s, f) => s + f.size, 0);
+      total.hidden = !files.length;
+      total.textContent = files.length + ' dosya · ' + fmt(sum) + ' / 25 MB';
+    }
+    input.addEventListener('change', () => { addFiles(input.files); input.value = ''; });
+    ['dragenter', 'dragover'].forEach((t) => zone.addEventListener(t, (e) => { e.preventDefault(); zone.classList.add('is-over'); }));
+    ['dragleave', 'drop'].forEach((t) => zone.addEventListener(t, (e) => { e.preventDefault(); zone.classList.remove('is-over'); }));
+    zone.addEventListener('drop', (e) => { if (e.dataTransfer && e.dataTransfer.files.length) addFiles(e.dataTransfer.files); });
+
+    // Doğrulama (sunucu aynı kuralları tekrar uygular)
+    const checked = (name) => $$('input[name="' + name + '"]:checked', form);
+    const m2ok = (v) => !v.trim() || /^\d{1,7}([.,]\d{1,2})?$/.test(v.replace(/\s/g, ''));
+    const RULES = {
+      1: {
+        proje_turu: () => (checked('proje_turu').length ? '' : 'Lütfen proje türünü seçin.'),
+        hizmetler: () => (checked('hizmetler[]').length ? '' : 'Lütfen en az bir hizmet seçin.'),
+        asama: () => (checked('asama').length ? '' : 'Lütfen projenizin aşamasını seçin.'),
+        il: () => (il.value ? '' : 'Lütfen il seçin.'),
+        ilce: () => (!il.value || il.value === 'Diğer' || ilce.value ? '' : 'Lütfen ilçe seçin.'),
+        ilce_diger: () => (il.value !== 'Diğer' || el('ilce_diger').value.trim().length >= 2 ? '' : 'Lütfen il ve ilçeyi yazın.'),
+        arsa_m2: () => (m2ok(el('arsa_m2').value) ? '' : 'Lütfen metrekareyi yalnızca sayı olarak yazın (ör. 450).'),
+        yapi_m2: () => (m2ok(el('yapi_m2').value) ? '' : 'Lütfen metrekareyi yalnızca sayı olarak yazın (ör. 450).')
+      },
+      2: {
+        aciklama: () => { const n = desc.value.trim().length; return n >= 20 && n <= 3000 ? '' : 'Proje açıklaması 20 ile 3000 karakter arasında olmalı.'; }
+      },
+      3: {
+        ad_soyad: () => (el('ad_soyad').value.trim().length >= 2 ? '' : 'Lütfen adınızı ve soyadınızı yazın.'),
+        telefon: () => { const d = tel.value.replace(/\D/g, ''); return d.length >= 10 && d.length <= 13 ? '' : 'Lütfen geçerli bir telefon numarası yazın.'; },
+        eposta: () => (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(el('eposta').value.trim()) ? '' : 'Lütfen geçerli bir e-posta adresi yazın.'),
+        kvkk: () => (el('kvkk').checked ? '' : 'Devam etmek için KVKK Aydınlatma Metni\'ni okuduğunuzu onaylayın.')
+      }
+    };
+    const stepOf = (name) => (name === 'dosyalar' ? 2 : Number(Object.keys(RULES).find((s) => name in RULES[s]) || 3));
+    function setError(name, msg) {
+      const err = $('#e-' + CSS.escape(name), form);
+      if (err) err.textContent = msg || '';
+      const target = name === 'hizmetler' ? null : form.elements[name];
+      if (target && target.nodeType === 1 && !(target instanceof RadioNodeList)) {
+        if (msg) target.setAttribute('aria-invalid', 'true'); else target.removeAttribute('aria-invalid');
+      }
+    }
+    function firstInvalidControl(name) {
+      if (name === 'hizmetler') return $('input[name="hizmetler[]"]', form);
+      if (name === 'dosyalar') return input;
+      const c = form.elements[name];
+      return c instanceof RadioNodeList ? c[0] : c;
+    }
+    function validateStep(n) {
+      let first = null;
+      Object.keys(RULES[n]).forEach((name) => {
+        const msg = RULES[n][name]();
+        setError(name, msg);
+        if (msg && !first) first = name;
+      });
+      return first;
+    }
+    // Hatalı alan düzeltilince hata kalksın
+    form.addEventListener('change', (e) => {
+      const name = (e.target.name || '').replace('[]', '');
+      const n = stepOf(name);
+      if (RULES[n] && RULES[n][name] && $('#e-' + CSS.escape(name), form)?.textContent) setError(name, RULES[n][name]());
+    });
+
+    function show(i, focus) {
+      current = i;
+      steps.forEach((s, k) => s.classList.toggle('is-current', k === i));
+      back.hidden = i === 0;
+      next.hidden = i === steps.length - 1;
+      submit.hidden = i !== steps.length - 1;
+      $('[data-pf-num]', form).textContent = String(i + 1);
+      $('[data-pf-name]', form).textContent = steps[i].dataset.stepName;
+      $('[data-pf-bar]', form).style.setProperty('--p', String((i + 1) / steps.length));
+      window.dataLayer.push({ event: 'form_step', step: i + 1, page_path: location.pathname });
+      if (focus) {
+        const card = form.closest('.form-card');
+        if (card.getBoundingClientRect().top < 0) card.scrollIntoView({ block: 'start', behavior: motionOK ? 'smooth' : 'auto' });
+        $('.pf-step__title', steps[i]).focus({ preventScroll: true });
+      }
+    }
+    next.addEventListener('click', () => {
+      const bad = validateStep(current + 1);
+      if (bad) { firstInvalidControl(bad).focus(); return; }
+      show(current + 1, true);
+    });
+    back.addEventListener('click', () => show(current - 1, true));
+    show(0, false);
+
+    // Gönderim
+    let sending = false;
+    const waFallback = WA_BASE + '?text=' + encodeURIComponent('Merhaba, web sitenizden proje talebi göndermeye çalıştım ancak form hata verdi. Projem hakkında bilgi vermek istiyorum.');
+    function showAlert(message) {
+      alertBox.replaceChildren();
+      const p1 = document.createElement('p');
+      p1.textContent = message;
+      const p2 = document.createElement('p');
+      p2.innerHTML = 'Dilerseniz talebinizi <a target="_blank" rel="noopener" data-wa-keep>WhatsApp\'tan iletin</a> ya da <a href="tel:+905368475640">0536 847 56 40</a> numarasını arayın.';
+      $('a', p2).href = waFallback;
+      alertBox.append(p1, p2);
+      alertBox.hidden = false;
+      alertBox.focus();
+    }
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (sending) return;
+      // Son adımdan önce Enter: gönderme, sonraki adıma geç
+      if (current < steps.length - 1) { next.click(); return; }
+      for (let n = 1; n <= 3; n++) {
+        const bad = validateStep(n);
+        if (bad) { show(n - 1, false); firstInvalidControl(bad).focus(); return; }
+      }
+      sending = true;
+      alertBox.hidden = true;
+      submit.setAttribute('aria-disabled', 'true');
+      back.setAttribute('aria-disabled', 'true');
+      status.className = 'form-status';
+      status.textContent = 'Gönderiliyor…';
+
+      const fd = new FormData(form);
+      fd.delete('dosyalar[]');
+      files.forEach((f) => fd.append('dosyalar[]', f, f.name));
+      const projeTuru = (checked('proje_turu')[0] || {}).value || null;
+      const hizmetSayisi = checked('hizmetler[]').length;
+
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', form.action);
+      xhr.setRequestHeader('Accept', 'application/json');
+      xhr.upload.addEventListener('progress', (ev) => {
+        if (ev.lengthComputable && files.length) status.textContent = 'Gönderiliyor… %' + Math.round((ev.loaded / ev.total) * 100);
+      });
+      const fail = (message) => {
+        sending = false;
+        submit.removeAttribute('aria-disabled');
+        back.removeAttribute('aria-disabled');
+        status.textContent = '';
+        showAlert(message || 'Talebiniz şu anda gönderilemedi. Bilgileriniz formda duruyor; lütfen tekrar deneyin.');
+      };
+      xhr.addEventListener('load', () => {
+        let data = null;
+        try { data = JSON.parse(xhr.responseText); } catch (err) { /* PHP çalışmıyor ya da beklenmeyen yanıt */ }
+        if (data && data.ok) {
+          status.textContent = 'Talebiniz alındı, yönlendiriliyorsunuz…';
+          const go = () => { location.href = data.redirect || '/projenizi-anlatin/tesekkurler/'; };
+          let done = false;
+          const once = () => { if (!done) { done = true; go(); } };
+          window.dataLayer.push({ event: 'form_submit', form_type: 'proje', proje_turu: projeTuru, hizmet_sayisi: hizmetSayisi, page_path: location.pathname, eventCallback: once, eventTimeout: 1500 });
+          setTimeout(once, 600);
+          return;
+        }
+        if (xhr.status === 422 && data && data.errors) {
+          Object.keys(data.errors).forEach((name) => setError(name, data.errors[name]));
+          const firstStep = Math.min(...Object.keys(data.errors).map(stepOf));
+          show(firstStep - 1, false);
+        }
+        fail(data && data.message);
+      });
+      xhr.addEventListener('error', () => fail());
+      xhr.send(fd);
+    });
+  }
+
+  /* ---------------------------------------------------------------- Teşekkür sayfası: ?no=<TALEP_NO> */
+  function initThanks() {
+    const box = $('[data-thanks]');
+    if (!box) return;
+    const no = new URLSearchParams(location.search).get('no') || '';
+    const valid = /^SA-\d{4}-(\d{4}|R[0-9A-F]{4})$/.test(no);
+    const wa = $('[data-thanks-wa]', box);
+    if (valid) {
+      $('[data-thanks-no]', box).textContent = no;
+      $('[data-thanks-line]', box).hidden = false;
+    }
+    wa.href = WA_BASE + '?text=' + encodeURIComponent(valid
+      ? 'Merhaba, web sitenizden ' + no + ' numaralı proje talebini gönderdim.'
+      : 'Merhaba, web sitenizden proje talebi gönderdim.');
   }
 
   /* ---------------------------------------------------------------- RÖNTGEN MERCEĞİ (3D Görselleştirme)
