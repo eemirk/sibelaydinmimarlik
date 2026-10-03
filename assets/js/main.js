@@ -355,56 +355,82 @@ const MASCOT_SVG = '<svg class="mascot__svg" viewBox="0 0 80 120" aria-hidden="t
     });
   });
 
-  /* ---------------------------------------------------------------- Projeler (JSON ile zenginleştirme)
-     Kartlar HTML'de statik durur (SEO); JSON gelirse içerik JSON'dan güncellenir.
-     Proje detay sayfaları yayına girene kadar kartlar link değildir (<article>). */
+  /* ---------------------------------------------------------------- Konsept çalışmalar (ana sayfa)
+     Kartlar HTML'de statik durur (SEO). /data/projects.json gelirse her karta "Görselleri inceleyin"
+     düğmesi eklenir; tıklanınca 3 görsellik detay penceresi (<dialog>) açılır. Kayıtlar temsilî
+     görselleştirmedir: etiket "Konsept çalışma · Temsilî görselleştirme" detayda da görünür. */
   const projectList = $('[data-projects]');
-  if (projectList && 'fetch' in window) {
+  if (projectList && 'fetch' in window && typeof HTMLDialogElement === 'function') {
     fetch(PROJECTS_URL, { credentials: 'same-origin' })
       .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
-      .then((data) => {
-        const items = (Array.isArray(data) ? data : data.projeler || []).slice(0, HOME_PROJECT_LIMIT);
-        if (items.length) renderProjects(projectList, items);
-      })
+      .then((data) => initConcepts(projectList, (Array.isArray(data) ? data : data.projeler || []).slice(0, HOME_PROJECT_LIMIT)))
       .catch(() => { /* statik kartlar kalır */ });
   }
 
-  function projectCard(p) {
-    const li = document.createElement('li');
-    li.className = 'project-card reveal';
-    li.innerHTML =
-      '<article><div class="project-card__frame"><div class="media"><img width="1600" height="1200" loading="lazy" decoding="async"></div></div>' +
-      '<div class="project-card__meta"><h3 class="project-card__title"></h3><p class="project-card__info"></p></div></article>';
-    return li;
+  function conceptPicture(g, sizes) {
+    const set = (ext) => [480, 960, 1600].map((w) => g.gorsel + '-' + w + '.' + ext + ' ' + w + 'w').join(', ');
+    const pic = document.createElement('picture');
+    const src = document.createElement('source');
+    src.type = 'image/avif'; src.srcset = set('avif'); src.sizes = sizes;
+    const img = document.createElement('img');
+    img.src = g.gorsel + '-960.webp'; img.srcset = set('webp'); img.sizes = sizes;
+    img.width = 1600; img.height = 1200; img.loading = 'lazy'; img.decoding = 'async'; img.alt = g.alt;
+    pic.append(src, img);
+    return pic;
   }
-  function renderProjects(list, items) {
-    const cards = $$('.project-card', list);
-    items.forEach((p, i) => {
-      let li = cards[i];
-      if (!li) { li = projectCard(p); list.appendChild(li); }
-      const media = $('.media', li);
-      const img = $('img', li);
-      const area = typeof p.alan_m2 === 'number' ? p.alan_m2.toLocaleString('tr-TR') + ' m²' : '— m²';
-      $('.project-card__title', li).textContent = p.baslik;
-      const info = $('.project-card__info', li);
-      info.textContent = '';
-      [p.tur, p.konum, area].forEach((t) => {
-        const s = document.createElement('span');
-        s.textContent = t;
-        info.appendChild(s);
-      });
-      media.dataset.ph = 'Proje kapağı: ' + p.baslik;
-      if (p.kapak && img.getAttribute('src') !== p.kapak) {
-        media.classList.remove('is-missing');
-        img.src = p.kapak;
-      }
-      img.alt = p.baslik + ' — ' + p.tur + ', ' + p.konum;
-      li.dataset.slug = p.slug;
-      li.dataset.tur = p.tur;
-      if (Array.isArray(p.hizmetler)) li.dataset.hizmetler = p.hizmetler.join('|');
+  function initConcepts(list, items) {
+    const bySlug = {};
+    items.forEach((p) => { bySlug[p.slug] = p; });
+    const dlg = document.createElement('dialog');
+    dlg.className = 'concept-dialog';
+    dlg.setAttribute('aria-labelledby', 'konsept-baslik');
+    // Kapat düğmesi önde ve yapışkan: uzun içerikte kaydırınca da görünür
+    dlg.innerHTML = '<button class="concept-dialog__close" type="button" aria-label="Pencereyi kapat"><span aria-hidden="true">×</span></button>' +
+      '<div class="concept-dialog__inner">' +
+      '<header class="concept-dialog__head"><p class="eyebrow" data-k-etiket></p><h2 id="konsept-baslik" class="concept-dialog__title"></h2>' +
+      '<p class="concept-dialog__text" data-k-tanim></p></header>' +
+      '<div class="concept-dialog__grid" data-k-galeri></div></div>';
+    body.appendChild(dlg);
+    let opener = null;
+    $('.concept-dialog__close', dlg).addEventListener('click', () => dlg.close());
+    dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });     // arka plana tıklama
+    dlg.addEventListener('close', () => { body.classList.remove('dialog-open'); if (opener) opener.focus(); });
+    const open = (p, btn) => {
+      opener = btn;
+      $('[data-k-etiket]', dlg).textContent = p.etiket;
+      $('.concept-dialog__title', dlg).textContent = p.baslik;
+      $('[data-k-tanim]', dlg).textContent = p.tanim;
+      const grid = $('[data-k-galeri]', dlg);
+      grid.replaceChildren(...p.galeri.map((g, i) => {
+        const fig = document.createElement('figure');
+        fig.className = 'concept-dialog__fig' + (i === 0 ? ' is-main' : '');
+        const media = document.createElement('div');
+        media.className = 'media';
+        media.appendChild(conceptPicture(g, i === 0 ? '(min-width: 1100px) 1040px, 94vw' : '(min-width: 700px) 520px, 94vw'));
+        const cap = document.createElement('figcaption');
+        cap.textContent = g.baslik;
+        fig.append(media, cap);
+        return fig;
+      }));
+      body.classList.add('dialog-open');
+      dlg.showModal();
+      dlg.scrollTop = 0;
+      window.dataLayer.push({ event: 'concept_open', concept: p.slug, page_path: location.pathname });
+    };
+    $$('.project-card', list).forEach((li) => {
+      const p = bySlug[li.dataset.slug];
+      if (!p || !Array.isArray(p.galeri) || !p.galeri.length) return;
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'link-arrow project-card__open';
+      btn.setAttribute('aria-haspopup', 'dialog');
+      btn.innerHTML = p.galeri.length + ' görseli inceleyin<svg class="i-arrow" aria-hidden="true"><use href="#i-arrow-r"/></svg>';
+      $('.project-card__meta', li).appendChild(btn);
+      btn.addEventListener('click', () => open(p, btn));
+      const frame = $('.project-card__frame', li);
+      frame.classList.add('is-interactive');
+      frame.addEventListener('click', () => open(p, btn));
     });
-    cards.slice(items.length).forEach((li) => li.remove());
-    observeReveals(list);
   }
 
   /* ---------------------------------------------------------------- HERO */

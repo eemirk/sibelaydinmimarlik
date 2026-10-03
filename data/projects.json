@@ -1,100 +1,58 @@
 [
   {
-    "_durum": "ÖRNEK – gerçek projeyle değiştirilecek",
-    "slug": "ornek-proje-01",
-    "baslik": "Örnek Proje 01",
-    "tur": "Villa",
-    "konum": "Konum eklenecek",
-    "alan_m2": null,
-    "hizmetler": [
-      "Mimari Proje",
-      "3D Görselleştirme",
-      "Ruhsat ve İskân Süreçleri"
-    ],
-    "kisa_aciklama": "ÖRNEK – gerçek projeyle değiştirilecek",
-    "kapak": "/assets/img/projeler/ornek-proje-01/kapak.webp",
-    "galeri": [],
-    "yer_tutucu": true
+    "slug": "iki-katli-modern-villa",
+    "baslik": "İki katlı modern villa",
+    "etiket": "Konsept çalışma · Temsilî görselleştirme",
+    "tanim": "Beyaz sıva ve traverten cepheli, geniş açıklıklı, havuzlu ve zeytin ağaçlı bahçesiyle iki katlı villa konsepti.",
+    "galeri": [
+      { "gorsel": "/assets/img/konsept/iki-katli-modern-villa-cephe", "baslik": "Dış cephe", "alt": "İki katlı modern villa görselleştirmesi: beyaz sıva ve traverten cephe, zeytin ağaçlı bahçe" },
+      { "gorsel": "/assets/img/konsept/iki-katli-modern-villa-havuz-teras", "baslik": "Havuz ve teras", "alt": "İki katlı modern villanın havuzu ve pergolalı terası – görselleştirme" },
+      { "gorsel": "/assets/img/konsept/iki-katli-modern-villa-salon", "baslik": "Salon", "alt": "İki katlı modern villanın çift yükseklikli salonu – görselleştirme" }
+    ]
   },
   {
-    "_durum": "ÖRNEK – gerçek projeyle değiştirilecek",
-    "slug": "ornek-proje-02",
-    "baslik": "Örnek Proje 02",
-    "tur": "Müstakil Konut",
-    "konum": "Konum eklenecek",
-    "alan_m2": null,
-    "hizmetler": [
-      "Mimari Proje",
-      "Uygulama"
-    ],
-    "kisa_aciklama": "ÖRNEK – gerçek projeyle değiştirilecek",
-    "kapak": "/assets/img/projeler/ornek-proje-02/kapak.webp",
-    "galeri": [],
-    "yer_tutucu": true
+    "slug": "deniz-manzarali-yazlik",
+    "baslik": "Deniz manzaralı yazlık",
+    "etiket": "Konsept çalışma · Temsilî görselleştirme",
+    "tanim": "Marmara'ya bakan eğimli arazide teraslarla yere oturan, geniş cam açıklıklı yazlık konsepti.",
+    "galeri": [
+      { "gorsel": "/assets/img/konsept/deniz-manzarali-yazlik-cephe", "baslik": "Dış cephe", "alt": "Denize bakan eğimli arazide teraslı yazlık görselleştirmesi" },
+      { "gorsel": "/assets/img/konsept/deniz-manzarali-yazlik-teras", "baslik": "Deniz terası", "alt": "Deniz manzaralı yazlığın ahşap terası – görselleştirme" },
+      { "gorsel": "/assets/img/konsept/deniz-manzarali-yazlik-salon", "baslik": "Salon", "alt": "Deniz manzaralı yazlığın terasa açılan salonu – görselleştirme" }
+    ]
   },
   {
-    "_durum": "ÖRNEK – gerçek projeyle değiştirilecek",
-    "slug": "ornek-proje-03",
-    "baslik": "Örnek Proje 03",
-    "tur": "İç Mimari",
-    "konum": "Konum eklenecek",
-    "alan_m2": null,
-    "hizmetler": [
-      "İç Mimari",
-      "3D Görselleştirme",
-      "Uygulama"
-    ],
-    "kisa_aciklama": "ÖRNEK – gerçek projeyle değiştirilecek",
-    "kapak": "/assets/img/projeler/ornek-proje-03/kapak.webp",
-    "galeri": [],
-    "yer_tutucu": true
+    "slug": "tadilat-oncesi-sonrasi",
+    "baslik": "Tadilat: öncesi ve sonrası",
+    "etiket": "Konsept çalışma · Temsilî görselleştirme",
+    "tanim": "Eski bir dairenin salonu ile mutfağını birleştiren ve depolama alanlarını yeniden düzenleyen tadilat konsepti.",
+    "kapak": 1,
+    "galeri": [
+      { "gorsel": "/assets/img/konsept/tadilat-oncesi-salon", "baslik": "Önce", "alt": "Tadilat öncesi eski bir daire salonu – temsilî görsel" },
+      { "gorsel": "/assets/img/konsept/tadilat-sonrasi-salon", "baslik": "Sonra", "alt": "Tadilat sonrası açık mutfaklı daire salonu – görselleştirme" },
+      { "gorsel": "/assets/img/konsept/tadilat-sonrasi-mutfak", "baslik": "Mutfak", "alt": "Tadilat sonrası meşe dolaplı mutfak köşesi – görselleştirme" }
+    ]
   },
   {
-    "_durum": "ÖRNEK – gerçek projeyle değiştirilecek",
-    "slug": "ornek-proje-04",
-    "baslik": "Örnek Proje 04",
-    "tur": "Ticari Yapı",
-    "konum": "Konum eklenecek",
-    "alan_m2": null,
-    "hizmetler": [
-      "Mimari Proje",
-      "Şantiye ve Teknik Hizmetler"
-    ],
-    "kisa_aciklama": "ÖRNEK – gerçek projeyle değiştirilecek",
-    "kapak": "/assets/img/projeler/ornek-proje-04/kapak.webp",
-    "galeri": [],
-    "yer_tutucu": true
+    "slug": "mustakil-bahceli-ev",
+    "baslik": "Müstakil bahçeli ev",
+    "etiket": "Konsept çalışma · Temsilî görselleştirme",
+    "tanim": "Kiremit çatılı, taş kaideli ve ahşap panjurlu; ön ve arka bahçesiyle aile yaşamına göre kurgulanmış müstakil ev konsepti.",
+    "galeri": [
+      { "gorsel": "/assets/img/konsept/mustakil-bahceli-ev-cephe", "baslik": "Dış cephe", "alt": "Kiremit çatılı, taş kaideli müstakil bahçeli ev görselleştirmesi" },
+      { "gorsel": "/assets/img/konsept/mustakil-bahceli-ev-arka-bahce", "baslik": "Arka bahçe", "alt": "Müstakil evin pergolalı taş terası ve arka bahçesi – görselleştirme" },
+      { "gorsel": "/assets/img/konsept/mustakil-bahceli-ev-mutfak", "baslik": "Mutfak ve yemek alanı", "alt": "Müstakil evin bahçeye bakan mutfak ve yemek alanı – görselleştirme" }
+    ]
   },
   {
-    "_durum": "ÖRNEK – gerçek projeyle değiştirilecek",
-    "slug": "ornek-proje-05",
-    "baslik": "Örnek Proje 05",
-    "tur": "Konut",
-    "konum": "Konum eklenecek",
-    "alan_m2": null,
-    "hizmetler": [
-      "Mimari Proje",
-      "Ruhsat ve İskân Süreçleri"
-    ],
-    "kisa_aciklama": "ÖRNEK – gerçek projeyle değiştirilecek",
-    "kapak": "/assets/img/projeler/ornek-proje-05/kapak.webp",
-    "galeri": [],
-    "yer_tutucu": true
-  },
-  {
-    "_durum": "ÖRNEK – gerçek projeyle değiştirilecek",
-    "slug": "ornek-proje-06",
-    "baslik": "Örnek Proje 06",
-    "tur": "Kentsel Dönüşüm",
-    "konum": "Konum eklenecek",
-    "alan_m2": null,
-    "hizmetler": [
-      "Mimari Danışmanlık ve Kentsel Dönüşüm",
-      "Mimari Proje"
-    ],
-    "kisa_aciklama": "ÖRNEK – gerçek projeyle değiştirilecek",
-    "kapak": "/assets/img/projeler/ornek-proje-06/kapak.webp",
-    "galeri": [],
-    "yer_tutucu": true
+    "slug": "kucuk-ticari-yapi",
+    "baslik": "Küçük ticari yapı",
+    "etiket": "Konsept çalışma · Temsilî görselleştirme",
+    "tanim": "Zemin katta vitrinli satış alanı, üst katta ahşap panjurlu ofis bulunan köşe parsel ticari yapı konsepti.",
+    "galeri": [
+      { "gorsel": "/assets/img/konsept/kucuk-ticari-yapi-cephe", "baslik": "Cephe", "alt": "Taş ve koyu metal cepheli, iki katlı küçük ticari yapı görselleştirmesi" },
+      { "gorsel": "/assets/img/konsept/kucuk-ticari-yapi-giris", "baslik": "Giriş", "alt": "Küçük ticari yapının cam girişi ve ön alanı – görselleştirme" },
+      { "gorsel": "/assets/img/konsept/kucuk-ticari-yapi-showroom", "baslik": "Showroom", "alt": "Küçük ticari yapının zemin kattaki aydınlık showroom iç mekânı – görselleştirme" }
+    ]
   }
 ]

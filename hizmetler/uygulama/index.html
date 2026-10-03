@@ -4,9 +4,9 @@
   Metni içerik dosyasında değiştirip yeniden üretin; sonra: node tools/sync-partials.mjs
   Görsel yer tutucuları (dosyalar yüklenene kadar gri, etiketli kutu görünür;
   yüklenince alt metinleri görselin GERÇEKTE gösterdiğine göre güncelleyin):
-    /assets/img/hizmet/uygulama.webp               (hero, 4:3 — ana sayfadaki kartla aynı dosya)
+    /assets/img/hizmet/villa-insaati-betonarme-karkas (hero, 4:3 — ana sayfadaki kartla aynı dosya)
     /assets/img/hizmet/uygulama/villa.webp         (kart, 4:3)
-    /assets/img/hizmet/uygulama/konut.webp         (kart, 4:3)
+    /assets/img/hizmet/konut-insaati-cephe-isleri  (kart, 4:3)
     /assets/img/hizmet/uygulama/tadilat.webp       (kart, 4:3)
 -->
 <html lang="tr">
@@ -246,7 +246,7 @@
         </div>
       </div>
       <div class="media media--4x3" data-ph="Görsel: villa şantiyesi">
-        <img src="/assets/img/hizmet/uygulama.webp" width="1200" height="900" fetchpriority="high" decoding="async" alt="Silivri inşaat ve uygulama – villa şantiyesi">
+        <picture><source type="image/avif" srcset="/assets/img/hizmet/villa-insaati-betonarme-karkas-480.avif 480w, /assets/img/hizmet/villa-insaati-betonarme-karkas-960.avif 960w, /assets/img/hizmet/villa-insaati-betonarme-karkas-1600.avif 1600w" sizes="(min-width: 900px) 46vw, 100vw"><img src="/assets/img/hizmet/villa-insaati-betonarme-karkas-960.webp" srcset="/assets/img/hizmet/villa-insaati-betonarme-karkas-480.webp 480w, /assets/img/hizmet/villa-insaati-betonarme-karkas-960.webp 960w, /assets/img/hizmet/villa-insaati-betonarme-karkas-1600.webp 1600w" sizes="(min-width: 900px) 46vw, 100vw" width="1600" height="1200" fetchpriority="high" decoding="async" alt="Zeytinlik arazide iki katlı betonarme villa karkası, korkuluklu iskele ve baretli, yelekli çalışanlar"></picture>
       </div>
     </div>
   </section>
@@ -299,21 +299,21 @@
       </header>
       <div class="cards-3">
         <article class="info-card reveal">
-          <div class="media media--4x3" data-ph="Görsel: villa uygulaması">
+          <div class="media media--4x3" data-ph="Görsel: villa uygulaması" hidden>
             <img src="/assets/img/hizmet/uygulama/villa.webp" width="1200" height="900" loading="lazy" decoding="async" alt="Uygulama aşamasındaki müstakil villa inşaatı">
           </div>
           <h3>Villa ve müstakil ev</h3>
           <p>Arsadan anahtar teslime; projesi bizde veya başka bir ofiste hazırlanmış villa ve müstakil ev uygulamaları.</p>
         </article>
         <article class="info-card reveal">
-          <div class="media media--4x3" data-ph="Görsel: konut ve apartman uygulaması">
-            <img src="/assets/img/hizmet/uygulama/konut.webp" width="1200" height="900" loading="lazy" decoding="async" alt="Cephe işleri süren çok katlı konut inşaatı">
+          <div class="media media--4x3" data-ph="Görsel: konut ve apartman uygulaması" hidden>
+            <picture><source type="image/avif" srcset="/assets/img/hizmet/konut-insaati-cephe-isleri-480.avif 480w, /assets/img/hizmet/konut-insaati-cephe-isleri-960.avif 960w, /assets/img/hizmet/konut-insaati-cephe-isleri-1600.avif 1600w" sizes="(min-width: 900px) 30vw, 100vw"><img src="/assets/img/hizmet/konut-insaati-cephe-isleri-960.webp" srcset="/assets/img/hizmet/konut-insaati-cephe-isleri-480.webp 480w, /assets/img/hizmet/konut-insaati-cephe-isleri-960.webp 960w, /assets/img/hizmet/konut-insaati-cephe-isleri-1600.webp 1600w" sizes="(min-width: 900px) 30vw, 100vw" width="1600" height="1200" loading="lazy" decoding="async" alt="Cephesine yalıtım levhaları ve doğramalar takılan, iskele ve güvenlik filesiyle çevrili konut inşaatı"></picture>
           </div>
           <h3>Konut ve apartman</h3>
           <p>Konut projelerinde kaba ve ince inşaat uygulaması, ortak alan ve cephe işleri.</p>
         </article>
         <article class="info-card reveal">
-          <div class="media media--4x3" data-ph="Görsel: tadilat ve dekorasyon">
+          <div class="media media--4x3" data-ph="Görsel: tadilat ve dekorasyon" hidden>
             <img src="/assets/img/hizmet/uygulama/tadilat.webp" width="1200" height="900" loading="lazy" decoding="async" alt="Projeli tadilatı süren daire iç mekânı">
           </div>
           <h3>Tadilat ve dekorasyon</h3>

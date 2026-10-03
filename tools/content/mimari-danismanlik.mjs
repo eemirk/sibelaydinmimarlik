@@ -14,8 +14,8 @@ export default {
   hero: {
     h1: 'Silivri Mimari Danışmanlık',
     lead: 'Silivri mimari danışmanlık hizmetimizle arsa almadan, inşaata başlamadan ya da kentsel dönüşüm kararı vermeden önce doğru bilgiyle hareket etmenizi sağlıyoruz. İmar koşullarını, riskleri ve seçenekleri sizin için anlaşılır hâle getiriyoruz. Silivri, Büyükçekmece ve çevresinde hizmet veriyoruz.',
-    img: '/assets/img/hizmet/mimari-danismanlik.webp',
-    alt: 'Silivri Mimari Danışmanlık – imar planı üzerinde arsa ve yapılaşma değerlendirmesi',
+    img: '/assets/img/hizmet/imar-plani-degerlendirme',
+    alt: 'Traverten masada parsel ve yol çizimli imar planı, ölçek cetveli ve aydınger',
     ph: 'Görsel: imar planı üzerinde değerlendirme'
   },
   scope: {
@@ -36,11 +36,11 @@ export default {
     h2: 'Hangi konularda danışmanlık veriyoruz?',
     cards: [
       { h3: 'Arsa ve imar', text: 'Arsa almadan önce ya da proje başlamadan önce yapılaşma koşullarını ve riskleri netleştirmek için.',
-        img: '/assets/img/hizmet/mimari-danismanlik/kart-1.webp', alt: 'Yapılaşma potansiyeli değerlendirilen boş bir arsa', ph: 'Görsel: arsa ve imar değerlendirmesi' },
+        img: '/assets/img/hizmet/kiyi-kasabasi-arsa-parselleri', alt: 'Deniz kıyısındaki bir kasabanın kenarında toprak yollarla ayrılmış boş arsalar – havadan görünüm', ph: 'Görsel: arsa ve imar değerlendirmesi' },
       { h3: 'Kentsel dönüşüm', text: 'Riskli yapı sürecinden yeni projeye kadar, maliklerin doğru karar verebilmesi için teknik destek.',
-        img: '/assets/img/hizmet/mimari-danismanlik/kart-2.webp', alt: 'Kentsel dönüşüm sürecindeki eski bir apartman', ph: 'Görsel: kentsel dönüşüm' },
+        img: '/assets/img/hizmet/konut-insaati-cephe-isleri', alt: 'Cephesine yalıtım levhaları ve doğramalar takılan, iskele ve güvenlik filesiyle çevrili konut inşaatı', ph: 'Görsel: kentsel dönüşüm' },
       { h3: 'Kat karşılığı ve yatırım', text: 'Müteahhitle anlaşma öncesinde proje, paylaşım ve teknik şartların değerlendirilmesi.',
-        img: '/assets/img/hizmet/mimari-danismanlik/kart-3.webp', alt: 'Kat karşılığı proje alternatiflerinin plan üzerinde incelenmesi', ph: 'Görsel: kat karşılığı proje incelemesi' }
+        img: '/assets/img/hizmet/konut-binasi-gorsellestirme', alt: 'Ahşap tavanlı girintili balkonları olan beş katlı çağdaş konut binası – mimari görselleştirme', ph: 'Görsel: kat karşılığı proje incelemesi' }
     ]
   },
   steps: [

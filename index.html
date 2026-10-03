@@ -7,21 +7,19 @@
      (41.0739, 28.2464) → ofisin gerçek koordinatıyla değiştirin.
   2. Görseller (dosyalar yüklenene kadar gri, etiketli kutu görünür):
      - /assets/img/hizmet/*.webp (6 hizmet kartı, 4:3, önerilen 1200×900)
-     - /assets/img/projeler/<slug>/kapak.webp (6 proje kapağı)
      - /assets/img/ofis.webp (Hakkımızda özeti, 4:5, önerilen 1000×1250)
      - /assets/img/kurumsal/ofis.webp (/kurumsal/ Hakkımızda, 4:5, önerilen 1000×1250)
      → Görseller yüklenince her <img> alt metnini görselin GERÇEKTE gösterdiğine
        göre güncelleyin (şimdiki alt metinler beklenen içeriği tarif ediyor).
-     - /assets/img/og-cover.jpg kullanılmıyor; og:image = hero-villa.webp
+     - og:image = /assets/img/og-paylasim.jpg (1200×630, logo + villa render; tools/generate-site-images.mjs og)
        (bazı platformlar WebP OG görselini göstermez → gerekirse 1200×630 JPG ekleyin)
-  3. Projeler: /data/projects.json içindeki 6 kayıt ÖRNEKTİR ("_durum": "ÖRNEK –
-     gerçek projeyle değiştirilecek"). Gerçek proje adı, türü, konumu, m² ve
-     görselleriyle değiştirin; bu dosyadaki statik proje kartlarını da eşleyin.
+  3. Konsept çalışmalar: /data/projects.json içindeki 5 kayıt yapay zekâ ile üretilmiş
+     TEMSİLÎ görselleştirmedir (gerçek proje değil; konum/yıl/m² yazmayın). Gerçek projeler
+     geldiğinde ayrı bir "Projeler" bölümü/sayfası açın; bu kayıtları gerçek iş gibi sunmayın.
      hero-villa.webp bir görselleştirmedir, proje olarak KULLANMAYIN.
      /projeler/ ve /blog/ henüz yok: header/footer linkleri, "Tüm projelerimizi görün"
      butonu ve eski site yönlendirmesi (/Icerik/Referanslar — .htaccess + netlify.toml)
-     "GİZLİ:" yorumuyla kapalı; kartlar link değil (<article>). Sayfalar yapılınca
-     yorumları kaldırın, kartları tekrar <a> yapın (main.js renderProjects) ve sitemap'e ekleyin.
+     "GİZLİ:" yorumuyla kapalı.
   4. Ekip bilgileri: /kurumsal/ekibimiz/ henüz yok; header ve footer'daki "Ekibimiz"
      linkleri "GİZLİ:" yorumuyla kapalı (sayfa yapılınca yorumu kaldırın, sitemap'e ekleyin).
      Kurumsal sayfalardaki alt menüye (.subnav) de eklenecek.
@@ -54,15 +52,15 @@
   <meta property="og:title" content="Sibel Aydın İnşaat Mimarlık | Silivri Mimarlık ve İnşaat Firması">
   <meta property="og:description" content="Silivri merkezli mimarlık ve inşaat firması. Villa ve konut projelerini tasarlıyor, ruhsatını alıyor ve anahtar teslim inşa ediyoruz. Büyükçekmece, Beylikdüzü ve Tekirdağ'da hizmet.">
   <meta property="og:url" content="https://www.sibelaydinmimarlik.com.tr/">
-  <meta property="og:image" content="https://www.sibelaydinmimarlik.com.tr/assets/img/hero-villa.webp">
-  <meta property="og:image:width" content="1920">
-  <meta property="og:image:height" content="1068">
-  <meta property="og:image:alt" content="Modern villa mimari görselleştirmesi">
+  <meta property="og:image" content="https://www.sibelaydinmimarlik.com.tr/assets/img/og-paylasim.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Sibel Aydın İnşaat Mimarlık logosu ve modern villa görselleştirmesi">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@mimarsibelaydin">
   <meta name="twitter:title" content="Sibel Aydın İnşaat Mimarlık | Silivri Mimarlık ve İnşaat Firması">
   <meta name="twitter:description" content="Silivri merkezli mimarlık ve inşaat firması. Villa ve konut projelerini tasarlıyor, ruhsatını alıyor ve anahtar teslim inşa ediyoruz. Büyükçekmece, Beylikdüzü ve Tekirdağ'da hizmet.">
-  <meta name="twitter:image" content="https://www.sibelaydinmimarlik.com.tr/assets/img/hero-villa.webp">
+  <meta name="twitter:image" content="https://www.sibelaydinmimarlik.com.tr/assets/img/og-paylasim.jpg">
 
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/assets/img/favicon-32.png" type="image/png" sizes="32x32">
@@ -427,7 +425,7 @@
         <article class="service-card service-card--lg reveal">
           <a class="service-card__link" href="/hizmetler/mimari-proje/">
             <div class="media" data-ph="Hizmet görseli: Mimari Proje">
-              <img src="/assets/img/hizmet/mimari-proje.webp" width="1200" height="900" loading="lazy" decoding="async" alt="Villa projesinin mimari çizimleri ve maket üzerinde çalışma">
+              <picture><source type="image/avif" srcset="/assets/img/hizmet/silivri-mimari-proje-tas-avlulu-villa-480.avif 480w, /assets/img/hizmet/silivri-mimari-proje-tas-avlulu-villa-960.avif 960w, /assets/img/hizmet/silivri-mimari-proje-tas-avlulu-villa-1600.avif 1600w" sizes="(min-width: 900px) 58vw, 100vw"><img src="/assets/img/hizmet/silivri-mimari-proje-tas-avlulu-villa-960.webp" srcset="/assets/img/hizmet/silivri-mimari-proje-tas-avlulu-villa-480.webp 480w, /assets/img/hizmet/silivri-mimari-proje-tas-avlulu-villa-960.webp 960w, /assets/img/hizmet/silivri-mimari-proje-tas-avlulu-villa-1600.webp 1600w" sizes="(min-width: 900px) 58vw, 100vw" width="1600" height="1200" loading="lazy" decoding="async" alt="Taş duvarlı, ahşap saçaklı tek katlı çağdaş villa ve zeytin ağaçlı çakıllı avlusu – mimari görselleştirme"></picture>
             </div>
             <h3 class="service-card__title">Mimari Proje</h3>
             <p class="service-card__text">Villa, konut ve ticari yapılar için imar mevzuatına uygun, yaşanabilir ve uygulanabilir projeler.</p>
@@ -437,7 +435,7 @@
         <article class="service-card service-card--lg reveal">
           <a class="service-card__link" href="/hizmetler/uygulama/">
             <div class="media" data-ph="Hizmet görseli: İnşaat ve Uygulama">
-              <img src="/assets/img/hizmet/uygulama.webp" width="1200" height="900" loading="lazy" decoding="async" alt="Uygulama aşamasındaki bir yapıda saha çalışması">
+              <picture><source type="image/avif" srcset="/assets/img/hizmet/villa-insaati-betonarme-karkas-480.avif 480w, /assets/img/hizmet/villa-insaati-betonarme-karkas-960.avif 960w, /assets/img/hizmet/villa-insaati-betonarme-karkas-1600.avif 1600w" sizes="(min-width: 900px) 58vw, 100vw"><img src="/assets/img/hizmet/villa-insaati-betonarme-karkas-960.webp" srcset="/assets/img/hizmet/villa-insaati-betonarme-karkas-480.webp 480w, /assets/img/hizmet/villa-insaati-betonarme-karkas-960.webp 960w, /assets/img/hizmet/villa-insaati-betonarme-karkas-1600.webp 1600w" sizes="(min-width: 900px) 58vw, 100vw" width="1600" height="1200" loading="lazy" decoding="async" alt="Zeytinlik arazide iki katlı betonarme villa karkası, korkuluklu iskele ve baretli, yelekli çalışanlar"></picture>
             </div>
             <h3 class="service-card__title">İnşaat ve Uygulama</h3>
             <p class="service-card__text">Sıfırdan villa ve konut inşaatı, tadilat ve yenileme; projeye sadık, takvimli ve şeffaf uygulama.</p>
@@ -447,7 +445,7 @@
         <article class="service-card reveal">
           <a class="service-card__link" href="/hizmetler/ic-mimari/">
             <div class="media" data-ph="Hizmet görseli: İç Mimari">
-              <img src="/assets/img/hizmet/ic-mimari.webp" width="1200" height="900" loading="lazy" decoding="async" alt="Doğal malzemelerle tasarlanmış aydınlık bir yaşam alanı">
+              <picture><source type="image/avif" srcset="/assets/img/hizmet/ic-mimari-traverten-mese-salon-480.avif 480w, /assets/img/hizmet/ic-mimari-traverten-mese-salon-960.avif 960w, /assets/img/hizmet/ic-mimari-traverten-mese-salon-1600.avif 1600w" sizes="(min-width: 900px) 30vw, 100vw"><img src="/assets/img/hizmet/ic-mimari-traverten-mese-salon-960.webp" srcset="/assets/img/hizmet/ic-mimari-traverten-mese-salon-480.webp 480w, /assets/img/hizmet/ic-mimari-traverten-mese-salon-960.webp 960w, /assets/img/hizmet/ic-mimari-traverten-mese-salon-1600.webp 1600w" sizes="(min-width: 900px) 30vw, 100vw" width="1600" height="1200" loading="lazy" decoding="async" alt="Traverten zeminli, meşe kitaplıklı ve petrol mavisi berjerli aydınlık villa salonu – iç mimari görselleştirme"></picture>
             </div>
             <h3 class="service-card__title">İç Mimari</h3>
             <p class="service-card__text">Mekânın kullanımını, ışığını ve malzemesini birlikte ele alan, uygulamaya hazır iç mekân tasarımı.</p>
@@ -457,7 +455,7 @@
         <article class="service-card reveal">
           <a class="service-card__link" href="/hizmetler/3d-gorsellestirme/">
             <div class="media" data-ph="Hizmet görseli: 3D Görselleştirme">
-              <img src="/assets/img/hizmet/3d-gorsellestirme.webp" width="1200" height="900" loading="lazy" decoding="async" alt="Bir konut projesinin gerçekçi üç boyutlu görselleştirmesi">
+              <picture><source type="image/avif" srcset="/assets/img/hizmet/konut-binasi-gorsellestirme-480.avif 480w, /assets/img/hizmet/konut-binasi-gorsellestirme-960.avif 960w, /assets/img/hizmet/konut-binasi-gorsellestirme-1600.avif 1600w" sizes="(min-width: 900px) 30vw, 100vw"><img src="/assets/img/hizmet/konut-binasi-gorsellestirme-960.webp" srcset="/assets/img/hizmet/konut-binasi-gorsellestirme-480.webp 480w, /assets/img/hizmet/konut-binasi-gorsellestirme-960.webp 960w, /assets/img/hizmet/konut-binasi-gorsellestirme-1600.webp 1600w" sizes="(min-width: 900px) 30vw, 100vw" width="1600" height="1200" loading="lazy" decoding="async" alt="Ahşap tavanlı girintili balkonları olan beş katlı çağdaş konut binası – mimari görselleştirme"></picture>
             </div>
             <h3 class="service-card__title">3D Görselleştirme</h3>
             <p class="service-card__text">Projenizi inşaat başlamadan gerçekçi görsellerle görün; kararlarınızı daha net ve güvenle verin.</p>
@@ -467,7 +465,7 @@
         <article class="service-card reveal">
           <a class="service-card__link" href="/hizmetler/ruhsat-iskan/">
             <div class="media" data-ph="Hizmet görseli: Ruhsat ve İskân">
-              <img src="/assets/img/hizmet/ruhsat-iskan.webp" width="1200" height="900" loading="lazy" decoding="async" alt="Ruhsat başvurusu için hazırlanmış proje dosyaları">
+              <picture><source type="image/avif" srcset="/assets/img/hizmet/ruhsat-proje-setleri-maket-480.avif 480w, /assets/img/hizmet/ruhsat-proje-setleri-maket-960.avif 960w, /assets/img/hizmet/ruhsat-proje-setleri-maket-1600.avif 1600w" sizes="(min-width: 900px) 30vw, 100vw"><img src="/assets/img/hizmet/ruhsat-proje-setleri-maket-960.webp" srcset="/assets/img/hizmet/ruhsat-proje-setleri-maket-480.webp 480w, /assets/img/hizmet/ruhsat-proje-setleri-maket-960.webp 960w, /assets/img/hizmet/ruhsat-proje-setleri-maket-1600.webp 1600w" sizes="(min-width: 900px) 30vw, 100vw" width="1600" height="1200" loading="lazy" decoding="async" alt="Meşe masada klasörlenmiş proje setleri, ölçek cetveli ve beyaz ev maketi"></picture>
             </div>
             <h3 class="service-card__title">Ruhsat ve İskân</h3>
             <p class="service-card__text">Yapı ruhsatından yapı kullanma iznine kadar belediye süreçlerinin dosya hazırlığı ve takibi.</p>
@@ -477,7 +475,7 @@
         <article class="service-card reveal">
           <a class="service-card__link" href="/hizmetler/mimari-danismanlik/">
             <div class="media" data-ph="Hizmet görseli: Mimari Danışmanlık">
-              <img src="/assets/img/hizmet/mimari-danismanlik.webp" width="1200" height="900" loading="lazy" decoding="async" alt="Kentsel dönüşüm kapsamındaki bir yapı için teknik değerlendirme toplantısı">
+              <picture><source type="image/avif" srcset="/assets/img/hizmet/imar-plani-degerlendirme-480.avif 480w, /assets/img/hizmet/imar-plani-degerlendirme-960.avif 960w, /assets/img/hizmet/imar-plani-degerlendirme-1600.avif 1600w" sizes="(min-width: 900px) 30vw, 100vw"><img src="/assets/img/hizmet/imar-plani-degerlendirme-960.webp" srcset="/assets/img/hizmet/imar-plani-degerlendirme-480.webp 480w, /assets/img/hizmet/imar-plani-degerlendirme-960.webp 960w, /assets/img/hizmet/imar-plani-degerlendirme-1600.webp 1600w" sizes="(min-width: 900px) 30vw, 100vw" width="1600" height="1200" loading="lazy" decoding="async" alt="Traverten masada parsel ve yol çizimli imar planı, ölçek cetveli ve aydınger"></picture>
             </div>
             <h3 class="service-card__title">Mimari Danışmanlık</h3>
             <p class="service-card__text">Arsa ve yapı kararlarında, kentsel dönüşüm süreçlerinde mevzuata dayalı teknik danışmanlık.</p>
@@ -498,98 +496,93 @@
     </div>
   </section>
 
-  <!-- 4. SEÇİLİ PROJELER — statik kartlar SEO için; JS /data/projects.json ile zenginleştirir -->
-  <section class="section projects" id="projeler" aria-labelledby="projeler-baslik">
+  <!-- 4. KONSEPT ÇALIŞMALAR — temsilî görselleştirmeler (yapay zekâ). Gerçek proje/referans kaydı DEĞİL:
+       lokasyon, yıl, m² yazılmaz; JSON-LD'de Project/CreativeWork olarak işaretlenmez.
+       Statik kartlar /data/projects.json ile aynı; JS her karta 3 görsellik detay penceresi ekler. -->
+  <!-- GİZLİ: konsept görselleri üretilince hidden kaldırılacak -->
+  <section class="section projects" id="konsept-calismalar" aria-labelledby="projeler-baslik" hidden>
     <div class="container">
       <header class="section__head section__head--split reveal">
         <div>
-          <p class="eyebrow">Seçili işler</p>
-          <h2 id="projeler-baslik" class="section__title">Projelerimiz</h2>
+          <p class="eyebrow">Tasarım yaklaşımımız</p>
+          <h2 id="projeler-baslik" class="section__title">Konsept Çalışmalar</h2>
         </div>
         <!-- GİZLİ: proje sayfaları yayına girince açılacak — <a class="btn btn--outline" href="/projeler/" data-cta="tum_projeler">Tüm projelerimizi görün<span class="btn__arrow" aria-hidden="true"><svg><use href="#i-arrow-ne"/></svg></span></a> -->
       </header>
 
       <ul class="projects__grid" data-projects>
-        <li class="project-card reveal">
+        <li class="project-card reveal" data-slug="iki-katli-modern-villa">
           <article>
             <div class="project-card__frame">
-              <div class="media" data-ph="Proje kapağı: Örnek Proje 01">
-                <img src="/assets/img/projeler/ornek-proje-01/kapak.webp" width="1600" height="1200" loading="lazy" decoding="async" alt="ÖRNEK proje kapak görseli — gerçek proje görseliyle değiştirilecek">
+              <div class="media" data-ph="Konsept: İki katlı modern villa">
+                <picture><source type="image/avif" srcset="/assets/img/konsept/iki-katli-modern-villa-cephe-480.avif 480w, /assets/img/konsept/iki-katli-modern-villa-cephe-960.avif 960w, /assets/img/konsept/iki-katli-modern-villa-cephe-1600.avif 1600w" sizes="(min-width: 900px) 56vw, 100vw"><img src="/assets/img/konsept/iki-katli-modern-villa-cephe-960.webp" srcset="/assets/img/konsept/iki-katli-modern-villa-cephe-480.webp 480w, /assets/img/konsept/iki-katli-modern-villa-cephe-960.webp 960w, /assets/img/konsept/iki-katli-modern-villa-cephe-1600.webp 1600w" sizes="(min-width: 900px) 56vw, 100vw" width="1600" height="1200" loading="lazy" decoding="async" alt="İki katlı modern villa görselleştirmesi: beyaz sıva ve traverten cephe, zeytin ağaçlı bahçe"></picture>
               </div>
             </div>
             <div class="project-card__meta">
-              <h3 class="project-card__title">Örnek Proje 01</h3>
-              <p class="project-card__info"><span>Villa</span><span>Konum eklenecek</span><span>— m²</span></p>
+              <h3 class="project-card__title">İki katlı modern villa</h3>
+              <p class="project-card__info"><span>Konsept çalışma</span><span>Temsilî görselleştirme</span></p>
+              <p class="project-card__text">Beyaz sıva ve traverten cepheli, geniş açıklıklı, havuzlu ve zeytin ağaçlı bahçesiyle iki katlı villa konsepti.</p>
             </div>
           </article>
         </li>
-        <li class="project-card reveal">
+        <li class="project-card reveal" data-slug="deniz-manzarali-yazlik">
           <article>
             <div class="project-card__frame">
-              <div class="media" data-ph="Proje kapağı: Örnek Proje 02">
-                <img src="/assets/img/projeler/ornek-proje-02/kapak.webp" width="1600" height="1200" loading="lazy" decoding="async" alt="ÖRNEK proje kapak görseli — gerçek proje görseliyle değiştirilecek">
+              <div class="media" data-ph="Konsept: Deniz manzaralı yazlık">
+                <picture><source type="image/avif" srcset="/assets/img/konsept/deniz-manzarali-yazlik-cephe-480.avif 480w, /assets/img/konsept/deniz-manzarali-yazlik-cephe-960.avif 960w, /assets/img/konsept/deniz-manzarali-yazlik-cephe-1600.avif 1600w" sizes="(min-width: 900px) 32vw, 100vw"><img src="/assets/img/konsept/deniz-manzarali-yazlik-cephe-960.webp" srcset="/assets/img/konsept/deniz-manzarali-yazlik-cephe-480.webp 480w, /assets/img/konsept/deniz-manzarali-yazlik-cephe-960.webp 960w, /assets/img/konsept/deniz-manzarali-yazlik-cephe-1600.webp 1600w" sizes="(min-width: 900px) 32vw, 100vw" width="1600" height="1200" loading="lazy" decoding="async" alt="Denize bakan eğimli arazide teraslı yazlık görselleştirmesi"></picture>
               </div>
             </div>
             <div class="project-card__meta">
-              <h3 class="project-card__title">Örnek Proje 02</h3>
-              <p class="project-card__info"><span>Müstakil Konut</span><span>Konum eklenecek</span><span>— m²</span></p>
+              <h3 class="project-card__title">Deniz manzaralı yazlık</h3>
+              <p class="project-card__info"><span>Konsept çalışma</span><span>Temsilî görselleştirme</span></p>
+              <p class="project-card__text">Marmara'ya bakan eğimli arazide teraslarla yere oturan, geniş cam açıklıklı yazlık konsepti.</p>
             </div>
           </article>
         </li>
-        <li class="project-card reveal">
+        <li class="project-card reveal" data-slug="tadilat-oncesi-sonrasi">
           <article>
             <div class="project-card__frame">
-              <div class="media" data-ph="Proje kapağı: Örnek Proje 03">
-                <img src="/assets/img/projeler/ornek-proje-03/kapak.webp" width="1600" height="1200" loading="lazy" decoding="async" alt="ÖRNEK proje kapak görseli — gerçek proje görseliyle değiştirilecek">
+              <div class="media" data-ph="Konsept: Tadilat: öncesi ve sonrası">
+                <picture><source type="image/avif" srcset="/assets/img/konsept/tadilat-sonrasi-salon-480.avif 480w, /assets/img/konsept/tadilat-sonrasi-salon-960.avif 960w, /assets/img/konsept/tadilat-sonrasi-salon-1600.avif 1600w" sizes="(min-width: 900px) 40vw, 100vw"><img src="/assets/img/konsept/tadilat-sonrasi-salon-960.webp" srcset="/assets/img/konsept/tadilat-sonrasi-salon-480.webp 480w, /assets/img/konsept/tadilat-sonrasi-salon-960.webp 960w, /assets/img/konsept/tadilat-sonrasi-salon-1600.webp 1600w" sizes="(min-width: 900px) 40vw, 100vw" width="1600" height="1200" loading="lazy" decoding="async" alt="Tadilat sonrası açık mutfaklı daire salonu – görselleştirme"></picture>
               </div>
             </div>
             <div class="project-card__meta">
-              <h3 class="project-card__title">Örnek Proje 03</h3>
-              <p class="project-card__info"><span>İç Mimari</span><span>Konum eklenecek</span><span>— m²</span></p>
+              <h3 class="project-card__title">Tadilat: öncesi ve sonrası</h3>
+              <p class="project-card__info"><span>Konsept çalışma</span><span>Temsilî görselleştirme</span></p>
+              <p class="project-card__text">Eski bir dairenin salonu ile mutfağını birleştiren ve depolama alanlarını yeniden düzenleyen tadilat konsepti.</p>
             </div>
           </article>
         </li>
-        <li class="project-card reveal">
+        <li class="project-card reveal" data-slug="mustakil-bahceli-ev">
           <article>
             <div class="project-card__frame">
-              <div class="media" data-ph="Proje kapağı: Örnek Proje 04">
-                <img src="/assets/img/projeler/ornek-proje-04/kapak.webp" width="1600" height="1200" loading="lazy" decoding="async" alt="ÖRNEK proje kapak görseli — gerçek proje görseliyle değiştirilecek">
+              <div class="media" data-ph="Konsept: Müstakil bahçeli ev">
+                <picture><source type="image/avif" srcset="/assets/img/konsept/mustakil-bahceli-ev-cephe-480.avif 480w, /assets/img/konsept/mustakil-bahceli-ev-cephe-960.avif 960w, /assets/img/konsept/mustakil-bahceli-ev-cephe-1600.avif 1600w" sizes="(min-width: 900px) 56vw, 100vw"><img src="/assets/img/konsept/mustakil-bahceli-ev-cephe-960.webp" srcset="/assets/img/konsept/mustakil-bahceli-ev-cephe-480.webp 480w, /assets/img/konsept/mustakil-bahceli-ev-cephe-960.webp 960w, /assets/img/konsept/mustakil-bahceli-ev-cephe-1600.webp 1600w" sizes="(min-width: 900px) 56vw, 100vw" width="1600" height="1200" loading="lazy" decoding="async" alt="Kiremit çatılı, taş kaideli müstakil bahçeli ev görselleştirmesi"></picture>
               </div>
             </div>
             <div class="project-card__meta">
-              <h3 class="project-card__title">Örnek Proje 04</h3>
-              <p class="project-card__info"><span>Ticari Yapı</span><span>Konum eklenecek</span><span>— m²</span></p>
+              <h3 class="project-card__title">Müstakil bahçeli ev</h3>
+              <p class="project-card__info"><span>Konsept çalışma</span><span>Temsilî görselleştirme</span></p>
+              <p class="project-card__text">Kiremit çatılı, taş kaideli ve ahşap panjurlu; ön ve arka bahçesiyle aile yaşamına göre kurgulanmış müstakil ev konsepti.</p>
             </div>
           </article>
         </li>
-        <li class="project-card reveal">
+        <li class="project-card reveal" data-slug="kucuk-ticari-yapi">
           <article>
             <div class="project-card__frame">
-              <div class="media" data-ph="Proje kapağı: Örnek Proje 05">
-                <img src="/assets/img/projeler/ornek-proje-05/kapak.webp" width="1600" height="1200" loading="lazy" decoding="async" alt="ÖRNEK proje kapak görseli — gerçek proje görseliyle değiştirilecek">
+              <div class="media" data-ph="Konsept: Küçük ticari yapı">
+                <picture><source type="image/avif" srcset="/assets/img/konsept/kucuk-ticari-yapi-cephe-480.avif 480w, /assets/img/konsept/kucuk-ticari-yapi-cephe-960.avif 960w, /assets/img/konsept/kucuk-ticari-yapi-cephe-1600.avif 1600w" sizes="(min-width: 900px) 64vw, 100vw"><img src="/assets/img/konsept/kucuk-ticari-yapi-cephe-960.webp" srcset="/assets/img/konsept/kucuk-ticari-yapi-cephe-480.webp 480w, /assets/img/konsept/kucuk-ticari-yapi-cephe-960.webp 960w, /assets/img/konsept/kucuk-ticari-yapi-cephe-1600.webp 1600w" sizes="(min-width: 900px) 64vw, 100vw" width="1600" height="1200" loading="lazy" decoding="async" alt="Taş ve koyu metal cepheli, iki katlı küçük ticari yapı görselleştirmesi"></picture>
               </div>
             </div>
             <div class="project-card__meta">
-              <h3 class="project-card__title">Örnek Proje 05</h3>
-              <p class="project-card__info"><span>Konut</span><span>Konum eklenecek</span><span>— m²</span></p>
-            </div>
-          </article>
-        </li>
-        <li class="project-card reveal">
-          <article>
-            <div class="project-card__frame">
-              <div class="media" data-ph="Proje kapağı: Örnek Proje 06">
-                <img src="/assets/img/projeler/ornek-proje-06/kapak.webp" width="1600" height="1200" loading="lazy" decoding="async" alt="ÖRNEK proje kapak görseli — gerçek proje görseliyle değiştirilecek">
-              </div>
-            </div>
-            <div class="project-card__meta">
-              <h3 class="project-card__title">Örnek Proje 06</h3>
-              <p class="project-card__info"><span>Kentsel Dönüşüm</span><span>Konum eklenecek</span><span>— m²</span></p>
+              <h3 class="project-card__title">Küçük ticari yapı</h3>
+              <p class="project-card__info"><span>Konsept çalışma</span><span>Temsilî görselleştirme</span></p>
+              <p class="project-card__text">Zemin katta vitrinli satış alanı, üst katta ahşap panjurlu ofis bulunan köşe parsel ticari yapı konsepti.</p>
             </div>
           </article>
         </li>
       </ul>
-      <p class="projects__note reveal">Projelerimizin detay sayfaları yakında yayında.</p>
+      <p class="projects__note reveal">Bu bölümdeki görseller, yaklaşımımızı anlatmak için yapay zekâ ile üretilmiş temsilî görselleştirmelerdir; gerçek bir proje ya da referans kaydı değildir.</p>
     </div>
   </section>
 

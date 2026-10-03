@@ -14,8 +14,8 @@ export default {
   hero: {
     h1: 'Silivri Bina Akustiği',
     lead: 'Silivri bina akustiği hizmetimizle yapınızın gürültüye karşı korunmasını proje aşamasından itibaren planlıyoruz. Yönetmeliğe uygun akustik proje ve raporların yanında, mevcut yapılardaki ses sorunlarına da çözüm üretiyoruz. Silivri, Büyükçekmece ve çevresinde hizmet veriyoruz.',
-    img: '/assets/img/hizmet/bina-akustigi.webp',
-    alt: 'Silivri Bina Akustiği – akustik panellerle düzenlenmiş iç mekân',
+    img: '/assets/img/hizmet/akustik-panelli-cok-amacli-salon',
+    alt: 'Ahşap çıtalı akustik duvar panelleri ve tavana asılı keçe paneller bulunan çok amaçlı salon',
     ph: 'Görsel: akustik panelli iç mekân'
   },
   scope: {
@@ -36,11 +36,11 @@ export default {
     h2: 'Hangi yapılarda çalışıyoruz?',
     cards: [
       { h3: 'Konut ve villa', text: 'Daireler arası ses geçişi, darbe sesi ve dış ortam gürültüsüne karşı yaşam konforunu artıran çözümler.',
-        img: '/assets/img/hizmet/bina-akustigi/kart-1.webp', alt: 'Sessiz ve konforlu bir konut yaşam alanı', ph: 'Görsel: konut iç mekânı' },
+        img: '/assets/img/hizmet/ic-mimari-traverten-mese-salon', alt: 'Traverten zeminli, meşe kitaplıklı ve petrol mavisi berjerli aydınlık villa salonu – iç mimari görselleştirme', ph: 'Görsel: konut iç mekânı' },
       { h3: 'Ticari ve kamusal yapılar', text: 'Ofis, okul, klinik ve otel gibi yapılarda mevzuata uygun akustik tasarım ve raporlama.',
-        img: '/assets/img/hizmet/bina-akustigi/kart-2.webp', alt: 'Akustik tavan uygulanmış bir ofis alanı', ph: 'Görsel: ofis akustiği' },
+        img: '/assets/img/hizmet/ofis-ic-mekan-tasarimi', alt: 'Meşe toplantı masası, keçe duvar panelleri ve traverten bankosu olan ofis iç mekânı', ph: 'Görsel: ofis akustiği' },
       { h3: 'Özel mekânlar', text: 'Toplantı salonu, stüdyo, restoran ve eğlence mekânlarında hem yalıtım hem iç akustik düzenleme.',
-        img: '/assets/img/hizmet/bina-akustigi/kart-3.webp', alt: 'Duvarlarında akustik paneller bulunan toplantı salonu', ph: 'Görsel: toplantı salonu akustiği' }
+        img: '/assets/img/hizmet/akustik-toplanti-odasi', alt: 'Akustik tavan panelleri ve kumaş kaplı duvar panelleri bulunan toplantı odası', ph: 'Görsel: toplantı salonu akustiği' }
     ]
   },
   steps: [

@@ -14,8 +14,8 @@ export default {
   hero: {
     h1: 'Silivri Bilirkişilik ve Teknik İnceleme',
     lead: 'Silivri bilirkişilik ve teknik inceleme hizmetimizle yapılardaki ayıp, eksik ve projeye aykırılıkları tarafsız ve belgeli şekilde ortaya koyuyoruz. Anlaşmazlık aşamasına gelmeden ya da yargı sürecinde, teknik gerçeği anlaşılır bir raporla sunuyoruz. Silivri, Büyükçekmece ve çevresinde hizmet veriyoruz.',
-    img: '/assets/img/hizmet/bilirkisilik.webp',
-    alt: 'Silivri Bilirkişilik ve Teknik İnceleme – yapıda ölçüm ve fotoğrafla kusur tespiti',
+    img: '/assets/img/hizmet/catlak-ve-nem-izli-apartman-cephesi',
+    alt: 'Sıvasında kılcal çatlaklar ve zemine yakın nem izleri bulunan eski bir apartman cephesi',
     ph: 'Görsel: yerinde teknik inceleme'
   },
   scope: {
@@ -36,11 +36,11 @@ export default {
     h2: 'Hangi durumlarda teknik incelemeye ihtiyaç duyulur?',
     cards: [
       { h3: 'Satın alma ve teslim', text: 'Yeni alınan ya da teslim edilen konutlarda sözleşme ve projeye aykırı eksiklerin belgelenmesi.',
-        img: '/assets/img/hizmet/bilirkisilik/kart-1.webp', alt: 'Teslim öncesi yeni bir konutta eksik kontrolü', ph: 'Görsel: teslimde eksik kontrolü' },
+        img: '/assets/img/hizmet/iskana-hazir-mustakil-ev', alt: 'Taş kaideli, ahşap panjurlu ve peyzajı tamamlanmış iki katlı müstakil ev', ph: 'Görsel: teslimde eksik kontrolü' },
       { h3: 'Müteahhit ve kat maliki uyuşmazlıkları', text: 'Kat karşılığı ve inşaat sözleşmelerinden doğan teknik anlaşmazlıkların değerlendirilmesi.',
-        img: '/assets/img/hizmet/bilirkisilik/kart-2.webp', alt: 'Kat karşılığı yapılmış bir apartmanın proje ve sözleşme incelemesi', ph: 'Görsel: proje ve sözleşme incelemesi' },
+        img: '/assets/img/hizmet/ruhsat-proje-setleri-maket', alt: 'Meşe masada klasörlenmiş proje setleri, ölçek cetveli ve beyaz ev maketi', ph: 'Görsel: proje ve sözleşme incelemesi' },
       { h3: 'Hasar ve kusur tespiti', text: 'Nem, çatlak, sızıntı ve benzeri sorunların nedenlerinin ve sorumluluğun teknik açıdan incelenmesi.',
-        img: '/assets/img/hizmet/bilirkisilik/kart-3.webp', alt: 'Duvardaki çatlak ve nem izinin yakından incelenmesi', ph: 'Görsel: çatlak ve nem tespiti' }
+        img: '/assets/img/hizmet/nem-olcer-ile-catlak-tespiti', alt: 'Nem ölçerle sıvadaki çatlağın ve zemine yakın nem izinin ölçülmesi', ph: 'Görsel: çatlak ve nem tespiti' }
     ]
   },
   steps: [

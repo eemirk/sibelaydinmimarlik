@@ -14,8 +14,8 @@ export default {
   hero: {
     h1: 'Silivri Enerji Kimlik Belgesi',
     lead: 'Silivri enerji kimlik belgesi (EKB) hizmetimizle binanızın enerji performansını belirliyor, iskân ve diğer resmi işlemler için gereken belgeyi hazırlıyoruz. Belgeyle birlikte enerji tüketimini azaltmak için neler yapılabileceğini de gösteriyoruz. Silivri, Büyükçekmece ve çevresinde hizmet veriyoruz.',
-    img: '/assets/img/hizmet/enerji-kimlik-belgesi.webp',
-    alt: 'Silivri Enerji Kimlik Belgesi – bina enerji sınıfı ölçeği ve konut cephesi',
+    img: '/assets/img/hizmet/enerji-verimli-konut-binasi',
+    alt: 'Dış cephesi yalıtımlı, çatısında güneş panelleri bulunan dört katlı konut binası',
     ph: 'Görsel: enerji sınıfı ve konut cephesi'
   },
   scope: {
@@ -36,11 +36,11 @@ export default {
     h2: 'EKB hangi durumlarda gerekir?',
     cards: [
       { h3: 'Yeni binalar', text: 'Yeni yapılan binalarda yapı kullanma izin belgesi (iskân) alınabilmesi için EKB gereklidir.',
-        img: '/assets/img/hizmet/enerji-kimlik-belgesi/kart-1.webp', alt: 'İnşaatı yeni tamamlanmış, iskân aşamasındaki bina', ph: 'Görsel: yeni bina' },
+        img: '/assets/img/hizmet/iskana-hazir-mustakil-ev', alt: 'Taş kaideli, ahşap panjurlu ve peyzajı tamamlanmış iki katlı müstakil ev', ph: 'Görsel: yeni bina' },
       { h3: 'Satış ve kiralama', text: 'Mevcut binaların satış ve kiralama işlemlerinde EKB talep edilebilir; güncel uygulamayı işleminizden önce kontrol etmenizi öneriyoruz.',
-        img: '/assets/img/hizmet/enerji-kimlik-belgesi/kart-2.webp', alt: 'Satış veya kiralama için hazırlanan mevcut bir konut', ph: 'Görsel: satış ve kiralama' },
+        img: '/assets/img/hizmet/konut-binasi-gorsellestirme', alt: 'Ahşap tavanlı girintili balkonları olan beş katlı çağdaş konut binası – mimari görselleştirme', ph: 'Görsel: satış ve kiralama' },
       { h3: 'Enerji iyileştirme', text: 'Isınma giderlerini azaltmak isteyen bina sahipleri için mevcut durumun tespiti ve iyileştirme yol haritası.',
-        img: '/assets/img/hizmet/enerji-kimlik-belgesi/kart-3.webp', alt: 'Dış cephesine ısı yalıtımı uygulanan bina', ph: 'Görsel: ısı yalıtımı uygulaması' }
+        img: '/assets/img/hizmet/mantolama-isi-yalitimi-uygulamasi', alt: 'Cepheye dübelle sabitlenmiş beyaz ısı yalıtım levhaları ve file üzerine sürülen sıva; önde iskele korkuluğu', ph: 'Görsel: ısı yalıtımı uygulaması' }
     ]
   },
   steps: [

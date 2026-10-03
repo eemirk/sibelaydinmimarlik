@@ -14,8 +14,8 @@ export default {
   hero: {
     h1: 'Silivri Ruhsat ve İskân',
     lead: 'Silivri ruhsat ve iskân süreçlerinde projelendirmeden belediye onayına kadar her adımı sizin adınıza planlıyor ve takip ediyoruz. Eksik belge ya da uyumsuz proje yüzünden zaman kaybetmemeniz için süreci baştan doğru kuruyoruz. Silivri, Büyükçekmece ve çevresinde hizmet veriyoruz.',
-    img: '/assets/img/hizmet/ruhsat-iskan.webp',
-    alt: 'Silivri Ruhsat ve İskân – belediye başvurusu için hazırlanmış proje dosyaları',
+    img: '/assets/img/hizmet/ruhsat-proje-setleri-maket',
+    alt: 'Meşe masada klasörlenmiş proje setleri, ölçek cetveli ve beyaz ev maketi',
     ph: 'Görsel: ruhsat proje dosyaları'
   },
   scope: {
@@ -36,11 +36,11 @@ export default {
     h2: 'Hangi süreçlerde destek veriyoruz?',
     cards: [
       { h3: 'Yeni yapı ruhsatı', text: 'Arsadan başlayarak villa, müstakil ev ve konut projeleri için ruhsat sürecinin tamamı.',
-        img: '/assets/img/hizmet/ruhsat-iskan/kart-1.webp', alt: 'Ruhsat projesi hazırlanan arsada yeni villa yapımı', ph: 'Görsel: yeni yapı ruhsatı' },
+        img: '/assets/img/hizmet/kiyi-kasabasi-arsa-parselleri', alt: 'Deniz kıyısındaki bir kasabanın kenarında toprak yollarla ayrılmış boş arsalar – havadan görünüm', ph: 'Görsel: yeni yapı ruhsatı' },
       { h3: 'Tadilat ve ilave ruhsatı', text: 'Mevcut yapılarda plan değişikliği, kat veya alan ilavesi gibi işler için gerekli ruhsat süreçleri.',
         img: '/assets/img/hizmet/ruhsat-iskan/kart-2.webp', alt: 'Kat ilavesi yapılan mevcut bir konut', ph: 'Görsel: tadilat ve ilave' },
       { h3: 'İskân (yapı kullanma izni)', text: 'İnşaatı biten yapılarda iskân başvurusu öncesi kontroller, eksiklerin tespiti ve başvuru takibi.',
-        img: '/assets/img/hizmet/ruhsat-iskan/kart-3.webp', alt: 'İnşaatı tamamlanmış, iskân aşamasındaki konut', ph: 'Görsel: iskân aşamasındaki yapı' }
+        img: '/assets/img/hizmet/iskana-hazir-mustakil-ev', alt: 'Taş kaideli, ahşap panjurlu ve peyzajı tamamlanmış iki katlı müstakil ev', ph: 'Görsel: iskân aşamasındaki yapı' }
     ]
   },
   steps: [

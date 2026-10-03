@@ -14,8 +14,8 @@ export default {
   hero: {
     h1: 'Silivri 3D Görselleştirme',
     lead: 'Silivri 3D görselleştirme hizmetimizle projenizi daha inşa edilmeden, gerçeğe yakın görsellerle görmenizi sağlıyoruz. Kararlarınızı çizim üzerinde değil, sonucu görerek veriyorsunuz. Silivri, Büyükçekmece ve çevresinde hizmet veriyoruz.',
-    img: '/assets/img/hizmet/3d-gorsellestirme.webp',
-    alt: 'Silivri 3D görselleştirme – villa dış cephe render',
+    img: '/assets/img/hizmet/konut-binasi-gorsellestirme',
+    alt: 'Ahşap tavanlı girintili balkonları olan beş katlı çağdaş konut binası – mimari görselleştirme',
     ph: 'Görsel: villa dış cephe render'
   },
   // Hero "röntgen merceği": alt katman tel kafes, üst katman render 3 (tools/build-studio-assets.mjs)
@@ -55,11 +55,11 @@ export default {
     h2: 'Kimler için hazırlıyoruz?',
     cards: [
       { h3: 'Ev sahipleri', text: 'Villanızın ya da evinizin nasıl görüneceğini inşaat başlamadan görmek, değişiklikleri erken aşamada ve masrafsız yapmak için.',
-        img: '/assets/img/hizmet/3d-gorsellestirme/ev-sahibi.webp', alt: 'Ev sahibi için hazırlanmış villa 3D görselleştirmesi', ph: 'Görsel: ev sahibi için villa görselleştirmesi' },
+        img: '/assets/img/hizmet/silivri-mimari-proje-tas-avlulu-villa', alt: 'Taş duvarlı, ahşap saçaklı tek katlı çağdaş villa ve zeytin ağaçlı çakıllı avlusu – mimari görselleştirme', ph: 'Görsel: ev sahibi için villa görselleştirmesi' },
       { h3: 'Müteahhitler ve yatırımcılar', text: 'Projeyi inşaat bitmeden tanıtmak, ön satış ve pazarlama çalışmalarında kullanmak için.',
-        img: '/assets/img/hizmet/3d-gorsellestirme/muteahhit.webp', alt: 'Satış ve pazarlama için konut projesi render görseli', ph: 'Görsel: konut projesi satış görseli' },
+        img: '/assets/img/hizmet/konut-binasi-gorsellestirme', alt: 'Ahşap tavanlı girintili balkonları olan beş katlı çağdaş konut binası – mimari görselleştirme', ph: 'Görsel: konut projesi satış görseli' },
       { h3: 'İşletmeler', text: 'Ofis, mağaza veya restoran iç mekânının müşteri gözünden nasıl algılanacağını önceden görmek için.',
-        img: '/assets/img/hizmet/3d-gorsellestirme/isletme.webp', alt: 'Restoran iç mekânının 3D görselleştirmesi', ph: 'Görsel: işletme iç mekân görselleştirmesi' }
+        img: '/assets/img/hizmet/ofis-ic-mekan-tasarimi', alt: 'Meşe toplantı masası, keçe duvar panelleri ve traverten bankosu olan ofis iç mekânı', ph: 'Görsel: işletme iç mekân görselleştirmesi' }
     ]
   },
   steps: [

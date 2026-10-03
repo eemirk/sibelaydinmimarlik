@@ -131,6 +131,9 @@ a:hover .link-arrow .i-arrow, .link-arrow:hover .i-arrow { transform: translateX
 .media { position: relative; overflow: hidden; background: #E7EBEB; aspect-ratio: 4 / 3; border-radius: var(--radius); }
 .media--4x3 { aspect-ratio: 4 / 3; }
 .media--4x5 { aspect-ratio: 4 / 5; }
+.media--wide { aspect-ratio: 21 / 9; }
+@media (max-width: 767px) { .media--wide { aspect-ratio: 16 / 9; } }
+.atmos { margin: 0 auto; }
 .media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
 .media.is-missing {
   background:
@@ -533,6 +536,35 @@ html:not(.motion) .hero__progress { display: none; }
   .project-card:nth-child(6) { grid-column: 9 / span 4; margin-top: clamp(40px, 7vw, 112px); }
   .project-card:nth-child(6) .media { aspect-ratio: 1 / 1; }
 }
+/* Konsept çalışmalar: açıklama, detay düğmesi; 5 kartta son kart ortalanır */
+.project-card__text { margin: 6px 0 0; max-width: 52ch; color: var(--muted); font-size: .9375rem; }
+.project-card__open { align-self: flex-start; margin-top: 10px; }
+.project-card__frame.is-interactive { cursor: pointer; }
+.project-card__frame.is-interactive:hover .media img { transform: scale(1.04); }
+@media (min-width: 900px) { .project-card:nth-child(5):last-child { grid-column: 3 / span 8; } }
+
+/* Konsept detay penceresi (<dialog>) */
+body.dialog-open { overflow: hidden; }
+.concept-dialog {
+  width: min(1120px, calc(100% - 32px)); max-width: none; max-height: calc(100% - 32px); padding: 0; border: 0;
+  border-radius: var(--radius); background: var(--surface); color: var(--ink); overflow: auto; overscroll-behavior: contain;
+}
+.concept-dialog::backdrop { background: rgba(var(--shade), .72); }
+.concept-dialog__inner { padding: clamp(24px, 4vw, 48px); }
+.concept-dialog__head { max-width: 60ch; margin-bottom: clamp(20px, 3vw, 32px); padding-right: 40px; }
+.concept-dialog__title { font-size: clamp(1.5rem, 3vw, 2.25rem); margin: 0 0 10px; }
+.concept-dialog__text { margin: 0; color: var(--muted); }
+.concept-dialog__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.concept-dialog__fig { margin: 0; }
+.concept-dialog__fig.is-main { grid-column: 1 / -1; }
+.concept-dialog__fig figcaption { margin-top: 8px; font-size: .8125rem; color: var(--muted); }
+.concept-dialog__close {
+  position: sticky; top: 12px; z-index: 2; float: right; margin: 12px 12px -56px 0; display: grid; place-items: center; width: 44px; height: 44px;
+  border-radius: 50%; background: var(--surface); font-size: 26px; line-height: 1; color: var(--ink);
+}
+.concept-dialog__close:hover { background: var(--bg); }
+@media (max-width: 699px) { .concept-dialog__grid { grid-template-columns: 1fr; } }
+
 @media (min-width: 768px) and (max-width: 899px) {
   .projects__grid { grid-template-columns: 1fr 1fr; }
   .project-card:nth-child(even) { margin-top: 64px; }
@@ -783,6 +815,9 @@ html:not(.motion) .hero__progress { display: none; }
 .related a:hover { color: inherit; }
 .related h3 { font-size: 1.125rem; }
 .related .link-arrow { margin-top: auto; }
+/* /hizmetler/ kartları: üstte hizmet görseli (kart kenarına taşar) */
+.related .media { margin: -24px -24px 6px; aspect-ratio: 16 / 10; border-radius: var(--radius) var(--radius) 0 0; }
+.related a:hover .media img { transform: scale(1.04); }
 @media (max-width: 899px) { .related { grid-template-columns: 1fr; } }
 
 /* Kurumsal sayfa bileşenleri --------------------------------------------------- */

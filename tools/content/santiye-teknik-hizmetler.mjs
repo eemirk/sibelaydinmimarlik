@@ -14,8 +14,8 @@ export default {
   hero: {
     h1: 'Silivri Şantiye ve Teknik Hizmetler',
     lead: 'Silivri şantiye ve teknik hizmetlerimizle projenizin sahada çizildiği gibi uygulanmasını takip ediyoruz. İşveren tarafında durarak kaliteyi, süreyi ve maliyeti kontrol altında tutuyoruz. Silivri, Büyükçekmece ve çevresinde hizmet veriyoruz.',
-    img: '/assets/img/hizmet/santiye-teknik-hizmetler.webp',
-    alt: 'Silivri Şantiye ve Teknik Hizmetler – şantiyede uygulamanın proje çizimleri üzerinden kontrolü',
+    img: '/assets/img/hizmet/santiye-kontrol-cizim-baret',
+    alt: 'Şantiye masasında açık proje paftaları, baret, şerit metre ve tablet; arkada iskeleli bina karkası',
     ph: 'Görsel: şantiyede proje kontrolü'
   },
   scope: {
@@ -36,11 +36,11 @@ export default {
     h2: 'Kimler için çalışıyoruz?',
     cards: [
       { h3: 'Ev ve villa sahipleri', text: 'İnşaatını bir müteahhide yaptıran ama sahada kendi adına güvenilir bir teknik göz isteyen işverenler için.',
-        img: '/assets/img/hizmet/santiye-teknik-hizmetler/kart-1.webp', alt: 'Villa inşaatında işveren adına yapılan saha kontrolü', ph: 'Görsel: villa şantiyesinde saha kontrolü' },
+        img: '/assets/img/hizmet/villa-santiyesi-donati-kontrolu', alt: 'Döküm öncesi donatısı yerleştirilmiş villa döşemesi; kalıp kenarında baret ve şerit metre', ph: 'Görsel: villa şantiyesinde saha kontrolü' },
       { h3: 'Yatırımcılar', text: 'Birden fazla birimli projelerde bütçe, süre ve kaliteyi düzenli raporlarla izlemek isteyen yatırımcılar için.',
-        img: '/assets/img/hizmet/santiye-teknik-hizmetler/kart-2.webp', alt: 'Çok birimli konut projesinin inşaat aşaması', ph: 'Görsel: çok birimli konut şantiyesi' },
+        img: '/assets/img/hizmet/konut-insaati-cephe-isleri', alt: 'Cephesine yalıtım levhaları ve doğramalar takılan, iskele ve güvenlik filesiyle çevrili konut inşaatı', ph: 'Görsel: çok birimli konut şantiyesi' },
       { h3: 'Kurumlar ve işletmeler', text: 'Ofis, mağaza veya tesis yatırımlarında proje ile uygulama arasında koordinasyon ihtiyacı olan kurumlar için.',
-        img: '/assets/img/hizmet/santiye-teknik-hizmetler/kart-3.webp', alt: 'İç mekân uygulaması süren bir ofis alanı', ph: 'Görsel: ofis uygulaması' }
+        img: '/assets/img/hizmet/ofis-ic-mekan-tasarimi', alt: 'Meşe toplantı masası, keçe duvar panelleri ve traverten bankosu olan ofis iç mekânı', ph: 'Görsel: ofis uygulaması' }
     ]
   },
   steps: [

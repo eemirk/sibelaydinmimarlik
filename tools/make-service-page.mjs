@@ -7,7 +7,7 @@
 //
 // og:title / og:description {{title}} / {{description}} yer tutucularıyla yazılır;
 // make-dist.mjs derlemede <title> ve meta description ile doldurur.
-import { writeFileSync, mkdirSync } from 'node:fs';
+import { writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
@@ -26,6 +26,18 @@ const arrow = '<span class="btn__arrow" aria-hidden="true"><svg><use href="#i-ar
 const linkArrow = '<svg class="i-arrow" aria-hidden="true"><use href="#i-arrow-r"/></svg>';
 const apptBtn = (cls, cta) => `<a class="btn ${cls} btn--wa" href="${APPT}" target="_blank" rel="noopener" aria-label="WhatsApp üzerinden randevu alın" data-appointment data-cta="${cta}"><svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>Randevu Alın${arrow}</a>`;
 const ind = (s, n) => s.split('\n').map((l) => (l ? ' '.repeat(n) + l : l)).join('\n');
+
+// Hizmet görselleri (4:3): uzantısız yol → AVIF + WebP srcset (480/960/1600, tools/generate-site-images.mjs);
+// uzantılı yol (.webp/.jpg) → tek <img> (eski yer tutucu davranışı)
+const MEDIA_SIZES = { hero: '(min-width: 900px) 46vw, 100vw', card: '(min-width: 900px) 30vw, 100vw' };
+const mset = (base, ext) => [480, 960, 1600].map((w) => `${base}-${w}.${ext} ${w}w`).join(', ');
+// Görsel dosyası diskte var mı (uzantısız yol → -960.webp)
+const hasImage = (src) => existsSync(join(ROOT, (/.(webp|jpe?g|png|avif)$/.test(src) ? src : src + '-960.webp').slice(1)));
+function mediaPic(src, alt, { sizes = MEDIA_SIZES.card, priority = false } = {}) {
+  const load = priority ? ' fetchpriority="high"' : ' loading="lazy"';
+  if (/.(webp|jpe?g|png|avif)$/.test(src)) return `<img src="${src}" width="1200" height="900"${load} decoding="async" alt="${attr(alt)}">`;
+  return `<picture><source type="image/avif" srcset="${mset(src, 'avif')}" sizes="${sizes}"><img src="${src}-960.webp" srcset="${mset(src, 'webp')}" sizes="${sizes}" width="1600" height="1200"${load} decoding="async" alt="${attr(alt)}"></picture>`;
+}
 
 // AVIF + WebP srcset (768/1280/1920). defer: true → data-* (bölüm görünür olunca JS yükler)
 const SIZES = '(min-width: 1376px) 1280px, 94vw';
@@ -81,7 +93,7 @@ const heroHtml = c.xray ? `  <!-- HERO: röntgen merceği (masaüstü: imleci ta
         ${heroText}
       </div>
       <div class="media media--4x3" data-ph="${attr(c.hero.ph)}">
-        <img src="${c.hero.img}" width="1200" height="900" fetchpriority="high" decoding="async" alt="${attr(c.hero.alt)}">
+        ${mediaPic(c.hero.img, c.hero.alt, { sizes: MEDIA_SIZES.hero, priority: true })}
       </div>
     </div>
   </section>`;
@@ -149,6 +161,9 @@ const ld = {
   ]
 };
 
+// Kart satırı: görsellerden biri bile henüz yoksa satırdaki tüm kart görselleri gizlenir (hidden);
+// görseller eklenip sayfa yeniden üretilince kendiliğinden görünür olur.
+const cardsReady = c.types.cards.every((k) => hasImage(k.img));
 const imgComment = [
   `    ${c.hero.img.padEnd(46)} (hero, 4:3 — ana sayfadaki kartla aynı dosya)`,
   ...c.types.cards.map((k) => `    ${k.img.padEnd(46)} (kart, 4:3)`)
@@ -239,8 +254,8 @@ ${studioHtml}
       </header>
       <div class="cards-3">
 ${c.types.cards.map((k) => `        <article class="info-card reveal">
-          <div class="media media--4x3" data-ph="${attr(k.ph)}">
-            <img src="${k.img}" width="1200" height="900" loading="lazy" decoding="async" alt="${attr(k.alt)}">
+          <div class="media media--4x3" data-ph="${attr(k.ph)}"${cardsReady ? '' : ' hidden'}>
+            ${mediaPic(k.img, k.alt)}
           </div>
           <h3>${esc(k.h3)}</h3>
           <p>${esc(k.text)}</p>

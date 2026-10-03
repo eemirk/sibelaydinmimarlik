@@ -14,8 +14,8 @@ export default {
   hero: {
     h1: 'Silivri İnşaat ve Uygulama',
     lead: 'Silivri inşaat firmaları arasında bizi farklı kılan, projeyi çizen ekiple uygulayan ekibin aynı olması. Tasarımda verilen kararlar şantiyede kaybolmuyor; villa, konut ve tadilat işlerinizi projeye sadık kalarak hayata geçiriyoruz. Silivri, Büyükçekmece ve çevresinde hizmet veriyoruz.',
-    img: '/assets/img/hizmet/uygulama.webp',
-    alt: 'Silivri inşaat ve uygulama – villa şantiyesi',
+    img: '/assets/img/hizmet/villa-insaati-betonarme-karkas',
+    alt: 'Zeytinlik arazide iki katlı betonarme villa karkası, korkuluklu iskele ve baretli, yelekli çalışanlar',
     ph: 'Görsel: villa şantiyesi'
   },
   scope: {
@@ -38,7 +38,7 @@ export default {
       { h3: 'Villa ve müstakil ev', text: 'Arsadan anahtar teslime; projesi bizde veya başka bir ofiste hazırlanmış villa ve müstakil ev uygulamaları.',
         img: '/assets/img/hizmet/uygulama/villa.webp', alt: 'Uygulama aşamasındaki müstakil villa inşaatı', ph: 'Görsel: villa uygulaması' },
       { h3: 'Konut ve apartman', text: 'Konut projelerinde kaba ve ince inşaat uygulaması, ortak alan ve cephe işleri.',
-        img: '/assets/img/hizmet/uygulama/konut.webp', alt: 'Cephe işleri süren çok katlı konut inşaatı', ph: 'Görsel: konut ve apartman uygulaması' },
+        img: '/assets/img/hizmet/konut-insaati-cephe-isleri', alt: 'Cephesine yalıtım levhaları ve doğramalar takılan, iskele ve güvenlik filesiyle çevrili konut inşaatı', ph: 'Görsel: konut ve apartman uygulaması' },
       { h3: 'Tadilat ve dekorasyon', text: 'Daire, villa ve iş yerlerinde projeli tadilat, yenileme ve iç mekân dekorasyonu uygulamaları.',
         img: '/assets/img/hizmet/uygulama/tadilat.webp', alt: 'Projeli tadilatı süren daire iç mekânı', ph: 'Görsel: tadilat ve dekorasyon' }
     ]
