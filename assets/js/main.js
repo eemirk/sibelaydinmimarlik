@@ -68,6 +68,23 @@ const REVEAL_STAGGER_MS = 80;
 const PF_FILE_TYPES = ['jpg', 'jpeg', 'png', 'heic', 'webp', 'pdf', 'dwg', 'dxf'];
 const PF_MAX_FILES = 10, PF_MAX_FILE = 15 * 1024 * 1024, PF_MAX_TOTAL = 25 * 1024 * 1024;
 const PF_SERVICE_MAP = { 'ruhsat-iskan': 'ruhsat', 'santiye-teknik-hizmetler': 'santiye-teknik', 'enerji-kimlik-belgesi': 'ekb' };
+/* WhatsApp şantiye karakteri (özgün çizim, 80×120, sola bakar). Renkler: mürekkep, petrol, koyu petrol, beyaz, ten, pantolon.
+   Gruplar ve eklem noktaları (svgOrigin): kolL 35 56 · kolR 47 56 · baret 41 30 · bas 41 50 · bacakF 38 84 · bacakB 43 84.
+   Direk ve bayrak kolR içinde: kol −150° kalkınca el başın sağında, direk ucu ≈ (72, 1) → HTML bayrak başın üstünde direğe asılır (CSS). */
+const MASCOT_SVG = '<svg class="mascot__svg" viewBox="0 0 80 120" aria-hidden="true" focusable="false">' +
+  '<g fill="none" stroke="#1E1E1E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+  '<g data-part="kolR"><g data-part="direk" opacity="0"><path d="M48.4 64 53 116" stroke-width="2.4"/></g>' +
+  '<g data-part="bayrak" opacity="0"><path d="M53 116 56.6 108.5 49.4 109.6Z" fill="#fff" stroke="#007580" stroke-width="1.6"/></g>' +
+  '<path d="M44 54h7l1 18h-7z" fill="#12636D"/><circle cx="49" cy="76" r="3.6" fill="#E9B48A"/></g>' +
+  '<g data-part="bacaklar"><g data-part="bacakB"><path d="M39.5 82h7.5v22h-7.5z" fill="#3A4245"/><path d="M36 104h11v5H35a2.5 2.5 0 0 1 1-5z" fill="#1E1E1E"/></g>' +
+  '<g data-part="bacakF"><path d="M34.5 82H42v22h-7.5z" fill="#3A4245"/><path d="M31 104h11v5H30a2.5 2.5 0 0 1 1-5z" fill="#1E1E1E"/></g></g>' +
+  '<g data-part="govde"><path d="M31 53q11-5 23 0l1 31H30z" fill="#007580"/><path d="M31.5 68h23M37 53.5V68m11-14.5V68" stroke="#fff" stroke-width="2.4"/><path d="M30 84h25"/></g>' +
+  '<g data-part="bas"><path d="M38 47v6h7v-6" fill="#E9B48A"/><circle cx="41" cy="38" r="12" fill="#E9B48A"/>' +
+  '<circle cx="34.6" cy="37.6" r="1.5" fill="#1E1E1E" stroke="none"/><circle cx="40.2" cy="37.6" r="1.5" fill="#1E1E1E" stroke="none"/>' +
+  '<path d="M33.6 42.6q3 2.6 6 0M48.6 36.5q3.2 2 0 4.6" stroke-width="1.6"/>' +
+  '<g data-part="baret"><path d="M28.5 30.5a12.5 11.5 0 0 1 25 0z" fill="#fff"/><rect x="22.5" y="29.5" width="33" height="4.2" rx="2.1" fill="#fff"/><path d="M41 19.5v10" stroke-width="1.6"/></g></g>' +
+  '<g data-part="kolL"><path d="M32 54h7l-1 18h-6z" fill="#007580"/><path d="M32.4 65.5h6.2" stroke="#fff" stroke-width="2.2"/><circle cx="35" cy="76" r="3.6" fill="#E9B48A"/></g>' +
+  '</g></svg>';
 
 (function () {
   'use strict';
@@ -397,6 +414,7 @@ const PF_SERVICE_MAP = { 'ruhsat-iskan': 'ruhsat', 'santiye-teknik-hizmetler': '
   initContactForm();
   initProjectForm();
   initThanks();
+  initMascot();
 
   /* ---------------------------------------------------------------- İLETİŞİM FORMU
      İstemci doğrulaması (sunucu aynı kuralları tekrar uygular) → POST /api/form.php (JSON).
@@ -1141,6 +1159,221 @@ const PF_SERVICE_MAP = { 'ruhsat-iskan': 'ruhsat', 'santiye-teknik-hizmetler': '
       invalidateOnRefresh: true,
       onUpdate: (self) => { target = clamp01(self.progress); schedule(); },
       onRefresh: (self) => { target = clamp01(self.progress); current = target; schedule(); updateHeader(); }
+    });
+  }
+
+  /* ---------------------------------------------------------------- WhatsApp: şantiye karakteri
+     Senaryo (GSAP, oturumda bir kez): sağdan yürüyüp WhatsApp butonunu yerine iter → baretini düzeltir →
+     bayrağı kaldırır ("Size nasıl yardımcı olabiliriz?") → ~8 sn ya da kaydırınca bayrak toplanır.
+     Masaüstü: karakter butonun yanında küçük kalır (≥20 sn'de bir baret düzeltme). Mobil: sağa çıkar.
+     Ana sayfada hero (pin) bittikten sonra, iç sayfalarda yüklemeden 3 sn sonra başlar.
+     İç sayfalarda GSAP yalnızca senaryo oynayacaksa (aynı CDN dosyası) yüklenir.
+     Yalnızca transform/opacity; katman position: fixed (CLS yok). */
+  function initMascot() {
+    const fab = $('.wa-fab');
+    if (!fab) return;
+    const KEY = 'sa-maskot';                       // 'oynadi' | 'kapali'
+    const store = (v) => { try { if (v === undefined) return sessionStorage.getItem(KEY); sessionStorage.setItem(KEY, v); } catch (e) { /* depolama kapalı */ } return null; };
+    const state = store();
+    const mobile = matchMedia('(max-width: 767px)').matches;
+    const still = !doc.classList.contains('motion') || matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (state === 'kapali' || (state === 'oynadi' && mobile)) return;
+
+    const OFF = 170;                               // ekran dışı başlangıç (px)
+    const SHIFT = { big: -64, small: -50 };        // karakter görünürken butonun sola kayması (px)
+    const FLAG_TEXT = 'Size nasıl yardımcı olabiliriz?';
+    const root = document.createElement('div');
+    root.className = 'mascot';
+    root.innerHTML = MASCOT_SVG +
+      '<div class="mascot__flag" hidden><p class="mascot__flag-text" aria-live="polite"></p>' +
+      '<button class="mascot__close" type="button" aria-label="Karakteri kapat"><span aria-hidden="true">×</span></button></div>';
+    body.appendChild(root);
+    const part = (n) => $('[data-part="' + n + '"]', root);
+    const P = { kolL: part('kolL'), kolR: part('kolR'), baret: part('baret'), bas: part('bas'), govde: part('govde'),
+      bacakF: part('bacakF'), bacakB: part('bacakB'), direk: part('direk'), bayrak: part('bayrak') };
+    const flag = $('.mascot__flag', root);
+    const flagText = $('.mascot__flag-text', root);
+    let g = null;                                  // GSAP (senaryo oynarken)
+    let small = false, closed = false, away = new Set();
+
+    const setShift = (px, dur) => {
+      if (g && dur) g.to(fab, { '--mascot-shift': px + 'px', duration: dur, ease: 'power2.out', overwrite: 'auto' });
+      else fab.style.setProperty('--mascot-shift', px + 'px');
+    };
+    const restShift = () => (closed || away.size ? 0 : mobile ? 0 : small ? SHIFT.small : SHIFT.big);
+    // Görünmez olması gereken durumlar: footer alt bandı, form alanına odak, mobil klavye
+    const setAway = (reason, on) => {
+      const was = away.size > 0;
+      on ? away.add(reason) : away.delete(reason);
+      const now = away.size > 0;
+      if (was === now) return;
+      root.classList.toggle('is-away', now);
+      root.inert = now;
+      setShift(restShift(), 0.4);
+    };
+    const bottom = $('.footer__bottom');
+    if (bottom && 'IntersectionObserver' in window) new IntersectionObserver((es) => setAway('footer', es[0].isIntersecting)).observe(bottom);
+    if ($('[data-contact-form], [data-project-form]')) {
+      document.addEventListener('focusin', (e) => { if (e.target.matches('input, select, textarea')) setAway('form', true); });
+      document.addEventListener('focusout', (e) => { if (e.target.matches('input, select, textarea')) setAway('form', false); });
+    }
+    if (window.visualViewport) visualViewport.addEventListener('resize', () => setAway('klavye', innerHeight - visualViewport.height > 150));
+
+    // Tıklama: WhatsApp butonuyla aynı link ve aynı dataLayer olayı (placement: floating_button)
+    root.addEventListener('click', (e) => {
+      if (e.target.closest('.mascot__close')) return;
+      if (e.target.closest('.mascot__svg, .mascot__flag')) fab.click();
+    });
+    $('.mascot__close', root).addEventListener('click', () => {
+      closed = true;
+      store('kapali');
+      flag.hidden = true;
+      root.classList.add('is-away');
+      root.inert = true;
+      setShift(0, 0.4);
+      setTimeout(() => root.remove(), 600);
+    });
+
+    const showSmall = () => {
+      small = true;
+      root.classList.add('is-small');
+      setShift(restShift(), 0);
+      // Ara sıra (20–32 sn) baret düzeltme — CSS anahtar kareleri, yalnızca transform
+      if (!still) (function idle() {
+        setTimeout(() => {
+          if (!root.isConnected) return;
+          if (!away.size) { root.classList.add('is-idle'); setTimeout(() => root.classList.remove('is-idle'), 1300); }
+          idle();
+        }, 20000 + Math.random() * 12000);
+      })();
+    };
+    const openFlag = () => {
+      flag.hidden = false;
+      if (!flagText.textContent) flagText.textContent = FLAG_TEXT;   // ekran okuyucu bir kez okur
+    };
+
+    // Daha önce oynadı (masaüstü): doğrudan son pozisyon
+    if (state === 'oynadi') { showSmall(); return; }
+
+    root.classList.add('is-waiting');
+    const start = () => {
+      if (closed) return;
+      store('oynadi');
+      root.classList.remove('is-waiting');
+      if (still) return playStill();
+      loadGsap().then(play, playStill);
+    };
+    // Hareketsiz: son poz statik, bayrak 8 sn sonra kaybolur
+    function playStill() {
+      root.classList.add('is-pose');
+      setShift(mobile ? 0 : SHIFT.big, 0);
+      openFlag();
+      setTimeout(() => {
+        flag.hidden = true;
+        root.classList.remove('is-pose');
+        if (mobile) root.remove(); else showSmall();
+      }, 8000);
+    }
+    function play(gsap) {
+      g = gsap;
+      const so = (x, y) => ({ svgOrigin: x + ' ' + y });
+      const walk = (dur) => {
+        const steps = Math.round(dur / 0.35);
+        const t = gsap.timeline();
+        for (let i = 0; i < steps; i++) {
+          const s = i % 2 ? 1 : -1;
+          t.to(P.bacakF, { rotation: 16 * s, ...so(38, 84), duration: 0.35, ease: 'sine.inOut' }, i * 0.35)
+            .to(P.bacakB, { rotation: -16 * s, ...so(43, 84), duration: 0.35, ease: 'sine.inOut' }, i * 0.35)
+            .to([P.govde, P.bas, P.kolL, P.kolR], { y: -1.5, duration: 0.175, yoyo: true, repeat: 1, ease: 'sine.inOut' }, i * 0.35);
+        }
+        return t.to([P.bacakF, P.bacakB], { rotation: 0, duration: 0.15 });
+      };
+      gsap.set(root, { x: OFF });
+      gsap.set(flag, { transformOrigin: '100% 100%' });
+      gsap.set(P.kolL, { rotation: 80, ...so(35, 56) });
+      const tl = gsap.timeline();
+      // 0.0–1.4 sn: buton ekran dışından itilerek yerine gelir; yerine oturunca yaylanır
+      tl.to(fab, { opacity: 0, duration: 0.15 })
+        .set(fab, { '--mascot-shift': OFF + 'px' })
+        .set(fab, { opacity: 1 })
+        .addLabel('yuru')
+        .to(root, { x: 0, duration: 1.4, ease: 'power1.out' }, 'yuru')
+        .to(fab, { '--mascot-shift': SHIFT.big + 'px', duration: 1.4, ease: 'power1.out' }, 'yuru')
+        .add(walk(1.4), 'yuru')
+        .to(fab, { '--mascot-shift': SHIFT.big - 7 + 'px', duration: 0.12, ease: 'power2.out' }, 'yuru+=1.4')
+        .to(fab, { '--mascot-shift': SHIFT.big + 'px', duration: 0.5, ease: 'elastic.out(1, 0.35)' })
+        // 1.4–2.2 sn: baret düzeltme
+        .to(P.kolL, { rotation: 165, ...so(35, 56), duration: 0.3, ease: 'power2.out' }, 'yuru+=1.45')
+        .to(P.baret, { rotation: -9, ...so(41, 30), duration: 0.14, ease: 'power1.inOut' }, 'yuru+=1.72')
+        .to(P.baret, { rotation: 0, ...so(41, 30), duration: 0.22, ease: 'back.out(3)' })
+        .to(P.kolL, { rotation: 0, ...so(35, 56), duration: 0.3, ease: 'power2.inOut' }, 'yuru+=2.0')
+        // 2.2–3.0 sn: bayrak kalkar ve açılır
+        .set([P.direk, P.bayrak], { opacity: 1 }, 'yuru+=2.2')
+        .to(P.kolR, { rotation: -150, ...so(47, 56), duration: 0.45, ease: 'back.out(1.6)' }, 'yuru+=2.2')
+        .call(openFlag, null, 'yuru+=2.55')
+        .fromTo(flag, { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 0.45, ease: 'power2.out' }, 'yuru+=2.55')
+        .call(() => {
+          const wave = gsap.to(flag, { rotation: 1.4, skewY: 1, duration: 1.6, yoyo: true, repeat: -1, ease: 'sine.inOut' });
+          let y0 = scrollY, done = false;
+          const fold = () => {
+            if (done || closed) return;
+            done = true;
+            removeEventListener('scroll', onScroll);
+            wave.kill();
+            const t = gsap.timeline();
+            t.to(flag, { scaleX: 0, opacity: 0, rotation: 0, skewY: 0, duration: 0.35, ease: 'power2.in' })
+              .call(() => { flag.hidden = true; })
+              .to(P.kolR, { rotation: 0, ...so(47, 56), duration: 0.35, ease: 'power2.inOut' })
+              .set([P.direk, P.bayrak], { opacity: 0 });
+            if (mobile) {
+              t.addLabel('cik')
+                .to(root, { x: OFF, duration: 1.1, ease: 'power1.in' }, 'cik')
+                .add(walk(1.1), 'cik')
+                .call(() => root.remove());
+            } else {
+              t.call(() => { small = true; })
+                .to(root, { scale: 0.55, transformOrigin: '100% 100%', duration: 0.5, ease: 'power2.inOut' })
+                .add(() => setShift(restShift(), 0.5), '<')
+                .call(() => {
+                  // Son poz: GSAP dönüşümleri temizlenir; boşta hareket CSS anahtar kareleriyle
+                  gsap.set(root, { clearProps: 'transform' });
+                  Object.values(P).forEach((el) => { gsap.set(el, { clearProps: 'all' }); el.removeAttribute('transform'); });
+                  showSmall();
+                });
+            }
+          };
+          const onScroll = () => { if (Math.abs(scrollY - y0) > 160) fold(); };
+          setTimeout(() => { y0 = scrollY; addEventListener('scroll', onScroll, { passive: true }); }, 600);
+          setTimeout(fold, 8000);
+        }, null, 'yuru+=3.0');
+    }
+
+    // Tetikleme: ana sayfada hero pin'i bitince, diğer sayfalarda 3 sn sonra
+    const stage = $('[data-hero-stage]');
+    if (stage && !still && !stage.classList.contains('is-static') && window.ScrollTrigger) {
+      const st = () => window.ScrollTrigger.getAll().find((t) => t.trigger === stage);
+      const check = () => {
+        const t = st();
+        if (t ? t.progress >= 1 : stage.getBoundingClientRect().bottom < 0) {
+          removeEventListener('scroll', check);
+          setTimeout(start, 600);
+        }
+      };
+      addEventListener('scroll', check, { passive: true });
+      check();
+    } else {
+      const go = () => setTimeout(start, 3000);
+      if (document.readyState === 'complete') go(); else addEventListener('load', go, { once: true });
+    }
+  }
+  function loadGsap() {
+    if (window.gsap) return Promise.resolve(window.gsap);
+    return new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js';
+      s.onload = () => (window.gsap ? resolve(window.gsap) : reject());
+      s.onerror = reject;
+      document.head.appendChild(s);
     });
   }
 })();
