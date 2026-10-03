@@ -1,11 +1,16 @@
 # ==========================================================================
 #  Netlify — ÖNİZLEME ortamı (canlı site Veridyen cPanel'de; .htaccess orada geçerli)
-#  Yayın klasörü dist/site; derleme tools/make-dist.mjs ile (?v= içerik hash'i + anahtar taraması)
+#  Yayın klasörü dist/site; derleme tools/make-dist.mjs ile (?v= içerik hash'i + anahtar taraması),
+#  ardından tools/netlify-preview.mjs: api/ kaldırılır (PHP yok), form.php önizleme JSON'u döner, önizleme bandı eklenir
 # ==========================================================================
 
 [build]
-  command = "node tools/make-dist.mjs"
+  command = "node tools/make-dist.mjs && node tools/netlify-preview.mjs"
   publish = "dist/site"
+
+# Önizlemede /api/form.php → sabit JSON yanıtı (POST dahil); tools/ yayın klasörüne kopyalanmaz
+[functions]
+  directory = "tools/netlify-functions"
 
 [build.environment]
   NODE_VERSION = "20"
@@ -19,6 +24,13 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     X-Frame-Options = "SAMEORIGIN"
     Permissions-Policy = "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+
+# --- /api: önizlemede PHP yok; api/form.php sabit JSON (tools/netlify-preview.mjs) ---
+[[headers]]
+  for = "/api/*"
+  [headers.values]
+    Content-Type = "application/json; charset=utf-8"
+    Cache-Control = "no-store"
 
 # --- Önbellek (.htaccess ile aynı mantık) ------------------------------------
 [[headers]]
