@@ -641,6 +641,12 @@ html:not(.motion) .hero__progress { display: none; }
 }
 .footer__bottom p { margin: 0; }
 .footer__bottom a { text-decoration: none; }
+/* Sağ grup: KVKK/Gizlilik + ajans imzası — masaüstünde telif satırıyla aynı hizada sağda, mobilde telifin altında solda */
+.footer__bottom-end { display: flex; flex-wrap: wrap; gap: 4px 24px; }
+.footer__credit a { transition: color .3s var(--ease); }
+.footer__credit a:hover, .footer__credit a:focus-visible { color: var(--accent); text-decoration: underline; }
+/* Sabit WhatsApp butonu (sağ 24px + 58px) sayfa sonunda imzanın üstüne binmesin: kenar boşluğu yetmezse sağda yer aç */
+@media (min-width: 768px) { .footer__bottom { padding-right: max(0px, calc(92px - max(var(--gutter), (100vw - var(--max)) / 2))); } }
 @media (max-width: 1023px) { .footer__grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 599px) { .footer__grid { grid-template-columns: 1fr; } }
 
