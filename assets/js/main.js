@@ -302,12 +302,39 @@ const PF_SERVICE_MAP = { 'ruhsat-iskan': 'ruhsat', 'santiye-teknik-hizmetler': '
     btn.addEventListener('click', () => {
       const f = document.createElement('iframe');
       f.src = box.dataset.mapSrc;
-      f.title = 'Sibel Aydın İnşaat Mimarlık konumu — Google Haritalar';
+      f.title = box.dataset.mapTitle || 'Sibel Aydın İnşaat Mimarlık konumu — Google Haritalar';
       f.loading = 'lazy';
       f.referrerPolicy = 'no-referrer-when-downgrade';
       f.setAttribute('allowfullscreen', '');
       box.innerHTML = '';
       box.appendChild(f);
+    });
+  });
+
+  /* ---------------------------------------------------------------- Harita sekmeleri (İletişim: Silivri | Büyükçekmece)
+     Sekme yalnızca yüklenecek iframe adresini değiştirir; kullanıcı "Haritayı göster"e basmadan Google'a istek gitmez.
+     Harita zaten yüklendiyse (onay verilmiş) iframe yeni ofise geçer. Klavye: ←/→, Home, End. */
+  $$('[data-map-tabs]').forEach((list) => {
+    const tabs = $$('[role="tab"]', list);
+    const panel = document.getElementById(tabs[0].getAttribute('aria-controls'));
+    if (!panel) return;
+    const select = (tab, focus) => {
+      tabs.forEach((t) => { const on = t === tab; t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1; });
+      panel.setAttribute('aria-labelledby', tab.id);
+      panel.dataset.mapSrc = tab.dataset.mapTab;
+      panel.dataset.mapTitle = tab.dataset.mapTitle;
+      const f = $('iframe', panel);
+      if (f) { f.src = tab.dataset.mapTab; f.title = tab.dataset.mapTitle; }
+      if (focus) tab.focus();
+    };
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => select(t, false));
+      t.addEventListener('keydown', (e) => {
+        const j = { ArrowRight: (i + 1) % tabs.length, ArrowLeft: (i - 1 + tabs.length) % tabs.length, Home: 0, End: tabs.length - 1 }[e.key];
+        if (j === undefined) return;
+        e.preventDefault();
+        select(tabs[j], true);
+      });
     });
   });
 

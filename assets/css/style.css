@@ -617,6 +617,10 @@ html:not(.motion) .hero__progress { display: none; }
 .footer__links a, .footer__contact a { text-decoration: none; }
 .footer__links a:hover, .footer__contact a:hover { text-decoration: underline; }
 .footer__contact p { margin-bottom: 12px; font-variant-numeric: tabular-nums; }
+/* İki ofis: etiket + adres, sıkı aralık (footer yüksekliği gereksiz büyümesin) */
+.footer-office { margin-bottom: 14px; }
+.footer__contact .footer-office__label { margin-bottom: 2px; font-size: .8125rem; font-weight: 600; letter-spacing: .01em; }
+.footer__contact .footer-address { margin-bottom: 0; }
 .map-embed {
   position: relative; margin-top: 20px; aspect-ratio: 16 / 10; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden;
   background: repeating-linear-gradient(0deg, transparent 0 23px, var(--line) 23px 24px), repeating-linear-gradient(90deg, transparent 0 23px, var(--line) 23px 24px), var(--bg);
@@ -810,6 +814,13 @@ html:not(.motion) .hero__progress { display: none; }
 .contact-item__value { margin: 0; font-size: 1.0625rem; font-variant-numeric: tabular-nums; }
 .contact-item__value a { text-decoration: none; }
 .contact-item__action { display: inline-flex; align-items: center; min-height: 44px; justify-self: start; }
+.contact-item > :not(svg) { grid-column: 2; }
+.contact-item__note { margin: 2px 0 0; font-size: .8125rem; color: var(--muted); }
+/* Harita sekmeleri (İletişim): yalnızca yüklenecek iframe adresini değiştirir */
+.map-tabs { display: flex; margin-bottom: 16px; border-bottom: 1px solid var(--line); }
+.map-tabs__tab { min-height: 44px; margin-bottom: -1px; padding: 0 20px; font-size: .9375rem; color: var(--muted); border-bottom: 2px solid transparent; transition: color .3s var(--ease), border-color .3s var(--ease); }
+.map-tabs__tab:hover { color: var(--ink); }
+.map-tabs__tab[aria-selected="true"] { color: var(--ink); font-weight: 500; border-bottom-color: var(--accent); }
 /* İletişim: Bizi takip edin */
 .contact-social { padding: 22px 0 0 44px; }
 .contact-social__title { margin-bottom: 8px; font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
