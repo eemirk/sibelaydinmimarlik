@@ -439,8 +439,63 @@ const MASCOT_SVG = '<svg class="mascot__svg" viewBox="0 0 80 120" aria-hidden="t
   initStudio();
   initContactForm();
   initProjectForm();
+  initDocs();
   initThanks();
   initMascot();
+
+  /* ---------------------------------------------------------------- BELGELER: lightbox
+     Kimdir sayfası ızgarası (data-doc-group="belgeler") ve hizmet sayfalarındaki "Yetki belgemiz" kartı.
+     Bağlantı JS yoksa 1600'lük görseli açar. <dialog>: ESC kapatır (yerel), ←/→ aynı gruptaki belgeler
+     arasında gezer, arka plana tıklama kapatır, kapanınca odak açan bağlantıya döner. dataLayer: document_open. */
+  function initDocs() {
+    const links = $$('[data-doc]');
+    if (!links.length || typeof HTMLDialogElement !== 'function') return;
+    const dlg = document.createElement('dialog');
+    dlg.className = 'doc-dialog';
+    dlg.setAttribute('aria-labelledby', 'belge-baslik');
+    const arrowSvg = '<svg class="i-arrow" aria-hidden="true"><use href="#i-arrow-r"/></svg>';
+    dlg.innerHTML = '<button class="doc-dialog__close" type="button" aria-label="Pencereyi kapat"><span aria-hidden="true">×</span></button>' +
+      '<div class="doc-dialog__stage"><picture><source type="image/avif"><img alt="" decoding="async"></picture></div>' +
+      '<div class="doc-dialog__bar"><p class="doc-dialog__cap"><span class="doc-dialog__title" id="belge-baslik"></span><span class="doc-dialog__meta"></span></p>' +
+      '<div class="doc-dialog__nav"><button class="doc-dialog__btn doc-dialog__btn--prev" type="button" data-step="-1" aria-label="Önceki belge">' + arrowSvg + '</button>' +
+      '<span class="doc-dialog__count" aria-live="polite"></span>' +
+      '<button class="doc-dialog__btn" type="button" data-step="1" aria-label="Sonraki belge">' + arrowSvg + '</button></div></div>';
+    body.appendChild(dlg);
+    const source = $('source', dlg), img = $('img', dlg), nav = $('.doc-dialog__nav', dlg);
+    let list = [], idx = 0, opener = null;
+    const show = (i) => {
+      idx = (i + list.length) % list.length;
+      const a = list[idx], base = a.dataset.doc, thumb = $('img', a);
+      source.srcset = base + '-1600.avif';      // belge metni okunabilsin diye her zaman 1600
+      img.width = +a.dataset.docW; img.height = +a.dataset.docH;
+      img.src = base + '-1600.webp';
+      img.alt = thumb ? thumb.alt : '';
+      $('.doc-dialog__title', dlg).textContent = a.dataset.docTitle;
+      $('.doc-dialog__meta', dlg).textContent = a.dataset.docMeta;
+      $('.doc-dialog__count', dlg).textContent = (idx + 1) + ' / ' + list.length;
+    };
+    links.forEach((a) => a.addEventListener('click', (e) => {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;   // yeni sekmede açma serbest
+      e.preventDefault();
+      const g = a.dataset.docGroup;
+      list = g ? links.filter((x) => x.dataset.docGroup === g) : [a];
+      nav.hidden = list.length < 2;
+      opener = a;
+      show(list.indexOf(a));
+      body.classList.add('dialog-open');
+      dlg.showModal();
+      window.dataLayer.push({ event: 'document_open', document: a.dataset.doc.split('/').pop(), page_path: location.pathname });
+    }));
+    $('.doc-dialog__close', dlg).addEventListener('click', () => dlg.close());
+    dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+    $$('[data-step]', dlg).forEach((b) => b.addEventListener('click', () => show(idx + Number(b.dataset.step))));
+    dlg.addEventListener('keydown', (e) => {
+      if (list.length < 2) return;
+      if (e.key === 'ArrowRight') { e.preventDefault(); show(idx + 1); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); show(idx - 1); }
+    });
+    dlg.addEventListener('close', () => { body.classList.remove('dialog-open'); if (opener) opener.focus(); });
+  }
 
   /* ---------------------------------------------------------------- İLETİŞİM FORMU
      İstemci doğrulaması (sunucu aynı kuralları tekrar uygular) → POST /api/form.php (JSON).

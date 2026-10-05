@@ -5,6 +5,7 @@ export default {
   breadcrumb: 'Bina Akustiği',
   waService: 'Bina Akustiği',
   waMsg: 'Merhaba, web sitenizden yazıyorum. Bina akustiği hizmetiniz hakkında bilgi almak istiyorum.',
+  yetkiBelgesi: 'd1-temel-bina-akustigi-sertifikasi',   // tools/content/belgeler.mjs
   service: {
     name: 'Silivri Bina Akustiği',
     type: 'Bina akustiği, akustik proje ve ses yalıtımı',

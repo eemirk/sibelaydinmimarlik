@@ -10,6 +10,7 @@
 import { writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { yetkiKarti } from './content/belgeler.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const slug = process.argv[2];
@@ -332,7 +333,7 @@ ${c.steps.map(([h3, text]) => `        <li class="reveal">
       </aside>
     </div>
   </section>
-
+${c.yetkiBelgesi ? '\n' + yetkiKarti(c.yetkiBelgesi) : ''}
   <!-- BÖLÜM 5 -->
   <section class="section section--tight" aria-labelledby="ilgili-baslik">
     <div class="container">

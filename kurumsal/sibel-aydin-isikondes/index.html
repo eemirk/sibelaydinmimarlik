@@ -5,7 +5,7 @@
   Portre: fotoğraf gelince .profile__media'daki hidden özniteliğini ve .profile--solo sınıfını kaldırın,
   görseli /assets/img/ekip/sibel-aydin-isikondes-{480,960}.{avif,webp} olarak ekleyin, alt metni güncelleyin ve
   Person düğümüne "image" ekleyin.
-  Belgeler bölümü (#belgeler): belgeler onaylanana kadar hidden.
+  Belgeler bölümü (#belgeler): tools/content/belgeler.mjs (sıra, başlık, metin) + tools/process-belgeler.mjs (görseller).
 -->
 <html lang="tr">
 <head>
@@ -64,6 +64,11 @@
           "@type": "Place",
           "name": "Değirmenköy, Silivri, İstanbul"
         },
+        "identifier": {
+          "@type": "PropertyValue",
+          "propertyID": "Mimarlar Odası sicil no",
+          "value": "46515"
+        },
         "alumniOf": {
           "@type": "CollegeOrUniversity",
           "name": "Mimar Sinan Güzel Sanatlar Üniversitesi"
@@ -87,6 +92,11 @@
           {
             "@type": "EducationalOccupationalCredential",
             "name": "D1 Bina Akustiği Raporu hazırlama yetkisi",
+            "credentialCategory": "license"
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            "name": "Kamulaştırma bilirkişiliği yetki belgesi",
             "credentialCategory": "license"
           }
         ]
@@ -251,11 +261,12 @@
         <p class="eyebrow">Yetkiler</p>
         <h2 id="uzmanlik-baslik" class="section__title">Uzmanlık alanları ve yetkileri</h2>
         <p class="section__intro">Kamu kurumlarında bilirkişi olarak görev alan Işıköndeş'in Enerji Kimlik Belgesi (EKB) düzenleme ve D1 Bina Akustiği Raporu hazırlama yetkileri bulunmaktadır.</p>
+        <p class="profile__fact">Mimarlar Odası sicil no: 46515</p>
       </header>
       <div class="related related--bg">
         <a class="reveal" href="/hizmetler/bilirkisilik/">
           <h3>Bilirkişilik</h3>
-          <p>Kamu kurumlarında bilirkişi olarak teknik inceleme ve rapor</p>
+          <p>Kamulaştırma bilirkişiliği yetki belgesi; kamu kurumlarında bilirkişi olarak teknik inceleme ve rapor</p>
           <span class="link-arrow">Bilirkişilik hizmetini inceleyin<svg class="i-arrow" aria-hidden="true"><use href="#i-arrow-r"/></svg></span>
         </a>
         <a class="reveal" href="/hizmetler/enerji-kimlik-belgesi/">
@@ -283,13 +294,28 @@
     </div>
   </section>
 
-  <!-- BELGELER — GİZLİ: belgeler onaylanana kadar kapalı (kart ızgarası + lightbox ayrı commit'te) -->
-  <section class="section section--surface" id="belgeler" aria-labelledby="belgeler-baslik" hidden>
+  <!-- BELGELER (tools/content/belgeler.mjs; görseller tools/process-belgeler.mjs) -->
+  <section class="section section--surface" id="belgeler" aria-labelledby="belgeler-baslik">
     <div class="container">
-      <header class="section__head">
+      <header class="section__head reveal">
         <p class="eyebrow">Belgeler</p>
         <h2 id="belgeler-baslik" class="section__title">Belgeler</h2>
+        <p class="section__intro">Mesleki yetki ve tescil belgelerimiz. Büyütmek için belgeye dokunun; belgelerdeki T.C. kimlik numarası ve imzalar gizlenmiştir.</p>
       </header>
+      <ul class="docs" role="list">
+        <li class="doc-card reveal">
+          <a class="doc-card__link" href="/assets/img/belgeler/mimarlar-odasi-buro-tescil-belgesi-2026-1600.webp" data-doc="/assets/img/belgeler/mimarlar-odasi-buro-tescil-belgesi-2026" data-doc-w="1600" data-doc-h="2263" data-doc-title="Mimarlar Odası Büro Tescil Belgesi" data-doc-meta="TMMOB Mimarlar Odası · Büro tescil no 34-7639 · 2026" data-doc-group="belgeler" aria-haspopup="dialog"><span class="doc-card__frame"><picture><source type="image/avif" srcset="/assets/img/belgeler/mimarlar-odasi-buro-tescil-belgesi-2026-800.avif 800w, /assets/img/belgeler/mimarlar-odasi-buro-tescil-belgesi-2026-1600.avif 1600w" sizes="(min-width: 1100px) 300px, (min-width: 700px) 45vw, 92vw"><img src="/assets/img/belgeler/mimarlar-odasi-buro-tescil-belgesi-2026-800.webp" srcset="/assets/img/belgeler/mimarlar-odasi-buro-tescil-belgesi-2026-800.webp 800w, /assets/img/belgeler/mimarlar-odasi-buro-tescil-belgesi-2026-1600.webp 1600w" sizes="(min-width: 1100px) 300px, (min-width: 700px) 45vw, 92vw" width="800" height="1132" loading="lazy" decoding="async" alt="TMMOB Mimarlar Odası Serbest Mimarlık Hizmetleri Büro Tescil Belgesi 2026: Sibel Aydın Işıköndeş, oda sicil no 46515, büro tescil no 34-7639 (T.C. kimlik no, QR kod ve imzalar kapatılmış)"></picture></span><span class="doc-card__title">Mimarlar Odası Büro Tescil Belgesi</span><span class="doc-card__meta">TMMOB Mimarlar Odası<br>Büro tescil no 34-7639 · 2026</span></a>
+        </li>
+        <li class="doc-card reveal">
+          <a class="doc-card__link" href="/assets/img/belgeler/d1-temel-bina-akustigi-sertifikasi-1600.webp" data-doc="/assets/img/belgeler/d1-temel-bina-akustigi-sertifikasi" data-doc-w="1600" data-doc-h="1102" data-doc-title="D1 Temel Bina Akustiği Sertifikası" data-doc-meta="TMMOB Fizik Mühendisleri Odası · Belge no 666 · 27.04.2022" data-doc-group="belgeler" aria-haspopup="dialog"><span class="doc-card__frame"><picture><source type="image/avif" srcset="/assets/img/belgeler/d1-temel-bina-akustigi-sertifikasi-800.avif 800w, /assets/img/belgeler/d1-temel-bina-akustigi-sertifikasi-1600.avif 1600w" sizes="(min-width: 1100px) 300px, (min-width: 700px) 45vw, 92vw"><img src="/assets/img/belgeler/d1-temel-bina-akustigi-sertifikasi-800.webp" srcset="/assets/img/belgeler/d1-temel-bina-akustigi-sertifikasi-800.webp 800w, /assets/img/belgeler/d1-temel-bina-akustigi-sertifikasi-1600.webp 1600w" sizes="(min-width: 1100px) 300px, (min-width: 700px) 45vw, 92vw" width="800" height="551" loading="lazy" decoding="async" alt="TMMOB Fizik Mühendisleri Odası Başarı Belgesi: Sibel Aydın Işıköndeş, D1 Temel Bina Akustiği sertifikası, belge no 666 (T.C. kimlik no ve imza kapatılmış)"></picture></span><span class="doc-card__title">D1 Temel Bina Akustiği Sertifikası</span><span class="doc-card__meta">TMMOB Fizik Mühendisleri Odası<br>Belge no 666 · 27.04.2022</span></a>
+        </li>
+        <li class="doc-card reveal">
+          <a class="doc-card__link" href="/assets/img/belgeler/kamulastirma-bilirkisiligi-yetki-belgesi-1600.webp" data-doc="/assets/img/belgeler/kamulastirma-bilirkisiligi-yetki-belgesi" data-doc-w="1600" data-doc-h="1031" data-doc-title="Kamulaştırma Bilirkişiliği Yetki Belgesi" data-doc-meta="TMMOB Mimarlar Odası SMGM · Belge no 00.SM.S.2016.0000047 · 14.10.2016" data-doc-group="belgeler" aria-haspopup="dialog"><span class="doc-card__frame"><picture><source type="image/avif" srcset="/assets/img/belgeler/kamulastirma-bilirkisiligi-yetki-belgesi-800.avif 800w, /assets/img/belgeler/kamulastirma-bilirkisiligi-yetki-belgesi-1600.avif 1600w" sizes="(min-width: 1100px) 300px, (min-width: 700px) 45vw, 92vw"><img src="/assets/img/belgeler/kamulastirma-bilirkisiligi-yetki-belgesi-800.webp" srcset="/assets/img/belgeler/kamulastirma-bilirkisiligi-yetki-belgesi-800.webp 800w, /assets/img/belgeler/kamulastirma-bilirkisiligi-yetki-belgesi-1600.webp 1600w" sizes="(min-width: 1100px) 300px, (min-width: 700px) 45vw, 92vw" width="800" height="516" loading="lazy" decoding="async" alt="TMMOB Mimarlar Odası Sürekli Mesleki Gelişim Merkezi yetki belgesi: Sibel Aydın (46515), Kamulaştırma Bilirkişiliği (imza kapatılmış)"></picture></span><span class="doc-card__title">Kamulaştırma Bilirkişiliği Yetki Belgesi</span><span class="doc-card__meta">TMMOB Mimarlar Odası SMGM<br>Belge no 00.SM.S.2016.0000047 · 14.10.2016</span></a>
+        </li>
+        <li class="doc-card reveal">
+          <a class="doc-card__link" href="/assets/img/belgeler/marka-tescil-belgesi-1600.webp" data-doc="/assets/img/belgeler/marka-tescil-belgesi" data-doc-w="1600" data-doc-h="2425" data-doc-title="Marka Tescil Belgesi" data-doc-meta="Türk Patent ve Marka Kurumu · Tescil no 2020 123274 · 25.06.2021" data-doc-group="belgeler" aria-haspopup="dialog"><span class="doc-card__frame"><picture><source type="image/avif" srcset="/assets/img/belgeler/marka-tescil-belgesi-800.avif 800w, /assets/img/belgeler/marka-tescil-belgesi-1600.avif 1600w" sizes="(min-width: 1100px) 300px, (min-width: 700px) 45vw, 92vw"><img src="/assets/img/belgeler/marka-tescil-belgesi-800.webp" srcset="/assets/img/belgeler/marka-tescil-belgesi-800.webp 800w, /assets/img/belgeler/marka-tescil-belgesi-1600.webp 1600w" sizes="(min-width: 1100px) 300px, (min-width: 700px) 45vw, 92vw" width="800" height="1213" loading="lazy" decoding="async" alt="Türk Patent ve Marka Kurumu Marka Tescil Belgesi: Sibel Aydın İnşaat &amp; Mimarlık logosu, marka no 2020 123274, sınıf 37 ve 42 (imza kapatılmış)"></picture></span><span class="doc-card__title">Marka Tescil Belgesi</span><span class="doc-card__meta">Türk Patent ve Marka Kurumu<br>Tescil no 2020 123274 · 25.06.2021</span></a>
+        </li>
+      </ul>
     </div>
   </section>
 

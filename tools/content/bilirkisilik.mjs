@@ -5,6 +5,7 @@ export default {
   breadcrumb: 'Bilirkişilik ve Teknik İnceleme',
   waService: 'Bilirkişilik ve Teknik İnceleme',
   waMsg: 'Merhaba, web sitenizden yazıyorum. Bilirkişilik ve teknik inceleme hizmetiniz hakkında bilgi almak istiyorum.',
+  yetkiBelgesi: 'kamulastirma-bilirkisiligi-yetki-belgesi',   // tools/content/belgeler.mjs
   service: {
     name: 'Silivri Bilirkişilik ve Teknik İnceleme',
     type: 'Mimari bilirkişilik ve yapı teknik incelemesi',

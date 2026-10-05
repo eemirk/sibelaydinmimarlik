@@ -929,6 +929,61 @@ body.dialog-open { overflow: hidden; }
 .contact-item__value a { text-decoration: none; }
 .contact-item__action { display: inline-flex; align-items: center; min-height: 44px; justify-self: start; }
 .contact-item__links { display: flex; flex-wrap: wrap; gap: 0 24px; margin: 0; }
+/* Belgeler: kimdir ızgarası, hizmet sayfası "Yetki belgemiz" kartı (tools/content/belgeler.mjs) ve lightbox */
+.profile__fact { margin: 14px 0 0; font-weight: 500; }
+.docs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(16px, 2vw, 24px); }
+@media (max-width: 1023px) { .docs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 479px) { .docs { grid-template-columns: minmax(0, 1fr); } }
+.doc-card__link {
+  display: flex; flex-direction: column; gap: 6px; height: 100%; padding: 14px 14px 20px;
+  background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius); color: inherit; text-decoration: none;
+  transition: box-shadow .4s var(--ease);
+}
+.doc-card__link:hover { color: inherit; box-shadow: 0 2px 8px rgba(0, 0, 0, .04), 0 12px 32px -12px rgba(0, 0, 0, .08); }
+.doc-card__frame { position: relative; display: block; aspect-ratio: 1 / 1; margin-bottom: 10px; background: var(--surface); border-radius: calc(var(--radius) / 2); overflow: hidden; }
+.doc-card__frame img {
+  position: absolute; inset: 14px; width: calc(100% - 28px); height: calc(100% - 28px); object-fit: contain;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, .14)); transition: transform .5s var(--ease);
+}
+.doc-card__link:hover .doc-card__frame img { transform: scale(1.03); }
+.doc-card__title { font-weight: 500; font-size: 1.0625rem; line-height: 1.35; color: var(--ink); }
+.doc-card__meta { font-size: .8125rem; line-height: 1.5; color: var(--muted); }
+.auth-card {
+  display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: clamp(20px, 4vw, 48px); align-items: center; max-width: 960px;
+  padding: clamp(20px, 3vw, 32px); background: var(--surface); border: 1px solid var(--line); border-left: 2px solid var(--accent); border-radius: var(--radius);
+}
+.auth-card__thumb { display: block; color: inherit; }
+.auth-card__thumb .doc-card__frame { margin: 0; background: var(--bg); }
+.auth-card__thumb:hover .doc-card__frame img { transform: scale(1.03); }
+.auth-card__title { font-size: clamp(1.25rem, 2vw, 1.5rem); margin: 8px 0 12px; }
+.auth-card__body p { color: var(--muted); margin: 0 0 12px; max-width: 62ch; }
+.auth-card__body .auth-card__meta { font-size: .875rem; margin-bottom: 16px; }
+@media (max-width: 599px) { .auth-card { grid-template-columns: minmax(0, 1fr); } .auth-card__thumb { max-width: 220px; } }
+.doc-dialog {
+  width: min(1100px, calc(100% - 24px)); max-width: none; max-height: calc(100% - 24px); padding: 0; border: 0;
+  border-radius: var(--radius); background: var(--surface); color: var(--ink); overflow: auto; overscroll-behavior: contain;
+}
+.doc-dialog::backdrop { background: rgba(var(--shade), .8); }
+.doc-dialog__stage { display: flex; justify-content: center; align-items: center; padding: 60px 16px 16px; background: var(--bg); }
+.doc-dialog__stage img {
+  width: auto; height: auto; max-width: 100%; max-height: calc(100vh - 210px); max-height: calc(100dvh - 210px);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, .14);
+}
+.doc-dialog__bar { display: flex; align-items: center; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap; padding: 14px 20px; }
+.doc-dialog__cap { display: flex; flex-direction: column; gap: 2px; margin: 0; }
+.doc-dialog__title { font-weight: 500; }
+.doc-dialog__meta { font-size: .8125rem; color: var(--muted); }
+.doc-dialog__nav { display: flex; align-items: center; gap: 8px; }
+.doc-dialog__count { min-width: 3.5em; text-align: center; font-size: .875rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.doc-dialog__btn { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 50%; color: var(--ink); }
+.doc-dialog__btn:hover { background: var(--bg); }
+.doc-dialog__btn .i-arrow { width: 16px; height: 16px; }
+.doc-dialog__btn--prev .i-arrow { transform: scaleX(-1); }
+.doc-dialog__close {
+  position: absolute; top: 8px; right: 8px; z-index: 2; display: grid; place-items: center; width: 44px; height: 44px;
+  border-radius: 50%; background: var(--surface); font-size: 26px; line-height: 1; color: var(--ink);
+}
+.doc-dialog__close:hover { background: var(--bg); }
 .contact-item > :not(svg) { grid-column: 2; }
 .contact-item__note { margin: 2px 0 0; font-size: .8125rem; color: var(--muted); }
 /* Harita sekmeleri (İletişim): yalnızca yüklenecek iframe adresini değiştirir */
