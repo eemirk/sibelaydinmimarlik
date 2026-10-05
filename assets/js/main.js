@@ -162,7 +162,7 @@ const MASCOT_SVG = '<svg class="mascot__svg" viewBox="0 0 80 120" aria-hidden="t
 
   /* ---------------------------------------------------------------- Aktif menü öğesi */
   const path = location.pathname.replace(/index\.html$/, '').replace(/\/?$/, '/');
-  $$('.nav a[href^="/"]').forEach((a) => {
+  $$('.nav a[href^="/"], .header-cta__link').forEach((a) => {
     const p = a.getAttribute('href');
     if (p === path) a.setAttribute('aria-current', 'page');
     const item = a.closest('.nav__item');

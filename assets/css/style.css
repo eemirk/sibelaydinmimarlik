@@ -221,11 +221,12 @@ a:hover .link-arrow .i-arrow, .link-arrow:hover .i-arrow { transform: translateX
 .nav__list { display: flex; align-items: center; }
 .nav__item { position: relative; display: flex; align-items: center; }
 .nav__link { display: block; padding: 10px 14px; font-size: .9375rem; font-weight: 500; text-decoration: none; color: var(--ink); position: relative; }
-.nav__link::after {
-  content: ""; position: absolute; left: 14px; right: 14px; bottom: 4px; height: 1px;
-  background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform .6s var(--ease);
+.nav__link::after, .header-cta__link::after {
+  content: ""; position: absolute; left: var(--line-inset, 14px); right: var(--line-inset, 14px); bottom: 4px; height: 1px;
+  background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform .6s var(--ease), background-color .3s var(--ease);
 }
-.nav__link:hover::after, .nav__link[aria-current="page"]::after, .nav__item.is-current > .nav__link::after { transform: scaleX(1); }
+.nav__link:hover::after, .nav__link[aria-current="page"]::after, .nav__item.is-current > .nav__link::after,
+.header-cta__link::after { transform: scaleX(1); }
 .nav__link:hover { color: inherit; }
 .nav__item--sub .nav__link { padding-right: 4px; }
 .nav__item--sub .nav__link::after { right: 4px; }
@@ -241,8 +242,10 @@ a:hover .link-arrow .i-arrow, .link-arrow:hover .i-arrow { transform: translateX
 
 .header-cta { display: flex; gap: 10px; flex: none; }
 /* "Bizimle Çalışın": buton değil, menü linki görünümünde (≥1024px); 1024–1280px'te "Kariyer" */
-.header-cta__link { display: none; align-self: center; padding: 10px 6px; font-size: .9375rem; font-weight: 500; text-decoration: none; color: var(--ink); white-space: nowrap; }
+.header-cta__link { --line-inset: 6px; position: relative; display: none; align-self: center; padding: 10px 6px; font-size: .9375rem; font-weight: 500; text-decoration: none; color: var(--ink); white-space: nowrap; }
 .header-cta__link:hover { color: var(--accent-dark); }
+/* Çizgi her sayfada görünür (aktif çizgiyle aynı); hover/odakta koyulaşır. /kariyer/'de de tek çizgi (aynı ::after) */
+.header-cta__link:hover::after, .header-cta__link:focus-visible::after { background: var(--accent-dark); }
 .header-cta__short { display: none; }
 @media (min-width: 1024px) { .header-cta__link { display: block; } }
 @media (min-width: 1024px) and (max-width: 1280px) {
