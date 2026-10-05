@@ -1260,8 +1260,8 @@ const MASCOT_SVG = '<svg class="mascot__svg" viewBox="0 0 80 120" aria-hidden="t
     const still = !doc.classList.contains('motion') || matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (state === 'kapali' || (state === 'oynadi' && mobile)) return;
 
-    const OFF = 170;                               // ekran dışı başlangıç (px)
-    const SHIFT = { big: -64, small: -50 };        // karakter görünürken butonun sola kayması (px)
+    let OFF = 170;                                 // ekran dışı başlangıç (px, --k ile ölçeklenir)
+    const SHIFT = { big: -64, small: -50 };        // karakter görünürken butonun sola kayması (px, --k = 1 için)
     const FLAG_TEXT = 'Size nasıl yardımcı olabiliriz?';
     const root = document.createElement('div');
     root.className = 'mascot';
@@ -1269,6 +1269,9 @@ const MASCOT_SVG = '<svg class="mascot__svg" viewBox="0 0 80 120" aria-hidden="t
       '<div class="mascot__flag" hidden><p class="mascot__flag-text" aria-live="polite"></p>' +
       '<button class="mascot__close" type="button" aria-label="Karakteri kapat"><span aria-hidden="true">×</span></button></div>';
     body.appendChild(root);
+    // Ölçek CSS'te (--k: masaüstü 4/3, mobil .9167, kısa ekranda eski boy); kaymalar aynı oranda büyür
+    const K = parseFloat(getComputedStyle(root).getPropertyValue('--k')) || 1;
+    OFF = Math.round(OFF * K); SHIFT.big = Math.round(SHIFT.big * K); SHIFT.small = Math.round(SHIFT.small * K);
     const part = (n) => $('[data-part="' + n + '"]', root);
     const P = { kolL: part('kolL'), kolR: part('kolR'), baret: part('baret'), bas: part('bas'), govde: part('govde'),
       bacakF: part('bacakF'), bacakB: part('bacakB'), direk: part('direk'), bayrak: part('bayrak') };
