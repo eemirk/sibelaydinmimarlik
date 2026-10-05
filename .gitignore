@@ -28,3 +28,6 @@ api/_data/
 api/config.local.php
 # Form verisi (public_html dışında tutulur; yerelde oluşursa)
 private_data/
+
+# Müşteriden gelen orijinal görseller (render/fotoğraf) — repoya girmez
+/tools/input/
