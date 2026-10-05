@@ -588,19 +588,24 @@
 
   <!-- 5. HAKKIMIZDA ÖZETİ -->
   <section class="section about" aria-labelledby="hakkimizda-baslik">
-    <div class="container about__grid">
-      <div class="about__body reveal">
+    <div class="container about__grid about__grid--solo">
+      <div class="about__head reveal">
         <p class="eyebrow">Hakkımızda</p>
         <h2 id="hakkimizda-baslik" class="section__title">Sürecin her adımında yanınızda</h2>
+      </div>
+      <div class="about__body reveal">
         <p>2017'den bu yana Silivri merkezli firmamızda mimarlık ve inşaatı tek çatı altında buluşturuyoruz; tasarladığımız projeleri kendi ekibimizle inşa ediyoruz. Sibel Aydın İnşaat Mimarlık, Silivri merkezli bir mimarlık ve inşaat firmasıdır. Konut, villa ve ticari yapılarda ilk eskizden uygulamaya kadar tüm süreci tek bir ekip olarak yönetiyor; tasarım, proje, ruhsat ve saha adımlarının birbirinden kopmadan ilerlemesini sağlıyoruz.</p>
         <p>İmar ve yapı mevzuatına hâkim bir yaklaşımla, belediye ve onay süreçlerini baştan planlıyoruz. Her aşamada ne yapıldığını, neyin beklendiğini ve sıradaki adımı açıkça paylaşıyor; kararları sizinle birlikte, şeffaf bir iletişimle veriyoruz.</p>
         <a class="link-arrow link-arrow--lg" href="/kurumsal/">Ofisimizi ve çalışma şeklimizi tanıyın <svg class="i-arrow" aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
       </div>
+      <!-- GİZLİ: gerçek ofis fotoğrafı gelene kadar kapalı (görsel isteği yok). Açarken: aşağıdaki bloğu yorumdan çıkarın,
+           .about__grid--solo sınıfını ve .about__head sarmalayıcısını kaldırıp eyebrow + h2'yi .about__body'nin başına taşıyın.
       <div class="about__media reveal">
         <div class="media media--4x5" data-ph="Ofis / ekip görseli">
           <img src="/assets/img/ofis.webp" width="1000" height="1250" loading="lazy" decoding="async" alt="Sibel Aydın İnşaat Mimarlık ofisinde proje çizimleri üzerinde çalışma">
         </div>
       </div>
+      -->
     </div>
   </section>
 

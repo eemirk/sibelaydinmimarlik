@@ -573,9 +573,12 @@ body.dialog-open { overflow: hidden; }
 
 /* 7.4 Hakkımızda — editorial split: solda serif başlık + metin, sağda görsel */
 .about__grid { display: grid; grid-template-columns: 7fr 5fr; gap: clamp(40px, 8vw, 128px); align-items: center; }
-.about__body .section__title { font-size: clamp(2.1rem, 3.8vw, 3.75rem); margin-bottom: 28px; max-width: 12em; }
+.about__body .section__title, .about__head .section__title { font-size: clamp(2.1rem, 3.8vw, 3.75rem); margin-bottom: 28px; max-width: 12em; }
+/* Görselsiz düzen (ofis fotoğrafı gelene kadar): solda başlık, sağda metin */
+.about__grid--solo { grid-template-columns: 5fr 7fr; align-items: start; }
+.about__grid--solo .about__head .section__title { margin-bottom: 0; }
 .about__body p:not(.eyebrow) { font-size: 1.0625rem; max-width: 60ch; }
-@media (max-width: 899px) { .about__grid { grid-template-columns: 1fr; } .about__media { max-width: 520px; } }
+@media (max-width: 899px) { .about__grid, .about__grid--solo { grid-template-columns: 1fr; } .about__grid--solo { row-gap: 20px; } .about__media { max-width: 520px; } }
 
 /* 7.5 Süreç */
 .process { background: var(--surface); border-top: 1px solid var(--line); }
