@@ -6,6 +6,8 @@ import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const IMG = join(resolve(dirname(fileURLToPath(import.meta.url)), '..'), 'assets', 'img');
+// Beyaz dikey logo sitede kullanılmıyor; yalnızca yatay beyaz logonun kaynağı → tools/logo-kaynak/
+const SRC_DIR = { 'sibelaydinlogo.svg': IMG, 'sibelaydinlogo-white.svg': join(dirname(fileURLToPath(import.meta.url)), 'logo-kaynak') };
 
 // Parça sınırları (orijinal viewBox 0 0 992.13 799.29 koordinatlarında; tarayıcıda getBBox ile ölçüldü)
 const ICON = { x: 300.7, y: 0, w: 404.9, h: 500.9 };
@@ -28,7 +30,7 @@ const textX = ICON.w + GAP;
 const W = f(textX + TEXT_W), H = f(ICON.h);
 
 for (const [src, cfg] of Object.entries(PARTS)) {
-  const svg = readFileSync(join(IMG, src), 'utf8');
+  const svg = readFileSync(join(SRC_DIR[src], src), 'utf8');
   const defs = svg.match(/<defs>[^]*?<\/defs>/)[0];
   const body = svg.slice(svg.indexOf('</defs>') + 7, svg.lastIndexOf('</svg>'));
   const els = body.match(/<path[^>]*\/>|<g[^>]*>[^]*?<\/g>/g);

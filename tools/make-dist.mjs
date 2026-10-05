@@ -12,11 +12,15 @@
 // 3) Güvenlik: çıktıda fal anahtarı / FAL_KEY izi ve dolu SMTP şifresi aranır; bulunursa paket üretilmez.
 //    api/config.local.php (SMTP şifresi) ve form çalışma verisi (_data, private_data, talepler, logs) hiçbir derinlikte kopyalanmaz.
 // 4) HTML yorumları (<!-- … -->; geliştirici notları, GİZLİ bloklar) yayın çıktısından çıkarılır; kaynakta kalır.
+// 5) Yalnızca referans verilen asset'ler yayına girer (tools/asset-refs.mjs): assets/ ve data/ altında yayın çıktısının
+//    HTML/CSS/JS/JSON/PHP/manifest/.htaccess dosyalarında geçmeyen dosya kopyalanmaz ve UYARI olarak listelenir.
+//    PDF dosyaları (belge taramaları) hiçbir derinlikte kopyalanmaz.
 import { createHash } from 'node:crypto';
 import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
+import { assetUsage } from './asset-refs.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = join(ROOT, 'dist');
@@ -31,7 +35,7 @@ rmSync(SITE, { recursive: true, force: true });
 mkdirSync(SITE, { recursive: true });
 for (const name of readdirSync(ROOT)) {
   if (EXCLUDE.has(name) || NESTED_EXCLUDE.has(name) || name.startsWith('.env')) continue;
-  cpSync(join(ROOT, name), join(SITE, name), { recursive: true, filter: (src) => !NESTED_EXCLUDE.has(basename(src)) });
+  cpSync(join(ROOT, name), join(SITE, name), { recursive: true, filter: (src) => !NESTED_EXCLUDE.has(basename(src)) && !/.pdf$/i.test(src) });
 }
 
 // 2) İçerik hash'i ile sürümle
@@ -69,6 +73,15 @@ for (const f of files.filter((p) => p.endsWith('.html'))) {
     .replace(/^[ \t]+$/gm, '').replace(/\n{3,}/g, '\n\n');
   if (s !== before) { writeFileSync(f, s); htmlCount++; }
 }
+
+// 2b) Referanssız asset'ler yayına girmez (yorumlar çıkarıldıktan sonra; yalnızca çalışma anında istenenler)
+const { unused } = assetUsage(SITE, { stripComments: true });
+for (const u of unused) rmSync(join(SITE, u.rel));
+if (unused.length) {
+  console.warn(`UYARI: ${unused.length} referanssız dosya yayına alınmadı (${(unused.reduce((t, u) => t + u.size, 0) / 1024).toFixed(0)} KB):`);
+  unused.forEach((u) => console.warn('  ' + u.rel));
+}
+for (const p of files.filter((x) => !existsSync(x))) files.splice(files.indexOf(p), 1);
 
 // 3) Anahtar taraması (metin dosyaları)
 const KEY = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}:[0-9a-f]{32}|FAL_KEY|SMTP_PASS'\s*=>\s*'[^']+'/i;
