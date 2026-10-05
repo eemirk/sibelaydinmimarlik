@@ -150,7 +150,7 @@ const ld = {
     {
       '@type': 'Service', '@id': `${URL}#hizmet`,
       name: c.service.name, serviceType: c.service.type, url: URL, description: c.service.description,
-      provider: { '@type': 'ProfessionalService', '@id': `${SITE}/#firma`, name: 'Sibel Aydın İnşaat Mimarlık', url: `${SITE}/` },
+      provider: { '@type': 'ProfessionalService', '@id': `${SITE}/#firma`, name: 'Sibel Aydın İnşaat Mimarlık', url: `${SITE}/`, founder: { '@id': `${SITE}/kurumsal/sibel-aydin-isikondes/#kisi` } },
       areaServed: [
         ...(c.service.cities || []).map((n) => ({ '@type': 'City', name: n })),
         { '@type': 'AdministrativeArea', name: 'İstanbul' }, { '@type': 'AdministrativeArea', name: 'Tekirdağ' }

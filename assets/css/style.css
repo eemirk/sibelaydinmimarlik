@@ -869,6 +869,18 @@ body.dialog-open { overflow: hidden; }
 .text-card h3 { font-size: clamp(1.375rem, 2vw, 1.75rem); margin-bottom: 16px; }
 .text-card p { color: var(--muted); font-size: 1.0625rem; margin: 0; max-width: 60ch; }
 @media (max-width: 767px) { .cards-2 { grid-template-columns: 1fr; } }
+/* Kurucumuz: kimdir sayfası (portre gelene kadar .profile--solo) ve /kurumsal/ kurucu kartı */
+.profile { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: clamp(32px, 6vw, 96px); align-items: start; }
+.profile--solo { grid-template-columns: minmax(0, 1fr); }
+.profile__media { margin: 0; position: sticky; top: 112px; }
+.profile__body > h2:first-child { margin-top: 0; }
+.profile__body p { font-size: 1.0625rem; }
+.profile__more { margin-top: 4px; }
+@media (max-width: 899px) { .profile { grid-template-columns: minmax(0, 1fr); } .profile__media { position: static; max-width: 420px; } }
+.related--bg a { background: var(--bg); }
+.founder-card { max-width: 860px; }
+.founder-card__name { font-size: clamp(1.375rem, 2vw, 1.75rem); margin: 10px 0 16px; }
+.founder-card .link-arrow { margin-top: 24px; }
 
 /* Hizmet link listesi: iki sütun, satır çizgili */
 .link-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0 clamp(24px, 4vw, 64px); }
@@ -916,6 +928,7 @@ body.dialog-open { overflow: hidden; }
 .contact-item__value { margin: 0; font-size: 1.0625rem; font-variant-numeric: tabular-nums; }
 .contact-item__value a { text-decoration: none; }
 .contact-item__action { display: inline-flex; align-items: center; min-height: 44px; justify-self: start; }
+.contact-item__links { display: flex; flex-wrap: wrap; gap: 0 24px; margin: 0; }
 .contact-item > :not(svg) { grid-column: 2; }
 .contact-item__note { margin: 2px 0 0; font-size: .8125rem; color: var(--muted); }
 /* Harita sekmeleri (İletişim): yalnızca yüklenecek iframe adresini değiştirir */

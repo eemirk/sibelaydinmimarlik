@@ -50,7 +50,8 @@ if (getenv('SA_MAIL_DRIVER')) $CONFIG['MAIL_DRIVER'] = getenv('SA_MAIL_DRIVER');
 if (getenv('SA_DATA_DIR')) $CONFIG['DATA_DIR'] = getenv('SA_DATA_DIR');
 
 const SITE_URL = 'https://www.sibelaydinmimarlik.com.tr';
-const PHONE_DISPLAY = '0536 847 56 40';
+const TEL_DISPLAY = '0212 727 10 20';   // Telefon (sabit hat)
+const GSM_DISPLAY = '0536 847 56 40';   // GSM
 const WA_URL = 'https://wa.me/905368475640';
 
 const RATE_MAX = 5;           // aynı IP'den pencere içinde en fazla gönderim (iki form tipi ortak)
@@ -190,7 +191,7 @@ function respond(int $status, array $data): void
         . '<meta name="robots" content="noindex"><title>' . h($title) . ' | Sibel Aydın İnşaat Mimarlık</title>'
         . '<link rel="stylesheet" href="/assets/css/style.css"></head><body class="page-inner"><main class="section"><div class="container prose">'
         . '<h1>' . h($title) . '</h1><p>' . implode('</p><p>', $lines) . '</p>'
-        . '<p><a href="javascript:history.back()">Forma geri dönün</a> · <a href="tel:+905368475640">' . PHONE_DISPLAY . '</a> · <a href="' . WA_URL . '">WhatsApp</a></p>'
+        . '<p><a href="javascript:history.back()">Forma geri dönün</a> · Telefon: <a href="tel:+902127271020">' . TEL_DISPLAY . '</a> · GSM: <a href="tel:+905368475640">' . GSM_DISPLAY . '</a> · <a href="' . WA_URL . '">WhatsApp</a></p>'
         . '</div></main></body></html>';
     exit;
 }
@@ -472,7 +473,7 @@ if ($type === 'iletisim') {
     $m->isHTML(false);
     $m->Body = "Merhaba {$c['ad']},\n\n"
         . "Sibel Aydın İnşaat Mimarlık web sitesi üzerinden gönderdiğiniz mesaj bize ulaştı. Talep numaranız: $no\n\n"
-        . 'En kısa sürede size dönüş yapacağız. Acil durumlar için ' . PHONE_DISPLAY . " numarasından bize ulaşabilirsiniz.\n\n"
+        . "En kısa sürede size dönüş yapacağız. Acil durumlar için bize telefonla ulaşabilirsiniz:\nTelefon: " . TEL_DISPLAY . "\nGSM: " . GSM_DISPLAY . "\n\n"
         . "Sibel Aydın İnşaat Mimarlık\nPiri Mehmet Paşa Mah. Şerif Sk. Osmanoğlu İş Merkezi No:1 İç Kapı No:10, 34570 Silivri / İstanbul\n" . SITE_URL . "\n\n"
         . 'Kişisel verileriniz KVKK Aydınlatma Metni kapsamında işlenmektedir: ' . SITE_URL . "/kvkk/\n";
     $record['musteri_eposta'] = deliver($m, "$no-musteri");
@@ -568,11 +569,12 @@ $m->Subject = "Talebiniz alındı – $no | Sibel Aydın İnşaat Mimarlık";
 $m->isHTML(true);
 $m->Body = html_table('Talebiniz alındı', $summary,
     'Merhaba ' . h($c['ad']) . ', proje talebiniz bize ulaştı. <strong>1 iş günü içinde</strong> size dönüş yapacağız.',
-    'Bize <a href="tel:+905368475640" style="color:#12636D">' . PHONE_DISPLAY . '</a> numarasından ya da <a href="' . WA_URL . '?text=' . $waText . '" style="color:#12636D">WhatsApp</a> üzerinden de ulaşabilirsiniz.<br>'
+    'Bize telefonla ya da <a href="' . WA_URL . '?text=' . $waText . '" style="color:#12636D">WhatsApp</a> üzerinden de ulaşabilirsiniz.<br>'
+    . 'Telefon: <a href="tel:+902127271020" style="color:#12636D">' . TEL_DISPLAY . '</a> · GSM: <a href="tel:+905368475640" style="color:#12636D">' . GSM_DISPLAY . '</a><br>'
     . 'Sibel Aydın İnşaat Mimarlık · Piri Mehmet Paşa Mah. Şerif Sk. Osmanoğlu İş Merkezi No:1 İç Kapı No:10, 34570 Silivri / İstanbul<br>'
     . 'Kişisel verileriniz <a href="' . SITE_URL . '/kvkk/" style="color:#12636D">KVKK Aydınlatma Metni</a> kapsamında işlenmektedir.');
 $m->AltBody = "Merhaba {$c['ad']},\n\nProje talebiniz bize ulaştı. 1 iş günü içinde size dönüş yapacağız.\n\n" . text_table($summary)
-    . "\nTelefon: " . PHONE_DISPLAY . "\nWhatsApp: " . WA_URL . "?text=$waText\n\nSibel Aydın İnşaat Mimarlık\nPiri Mehmet Paşa Mah. Şerif Sk. Osmanoğlu İş Merkezi No:1 İç Kapı No:10, 34570 Silivri / İstanbul\n"
+    . "\nTelefon: " . TEL_DISPLAY . "\nGSM: " . GSM_DISPLAY . "\nWhatsApp: " . WA_URL . "?text=$waText\n\nSibel Aydın İnşaat Mimarlık\nPiri Mehmet Paşa Mah. Şerif Sk. Osmanoğlu İş Merkezi No:1 İç Kapı No:10, 34570 Silivri / İstanbul\n"
     . 'Kişisel verileriniz KVKK Aydınlatma Metni kapsamında işlenmektedir: ' . SITE_URL . "/kvkk/\n";
 $record['musteri_eposta'] = deliver($m, "$no-musteri");
 save_request($no, $record);

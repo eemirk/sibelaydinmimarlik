@@ -1,21 +1,19 @@
 <!doctype html>
 <!--
-  HİZMET SAYFASI: Ruhsat ve İskân Süreçleri — tools/make-service-page.mjs ile tools/content/ruhsat-iskan.mjs'den üretildi.
-  Metni içerik dosyasında değiştirip yeniden üretin; sonra: node tools/sync-partials.mjs
-  Görsel yer tutucuları (dosyalar yüklenene kadar gri, etiketli kutu görünür;
-  yüklenince alt metinleri görselin GERÇEKTE gösterdiğine göre güncelleyin):
-    /assets/img/hizmet/ruhsat-proje-setleri-maket  (hero, 4:3 — ana sayfadaki kartla aynı dosya)
-    /assets/img/hizmet/kiyi-kasabasi-arsa-parselleri (kart, 4:3)
-    /assets/img/hizmet/ruhsat-iskan/kart-2.webp    (kart, 4:3)
-    /assets/img/hizmet/iskana-hazir-mustakil-ev    (kart, 4:3)
+  KURUMSAL › KURUCUMUZ (Sibel Aydın Işıköndeş kimdir?) — tools/templates/ic-sayfa.html yapısıyla. Header/footer: node tools/sync-partials.mjs
+  Person düğümü (#kisi) YALNIZCA bu sayfada tanımlanır; diğer sayfalar { "@id": "…/kurumsal/sibel-aydin-isikondes/#kisi" } ile başvurur.
+  Portre: fotoğraf gelince .profile__media'daki hidden özniteliğini ve .profile--solo sınıfını kaldırın,
+  görseli /assets/img/ekip/sibel-aydin-isikondes-{480,960}.{avif,webp} olarak ekleyin, alt metni güncelleyin ve
+  Person düğümüne "image" ekleyin.
+  Belgeler bölümü (#belgeler): belgeler onaylanana kadar hidden.
 -->
 <html lang="tr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Silivri Ruhsat ve İskân İşlemleri | Yapı Ruhsatı, Yapı Kullanma İzni – Sibel Aydın İnşaat Mimarlık</title>
-  <meta name="description" content="Silivri ve Büyükçekmece'de yapı ruhsatı, tadilat ruhsatı ve iskân (yapı kullanma izin belgesi) süreçleri. Projelendirmeden belediye onayına kadar takip.">
-  <link rel="canonical" href="https://www.sibelaydinmimarlik.com.tr/hizmetler/ruhsat-iskan/">
+  <title>Sibel Aydın Işıköndeş Kimdir? | Mimar – Sibel Aydın İnşaat Mimarlık Kurucusu</title>
+  <meta name="description" content="Mimar Sibel Aydın Işıköndeş; Mimar Sinan Güzel Sanatlar Üniversitesi mezunu, 2017'de Sibel Aydın İnşaat Mimarlık'ı kurdu. Bilirkişi, EKB ve D1 bina akustiği yetkili.">
+  <link rel="canonical" href="https://www.sibelaydinmimarlik.com.tr/kurumsal/sibel-aydin-isikondes/">
   <!-- GSC: <meta name="google-site-verification" content="..."> -->
   <meta name="theme-color" content="#F6F7F6">
   <meta property="og:type" content="website">
@@ -23,7 +21,7 @@
   <meta property="og:site_name" content="Sibel Aydın İnşaat Mimarlık">
   <meta property="og:title" content="{{title}}">
   <meta property="og:description" content="{{description}}">
-  <meta property="og:url" content="https://www.sibelaydinmimarlik.com.tr/hizmetler/ruhsat-iskan/">
+  <meta property="og:url" content="https://www.sibelaydinmimarlik.com.tr/kurumsal/sibel-aydin-isikondes/">
   <meta property="og:image" content="https://www.sibelaydinmimarlik.com.tr/assets/img/og-paylasim.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@mimarsibelaydin">
@@ -41,35 +39,55 @@
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "Service",
-        "@id": "https://www.sibelaydinmimarlik.com.tr/hizmetler/ruhsat-iskan/#hizmet",
-        "name": "Silivri Ruhsat ve İskân",
-        "serviceType": "Yapı ruhsatı ve yapı kullanma izni işlemleri",
-        "url": "https://www.sibelaydinmimarlik.com.tr/hizmetler/ruhsat-iskan/",
-        "description": "Silivri ve Büyükçekmece'de yapı ruhsatı, tadilat ruhsatı ve iskân (yapı kullanma izin belgesi) süreçleri. Projelendirmeden belediye onayına kadar takip.",
-        "provider": {
-          "@type": "ProfessionalService",
-          "@id": "https://www.sibelaydinmimarlik.com.tr/#firma",
-          "name": "Sibel Aydın İnşaat Mimarlık",
-          "url": "https://www.sibelaydinmimarlik.com.tr/",
-          "founder": { "@id": "https://www.sibelaydinmimarlik.com.tr/kurumsal/sibel-aydin-isikondes/#kisi" }
+        "@type": "ProfilePage",
+        "@id": "https://www.sibelaydinmimarlik.com.tr/kurumsal/sibel-aydin-isikondes/#sayfa",
+        "url": "https://www.sibelaydinmimarlik.com.tr/kurumsal/sibel-aydin-isikondes/",
+        "name": "Sibel Aydın Işıköndeş Kimdir?",
+        "description": "Mimar Sibel Aydın Işıköndeş; Mimar Sinan Güzel Sanatlar Üniversitesi mezunu, 2017'de Sibel Aydın İnşaat Mimarlık'ı kurdu. Bilirkişi, EKB ve D1 bina akustiği yetkili.",
+        "inLanguage": "tr-TR",
+        "isPartOf": {
+          "@type": "WebSite",
+          "@id": "https://www.sibelaydinmimarlik.com.tr/#site"
         },
-        "areaServed": [
+        "mainEntity": {
+          "@id": "https://www.sibelaydinmimarlik.com.tr/kurumsal/sibel-aydin-isikondes/#kisi"
+        }
+      },
+      {
+        "@type": "Person",
+        "@id": "https://www.sibelaydinmimarlik.com.tr/kurumsal/sibel-aydin-isikondes/#kisi",
+        "name": "Sibel Aydın Işıköndeş",
+        "alternateName": "Sibel Aydın",
+        "jobTitle": "Mimar",
+        "url": "https://www.sibelaydinmimarlik.com.tr/kurumsal/sibel-aydin-isikondes/",
+        "birthPlace": {
+          "@type": "Place",
+          "name": "Değirmenköy, Silivri, İstanbul"
+        },
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "Mimar Sinan Güzel Sanatlar Üniversitesi"
+        },
+        "worksFor": {
+          "@id": "https://www.sibelaydinmimarlik.com.tr/#firma"
+        },
+        "knowsAbout": [
+          "Mimari proje",
+          "Bilirkişilik",
+          "Enerji Kimlik Belgesi",
+          "Bina akustiği",
+          "Ruhsat ve iskân süreçleri"
+        ],
+        "hasCredential": [
           {
-            "@type": "City",
-            "name": "Silivri"
+            "@type": "EducationalOccupationalCredential",
+            "name": "Enerji Kimlik Belgesi (EKB) düzenleme yetkisi",
+            "credentialCategory": "license"
           },
           {
-            "@type": "City",
-            "name": "Büyükçekmece"
-          },
-          {
-            "@type": "AdministrativeArea",
-            "name": "İstanbul"
-          },
-          {
-            "@type": "AdministrativeArea",
-            "name": "Tekirdağ"
+            "@type": "EducationalOccupationalCredential",
+            "name": "D1 Bina Akustiği Raporu hazırlama yetkisi",
+            "credentialCategory": "license"
           }
         ]
       },
@@ -85,59 +103,13 @@
           {
             "@type": "ListItem",
             "position": 2,
-            "name": "Hizmetler",
-            "item": "https://www.sibelaydinmimarlik.com.tr/hizmetler/"
+            "name": "Kurumsal",
+            "item": "https://www.sibelaydinmimarlik.com.tr/kurumsal/"
           },
           {
             "@type": "ListItem",
             "position": 3,
-            "name": "Ruhsat ve İskân Süreçleri",
-            "item": "https://www.sibelaydinmimarlik.com.tr/hizmetler/ruhsat-iskan/"
-          }
-        ]
-      },
-      {
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "Silivri'de ruhsat almak için hangi belgeler gerekir?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Temel olarak tapu, imar durumu, aplikasyon krokisi, zemin etüdü raporu ve onaylanacak mimari, statik, mekanik ve elektrik projeleri gerekir; yapı denetim sözleşmesi ve ilgili harçlar da süreçte yer alır. Projeye göre ek belgeler istenebildiği için güncel listeyi sürecin başında sizinle paylaşıyoruz."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Ruhsat süreci ne kadar sürer?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Süre; projenin hazırlanma süresine, başvurunun eksiksiz olmasına ve belediyenin yoğunluğuna göre değişir. Eksiksiz ve doğru hazırlanmış bir başvuru, düzeltme turlarını azaltarak süreci belirgin şekilde kısaltır."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "İskân (yapı kullanma izni) almak için neler gerekir?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "İnşaatın onaylı projeye uygun tamamlanmış olması, yapı denetim sürecinin kapatılması ve Enerji Kimlik Belgesi gibi belgelerin hazırlanması gerekir. Yapının türüne göre ilgili kurumlardan ek uygunluk yazıları da istenebilir."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Projesine aykırı yapılmış bir binaya iskân alınabilir mi?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Önce aykırılığın türü ve mevzuat karşısındaki durumu incelenmelidir. Bazı durumlarda tadilat projesiyle uygunluk sağlanabilir; hangi yolun mümkün olduğunu yerinde tespit ve belge incelemesinden sonra söyleyebiliyoruz."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Ruhsat ve iskân hizmetinin ücreti nasıl belirlenir?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Ücret; yapının büyüklüğüne, işlem türüne ve hazırlanması gereken projelerin kapsamına göre belirlenir. Belgelerinizi incelediğimizde size özel teklif hazırlıyoruz."
-            }
+            "name": "Sibel Aydın Işıköndeş"
           }
         ]
       }
@@ -147,7 +119,7 @@
   <!-- İç sayfalarda GSAP gerekmez; yalnızca main.js -->
   <script src="/assets/js/main.js?v=dev" defer></script>
 </head>
-<body class="page-inner page-service" data-wa-service="Ruhsat ve İskân Süreçleri" data-wa-msg="Merhaba, web sitenizden yazıyorum. Ruhsat ve iskân hizmetiniz hakkında bilgi almak istiyorum.">
+<body class="page-inner" data-wa-msg="Merhaba, Sibel Aydın İnşaat Mimarlık web sitenizden yazıyorum. Projem hakkında bilgi almak istiyorum.">
 
 <!-- HEADER START -->
 <a class="skip-link" href="#main">İçeriğe geç</a>
@@ -231,201 +203,93 @@
   <nav class="breadcrumb container" aria-label="Sayfa konumu">
     <ol>
       <li><a href="/">Ana Sayfa</a></li>
-      <li><a href="/hizmetler/">Hizmetler</a></li>
-      <li aria-current="page">Ruhsat ve İskân Süreçleri</li>
+      <li><a href="/kurumsal/">Kurumsal</a></li>
+      <li aria-current="page">Sibel Aydın Işıköndeş</li>
     </ol>
   </nav>
+  <nav class="subnav container" aria-label="Kurumsal sayfalar">
+    <ul>
+      <li><a href="/kurumsal/">Hakkımızda</a></li>
+      <li><a href="/kurumsal/sibel-aydin-isikondes/" aria-current="page">Kurucumuz</a></li>
+      <li><a href="/kurumsal/calisma-anlayisimiz/">Çalışma Anlayışımız</a></li>
+      <!-- GİZLİ: Ekibimiz sayfası bilgiler gelince açılacak — <li><a href="/kurumsal/ekibimiz/">Ekibimiz</a></li> -->
+    </ul>
+  </nav>
 
-  <!-- HERO -->
   <section class="page-hero">
-    <div class="container svc-hero">
-      <div>
-        <p class="eyebrow">Hizmetler</p>
-        <h1 class="page-hero__title">Silivri Ruhsat ve İskân</h1>
-        <p class="page-hero__lead">Silivri ruhsat ve iskân süreçlerinde projelendirmeden belediye onayına kadar her adımı sizin adınıza planlıyor ve takip ediyoruz. Eksik belge ya da uyumsuz proje yüzünden zaman kaybetmemeniz için süreci baştan doğru kuruyoruz. Silivri, Büyükçekmece ve çevresinde hizmet veriyoruz.</p>
-        <div class="btn-row">
-          <a class="btn btn--primary" href="/projenizi-anlatin/?hizmet=ruhsat-iskan" data-cta="projenizi_anlatin_hizmet_hero">Projenizi Anlatın<span class="btn__arrow" aria-hidden="true"><svg><use href="#i-arrow-ne"/></svg></span></a>
-          <a class="btn btn--outline btn--wa" href="https://wa.me/905368475640?text=Merhaba%2C%20Sibel%20Ayd%C4%B1n%20%C4%B0n%C5%9Faat%20Mimarl%C4%B1k%20ile%20g%C3%B6r%C3%BC%C5%9Fme%20randevusu%20almak%20istiyorum.%20Uygun%20oldu%C4%9Fum%20g%C3%BCn%20ve%20saat%3A%20" target="_blank" rel="noopener" aria-label="WhatsApp üzerinden randevu alın" data-appointment data-cta="randevu_hizmet_hero"><svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>Randevu Alın<span class="btn__arrow" aria-hidden="true"><svg><use href="#i-arrow-ne"/></svg></span></a>
+    <div class="container">
+      <p class="eyebrow">Kurucu Mimar</p>
+      <h1 class="page-hero__title">Sibel Aydın Işıköndeş Kimdir?</h1>
+      <p class="page-hero__lead">Mimari tasarım, teknik uzmanlık ve proje deneyimini bir araya getiren mimar.</p>
+    </div>
+  </section>
+
+  <!-- HAYATI VE FİRMA -->
+  <section class="section section--tight" aria-label="Hayatı, eğitimi ve firması">
+    <div class="container profile profile--solo">
+      <!-- GİZLİ: portre fotoğrafı gelince açılacak (yukarıdaki açıklamaya bakın) -->
+      <figure class="profile__media" hidden>
+        <div class="media media--4x5" data-ph="Portre: Mimar Sibel Aydın Işıköndeş">
+          <!-- portre gelince: <img src="/assets/img/ekip/sibel-aydin-isikondes-960.webp" width="960" height="1200" loading="lazy" decoding="async" alt="Mimar Sibel Aydın Işıköndeş"> -->
         </div>
-      </div>
-      <div class="media media--4x3" data-ph="Görsel: ruhsat proje dosyaları">
-        <picture><source type="image/avif" srcset="/assets/img/hizmet/ruhsat-proje-setleri-maket-480.avif 480w, /assets/img/hizmet/ruhsat-proje-setleri-maket-960.avif 960w, /assets/img/hizmet/ruhsat-proje-setleri-maket-1600.avif 1600w" sizes="(min-width: 900px) 46vw, 100vw"><img src="/assets/img/hizmet/ruhsat-proje-setleri-maket-960.webp" srcset="/assets/img/hizmet/ruhsat-proje-setleri-maket-480.webp 480w, /assets/img/hizmet/ruhsat-proje-setleri-maket-960.webp 960w, /assets/img/hizmet/ruhsat-proje-setleri-maket-1600.webp 1600w" sizes="(min-width: 900px) 46vw, 100vw" width="1600" height="1200" fetchpriority="high" decoding="async" alt="Meşe masada klasörlenmiş proje setleri, ölçek cetveli ve beyaz ev maketi"></picture>
+      </figure>
+      <div class="profile__body prose reveal">
+        <h2 id="hayati-baslik">Hayatı ve eğitimi</h2>
+        <p>Sibel Aydın Işıköndeş, 1990 yılında Silivri'nin Değirmenköy mahallesinde doğdu. İlk ve orta öğrenimini Değirmenköy'de, lise eğitimini Çamlıca Kız Lisesi'nde tamamladı. Mimarlık eğitimini Mimar Sinan Güzel Sanatlar Üniversitesi Mimarlık Fakültesi'nde aldı.</p>
+
+        <h2 id="firma-baslik">Sibel Aydın İnşaat Mimarlık</h2>
+        <p>2017 yılında Sibel Aydın İnşaat Mimarlık Sanayi Ticaret Limited Şirketi'ni kurarak mesleki çalışmalarını kendi çatısı altında sürdürmeye başladı. Mimari proje, danışmanlık ve teknik uzmanlık alanlarında çalışmalar yürüten Işıköndeş, her projeyi ihtiyaçlar, teknik koşullar, mevzuat ve uygulanabilirlik kriterleri doğrultusunda değerlendirir. Amacı işlevsel, nitelikli ve sürdürülebilir çözümler geliştirmektir.</p>
+        <p class="profile__more"><a class="link-arrow" href="/kurumsal/">Firmamızı yakından tanıyın<svg class="i-arrow" aria-hidden="true"><use href="#i-arrow-r"/></svg></a></p>
       </div>
     </div>
   </section>
 
-  <!-- BÖLÜM 1 -->
-  <section class="section" aria-labelledby="kapsam-baslik">
-    <div class="container">
-      <div class="split-head reveal">
-        <div>
-          <p class="eyebrow">Kapsam</p>
-          <h2 id="kapsam-baslik" class="section__title">Silivri ruhsat ve iskân hizmetimiz neleri kapsar?</h2>
-        </div>
-        <p>Yapı ruhsatı ve yapı kullanma izin belgesi (iskân), bir yapının yasal olarak inşa edilebilmesi ve kullanılabilmesi için gereken temel belgelerdir. Süreç; imar durumunun doğru okunmasından projelerin onaylanmasına, yapı denetim ve ilgili kurumlarla yürütülen yazışmalardan iskân aşamasındaki kontrollere kadar birçok adımı içerir.</p>
-      </div>
-      <ul class="icon-list">
-        <li class="reveal">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14"/></svg>
-          <span>İmar durumu ve yapılaşma koşullarının değerlendirilmesi</span>
-        </li>
-        <li class="reveal">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4zM4 12h8M12 4v16M12 15h8"/></svg>
-          <span>Ruhsat projelerinin hazırlanması ve diğer disiplinlerle koordinasyonu</span>
-        </li>
-        <li class="reveal">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9l9-5 9 5M5 9v9M9.5 9v9M14.5 9v9M19 9v9M3 20h18"/></svg>
-          <span>Belediye başvurusu, düzeltmelerin takibi ve onay süreci</span>
-        </li>
-        <li class="reveal">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M5 20v-8l6-5 6 5v8M11 11.5v5M8.5 14h5"/></svg>
-          <span>Tadilat ve ilave ruhsatı süreçleri</span>
-        </li>
-        <li class="reveal">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v11H4zM8 8h8M8 11h4M16 11a2 2 0 1 1 0 4 2 2 0 0 1 0-4zM15 15v5l1-.8 1 .8v-5"/></svg>
-          <span>Yapı kullanma izin belgesi (iskân) için gerekli belge ve kontrollerin planlanması</span>
-        </li>
-        <li class="reveal">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.5 3a7.5 7.5 0 1 1 0 15 7.5 7.5 0 0 1 0-15zM21 21l-5-5M10.5 7v4.5M10.5 14v.5"/></svg>
-          <span>Projesine aykırı durumların tespiti ve çözüm yollarının değerlendirilmesi</span>
-        </li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- BÖLÜM 2 -->
-  <section class="section projects" aria-labelledby="turler-baslik">
+  <!-- UZMANLIK ALANLARI VE YETKİLERİ -->
+  <section class="section section--surface" aria-labelledby="uzmanlik-baslik">
     <div class="container">
       <header class="section__head reveal">
-        <p class="eyebrow">İşlem türleri</p>
-        <h2 id="turler-baslik" class="section__title">Hangi süreçlerde destek veriyoruz?</h2>
+        <p class="eyebrow">Yetkiler</p>
+        <h2 id="uzmanlik-baslik" class="section__title">Uzmanlık alanları ve yetkileri</h2>
+        <p class="section__intro">Kamu kurumlarında bilirkişi olarak görev alan Işıköndeş'in Enerji Kimlik Belgesi (EKB) düzenleme ve D1 Bina Akustiği Raporu hazırlama yetkileri bulunmaktadır.</p>
       </header>
-      <div class="cards-3">
-        <article class="info-card reveal">
-          <div class="media media--4x3" data-ph="Görsel: yeni yapı ruhsatı" hidden>
-            <picture><source type="image/avif" srcset="/assets/img/hizmet/kiyi-kasabasi-arsa-parselleri-480.avif 480w, /assets/img/hizmet/kiyi-kasabasi-arsa-parselleri-960.avif 960w, /assets/img/hizmet/kiyi-kasabasi-arsa-parselleri-1600.avif 1600w" sizes="(min-width: 900px) 30vw, 100vw"><img src="/assets/img/hizmet/kiyi-kasabasi-arsa-parselleri-960.webp" srcset="/assets/img/hizmet/kiyi-kasabasi-arsa-parselleri-480.webp 480w, /assets/img/hizmet/kiyi-kasabasi-arsa-parselleri-960.webp 960w, /assets/img/hizmet/kiyi-kasabasi-arsa-parselleri-1600.webp 1600w" sizes="(min-width: 900px) 30vw, 100vw" width="1600" height="1200" loading="lazy" decoding="async" alt="Deniz kıyısındaki bir kasabanın kenarında toprak yollarla ayrılmış boş arsalar – havadan görünüm"></picture>
-          </div>
-          <h3>Yeni yapı ruhsatı</h3>
-          <p>Arsadan başlayarak villa, müstakil ev ve konut projeleri için ruhsat sürecinin tamamı.</p>
-        </article>
-        <article class="info-card reveal">
-          <div class="media media--4x3" data-ph="Görsel: tadilat ve ilave" hidden>
-            <img src="/assets/img/hizmet/ruhsat-iskan/kart-2.webp" width="1200" height="900" loading="lazy" decoding="async" alt="Kat ilavesi yapılan mevcut bir konut">
-          </div>
-          <h3>Tadilat ve ilave ruhsatı</h3>
-          <p>Mevcut yapılarda plan değişikliği, kat veya alan ilavesi gibi işler için gerekli ruhsat süreçleri.</p>
-        </article>
-        <article class="info-card reveal">
-          <div class="media media--4x3" data-ph="Görsel: iskân aşamasındaki yapı" hidden>
-            <picture><source type="image/avif" srcset="/assets/img/hizmet/iskana-hazir-mustakil-ev-480.avif 480w, /assets/img/hizmet/iskana-hazir-mustakil-ev-960.avif 960w, /assets/img/hizmet/iskana-hazir-mustakil-ev-1600.avif 1600w" sizes="(min-width: 900px) 30vw, 100vw"><img src="/assets/img/hizmet/iskana-hazir-mustakil-ev-960.webp" srcset="/assets/img/hizmet/iskana-hazir-mustakil-ev-480.webp 480w, /assets/img/hizmet/iskana-hazir-mustakil-ev-960.webp 960w, /assets/img/hizmet/iskana-hazir-mustakil-ev-1600.webp 1600w" sizes="(min-width: 900px) 30vw, 100vw" width="1600" height="1200" loading="lazy" decoding="async" alt="Taş kaideli, ahşap panjurlu ve peyzajı tamamlanmış iki katlı müstakil ev"></picture>
-          </div>
-          <h3>İskân (yapı kullanma izni)</h3>
-          <p>İnşaatı biten yapılarda iskân başvurusu öncesi kontroller, eksiklerin tespiti ve başvuru takibi.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- BÖLÜM 3 -->
-  <section class="section" aria-labelledby="surec-baslik">
-    <div class="container">
-      <header class="section__head reveal">
-        <p class="eyebrow">Süreç</p>
-        <h2 id="surec-baslik" class="section__title">Süreç nasıl ilerler?</h2>
-      </header>
-      <ol class="steps">
-        <li class="reveal">
-          <h3>Belge ve imar incelemesi</h3>
-          <p>Tapu, imar durumu ve mevcut belgeleri inceleyip yapılaşma koşullarını netleştiriyoruz.</p>
-        </li>
-        <li class="reveal">
-          <h3>Yol haritası</h3>
-          <p>Gerekli projeleri, belgeleri, kurum yazışmalarını ve tahmini süreyi listeliyoruz.</p>
-        </li>
-        <li class="reveal">
-          <h3>Proje hazırlığı</h3>
-          <p>Mimari projeyi hazırlıyor, diğer mühendislik projeleriyle uyumunu sağlıyoruz.</p>
-        </li>
-        <li class="reveal">
-          <h3>Başvuru ve takip</h3>
-          <p>Belediye başvurusunu yapıyor, düzeltme taleplerini hızla karşılıyor ve süreci takip ediyoruz.</p>
-        </li>
-        <li class="reveal">
-          <h3>Sonuç</h3>
-          <p>Ruhsat veya iskân belgesi alınana kadar süreci sizin adınıza yönetiyor, her adımda bilgilendiriyoruz.</p>
-        </li>
-      </ol>
-    </div>
-  </section>
-
-  <!-- BÖLÜM 4 -->
-  <section class="section process" aria-labelledby="erken-baslik">
-    <div class="container two-col">
-      <div class="reveal">
-        <p class="eyebrow">Doğru başlangıç</p>
-        <h2 id="erken-baslik" class="section__title">Ruhsat sürecinde en sık yapılan hatalar nelerdir?</h2>
-        <p class="prose-p">Arsa alındıktan sonra imar durumunun incelenmesi, onaylı projeden farklı uygulama yapılması ve iskân aşamasına gelindiğinde eksik belgelerle karşılaşılması en sık yaşanan sorunlardır. Bu hatalar hem zaman hem de para kaybına yol açar. Süreci projelendirme başlamadan planlamak ve uygulamayı onaylı projeye uygun yürütmek bu risklerin çoğunu ortadan kaldırır.</p>
-      </div>
-      <aside class="note reveal" aria-label="Not">
-        <p>İskân için Enerji Kimlik Belgesi gerekir</p>
-        <a class="link-arrow" href="/hizmetler/enerji-kimlik-belgesi/">Enerji kimlik belgesi hizmetini inceleyin<svg class="i-arrow" aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
-      </aside>
-    </div>
-  </section>
-
-  <!-- BÖLÜM 5 -->
-  <section class="section section--tight" aria-labelledby="ilgili-baslik">
-    <div class="container">
-      <header class="section__head reveal">
-        <p class="eyebrow">Birlikte düşünülenler</p>
-        <h2 id="ilgili-baslik" class="section__title">İlgili hizmetler</h2>
-      </header>
-      <div class="related">
-        <a class="reveal" href="/hizmetler/mimari-proje/">
-          <h3>Mimari Proje</h3>
-          <span class="link-arrow">Mimari proje hizmetini inceleyin<svg class="i-arrow" aria-hidden="true"><use href="#i-arrow-r"/></svg></span>
+      <div class="related related--bg">
+        <a class="reveal" href="/hizmetler/bilirkisilik/">
+          <h3>Bilirkişilik</h3>
+          <p>Kamu kurumlarında bilirkişi olarak teknik inceleme ve rapor</p>
+          <span class="link-arrow">Bilirkişilik hizmetini inceleyin<svg class="i-arrow" aria-hidden="true"><use href="#i-arrow-r"/></svg></span>
         </a>
         <a class="reveal" href="/hizmetler/enerji-kimlik-belgesi/">
-          <h3>Enerji Kimlik Belgesi (EKB)</h3>
+          <h3>Enerji Kimlik Belgesi</h3>
+          <p>EKB düzenleme yetkisi</p>
           <span class="link-arrow">Enerji kimlik belgesi hizmetini inceleyin<svg class="i-arrow" aria-hidden="true"><use href="#i-arrow-r"/></svg></span>
         </a>
-        <a class="reveal" href="/hizmetler/mimari-danismanlik/">
-          <h3>Mimari Danışmanlık ve Kentsel Dönüşüm</h3>
-          <span class="link-arrow">Mimari danışmanlık hizmetini inceleyin<svg class="i-arrow" aria-hidden="true"><use href="#i-arrow-r"/></svg></span>
+        <a class="reveal" href="/hizmetler/bina-akustigi/">
+          <h3>Bina Akustiği</h3>
+          <p>D1 Bina Akustiği Raporu hazırlama yetkisi</p>
+          <span class="link-arrow">Bina akustiği hizmetini inceleyin<svg class="i-arrow" aria-hidden="true"><use href="#i-arrow-r"/></svg></span>
         </a>
       </div>
     </div>
   </section>
 
-  <!-- BÖLÜM 6: SSS -->
-  <section class="section faq" id="sss" aria-labelledby="sss-baslik">
-    <div class="container faq__grid">
-      <header class="faq__head reveal">
-        <p class="eyebrow">SSS</p>
-        <h2 id="sss-baslik" class="section__title">Sıkça sorulan sorular</h2>
-      </header>
-      <div class="faq__list reveal">
-        <details class="faq__item">
-          <summary>Silivri'de ruhsat almak için hangi belgeler gerekir?</summary>
-          <div class="faq__answer"><p>Temel olarak tapu, imar durumu, aplikasyon krokisi, zemin etüdü raporu ve onaylanacak mimari, statik, mekanik ve elektrik projeleri gerekir; yapı denetim sözleşmesi ve ilgili harçlar da süreçte yer alır. Projeye göre ek belgeler istenebildiği için güncel listeyi sürecin başında sizinle paylaşıyoruz.</p></div>
-        </details>
-        <details class="faq__item">
-          <summary>Ruhsat süreci ne kadar sürer?</summary>
-          <div class="faq__answer"><p>Süre; projenin hazırlanma süresine, başvurunun eksiksiz olmasına ve belediyenin yoğunluğuna göre değişir. Eksiksiz ve doğru hazırlanmış bir başvuru, düzeltme turlarını azaltarak süreci belirgin şekilde kısaltır.</p></div>
-        </details>
-        <details class="faq__item">
-          <summary>İskân (yapı kullanma izni) almak için neler gerekir?</summary>
-          <div class="faq__answer"><p>İnşaatın onaylı projeye uygun tamamlanmış olması, yapı denetim sürecinin kapatılması ve Enerji Kimlik Belgesi gibi belgelerin hazırlanması gerekir. Yapının türüne göre ilgili kurumlardan ek uygunluk yazıları da istenebilir.</p></div>
-        </details>
-        <details class="faq__item">
-          <summary>Projesine aykırı yapılmış bir binaya iskân alınabilir mi?</summary>
-          <div class="faq__answer"><p>Önce aykırılığın türü ve mevzuat karşısındaki durumu incelenmelidir. Bazı durumlarda tadilat projesiyle uygunluk sağlanabilir; hangi yolun mümkün olduğunu yerinde tespit ve belge incelemesinden sonra söyleyebiliyoruz.</p></div>
-        </details>
-        <details class="faq__item">
-          <summary>Ruhsat ve iskân hizmetinin ücreti nasıl belirlenir?</summary>
-          <div class="faq__answer"><p>Ücret; yapının büyüklüğüne, işlem türüne ve hazırlanması gereken projelerin kapsamına göre belirlenir. Belgelerinizi incelediğimizde size özel teklif hazırlıyoruz.</p></div>
-        </details>
+  <!-- ÇALIŞMA YAKLAŞIMI -->
+  <section class="section section--tight" aria-labelledby="yaklasim-baslik">
+    <div class="container profile profile--solo">
+      <div class="profile__body prose reveal">
+        <h2 id="yaklasim-baslik">Çalışma yaklaşımı</h2>
+        <p>Mimari tasarım yaklaşımını teknik bilgi ve saha deneyimiyle destekleyen Işıköndeş, proje süreçlerinin tasarım, teknik değerlendirme ve uygulama aşamalarında bütüncül bir çalışma anlayışı benimser.</p>
+        <p class="profile__more"><a class="link-arrow" href="/kurumsal/calisma-anlayisimiz/">Çalışma anlayışımız<svg class="i-arrow" aria-hidden="true"><use href="#i-arrow-r"/></svg></a></p>
       </div>
+    </div>
+  </section>
+
+  <!-- BELGELER — GİZLİ: belgeler onaylanana kadar kapalı (kart ızgarası + lightbox ayrı commit'te) -->
+  <section class="section section--surface" id="belgeler" aria-labelledby="belgeler-baslik" hidden>
+    <div class="container">
+      <header class="section__head">
+        <p class="eyebrow">Belgeler</p>
+        <h2 id="belgeler-baslik" class="section__title">Belgeler</h2>
+      </header>
     </div>
   </section>
 
@@ -434,13 +298,11 @@
     <div class="container cta-band__inner reveal">
       <div>
         <p class="eyebrow eyebrow--light">İletişim</p>
-        <h2 id="cta-baslik" class="cta-band__title">Ruhsat sürecinizi birlikte planlayalım</h2>
-        <p class="cta-band__text">Tapu ve imar durumu belgelerinizi paylaşın, size özel yol haritasını çıkaralım.</p>
+        <h2 id="cta-baslik" class="cta-band__title">Projenizi Sibel Aydın Işıköndeş ve ekibiyle konuşun.</h2>
       </div>
       <div class="btn-row">
-        <a class="btn btn--light" href="/projenizi-anlatin/?hizmet=ruhsat-iskan" data-cta="projenizi_anlatin_band">Projenizi Anlatın<span class="btn__arrow" aria-hidden="true"><svg><use href="#i-arrow-ne"/></svg></span></a>
+        <a class="btn btn--light" href="/projenizi-anlatin/" data-cta="projenizi_anlatin_band">Projenizi Anlatın<span class="btn__arrow" aria-hidden="true"><svg><use href="#i-arrow-ne"/></svg></span></a>
         <a class="btn btn--ghost-light btn--wa" href="https://wa.me/905368475640?text=Merhaba%2C%20Sibel%20Ayd%C4%B1n%20%C4%B0n%C5%9Faat%20Mimarl%C4%B1k%20ile%20g%C3%B6r%C3%BC%C5%9Fme%20randevusu%20almak%20istiyorum.%20Uygun%20oldu%C4%9Fum%20g%C3%BCn%20ve%20saat%3A%20" target="_blank" rel="noopener" aria-label="WhatsApp üzerinden randevu alın" data-appointment data-cta="randevu_band"><svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>Randevu Alın<span class="btn__arrow" aria-hidden="true"><svg><use href="#i-arrow-ne"/></svg></span></a>
-        <a class="btn btn--ghost-light" href="tel:+905368475640" data-cta="ara_band"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>Bizi Arayın</a>
       </div>
     </div>
   </section>

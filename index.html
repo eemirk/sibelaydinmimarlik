@@ -3,8 +3,10 @@
 ==========================================================================
   YER TUTUCULAR — yayına almadan önce doldurulacak / doğrulanacak
 ==========================================================================
-  1. Harita koordinatı: JSON-LD "geo" Silivri ilçe merkezini gösteriyor
-     (41.0739, 28.2464) → ofisin gerçek koordinatıyla değiştirin.
+  1. Harita: JSON-LD "geo" = Osmanoğlu İş Merkezi'nin Google Haritalar konumu (41.0746121, 28.2483007).
+     hasMap / sameAs = Google İşletme kaydı (cid). Kayıt "hizmet bölgesi" türünde (adres gizli): cid haritası
+     pin göstermez, kaydın konumu (41.207144, 28.2429901) hizmet bölgesinin merkezidir, ofis DEĞİL.
+     Bu yüzden harita iframe'i ve yol tarifi ofis adresine/koordinatına gider. Büyükçekmece ofisinin kaydı yok.
   2. Görseller (dosyalar yüklenene kadar gri, etiketli kutu görünür):
      - /assets/img/hizmet/*.webp (6 hizmet kartı, 4:3, önerilen 1200×900)
      - /assets/img/ofis.webp (Hakkımızda özeti, 4:5, önerilen 1000×1250)
@@ -77,7 +79,6 @@
   <link rel="preload" href="/assets/fonts/instrument-sans-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/assets/css/style.css?v=dev">
 
-  <!-- JSON-LD #firma sameAs: Google İşletme Profili linki (ör. https://maps.app.goo.gl/… veya https://g.page/…) YER TUTUCU — profil netleşince sameAs dizisine eklenecek -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -120,7 +121,9 @@
           "addressRegion": "İstanbul",
           "addressCountry": "TR"
         },
-        "geo": { "@type": "GeoCoordinates", "latitude": 41.0739, "longitude": 28.2464 },
+        "geo": { "@type": "GeoCoordinates", "latitude": 41.0746121, "longitude": 28.2483007 },
+        "hasMap": "https://www.google.com/maps?cid=799376017686186310",
+        "founder": { "@id": "https://www.sibelaydinmimarlik.com.tr/kurumsal/sibel-aydin-isikondes/#kisi" },
         "department": {
           "@type": [
             "ProfessionalService",
@@ -185,7 +188,8 @@
         "sameAs": [
           "https://www.instagram.com/mimarsibelaydin/",
           "https://www.facebook.com/mimarsibelaydin/",
-          "https://x.com/mimarsibelaydin"
+          "https://x.com/mimarsibelaydin",
+          "https://www.google.com/maps?cid=799376017686186310"
         ],
         "knowsAbout": ["Mimari proje", "İç mimari", "Yapı ruhsatı", "Yapı kullanma izni", "Kentsel dönüşüm", "Enerji kimlik belgesi", "Bina akustiği"],
         "hasOfferCatalog": {
@@ -281,6 +285,7 @@
           <div class="nav__sub" id="sub-kurumsal">
             <ul class="nav__sub-list">
               <li><a href="/kurumsal/">Hakkımızda</a></li>
+              <li><a href="/kurumsal/sibel-aydin-isikondes/">Kurucumuz</a></li>
               <li><a href="/kurumsal/calisma-anlayisimiz/">Çalışma Anlayışımız</a></li>
               <!-- GİZLİ: Ekibimiz sayfası bilgiler gelince açılacak — <li><a href="/kurumsal/ekibimiz/">Ekibimiz</a></li> -->
             </ul>
@@ -790,6 +795,7 @@
         <h2 class="footer__title">Kurumsal</h2>
         <ul class="footer__links">
           <li><a href="/kurumsal/">Hakkımızda</a></li>
+          <li><a href="/kurumsal/sibel-aydin-isikondes/">Kurucumuz</a></li>
           <li><a href="/kurumsal/calisma-anlayisimiz/">Çalışma Anlayışımız</a></li>
           <!-- GİZLİ: Ekibimiz sayfası bilgiler gelince açılacak — <li><a href="/kurumsal/ekibimiz/">Ekibimiz</a></li> -->
           <li><a href="/projeler/">Tasarım Projelerimiz</a></li>
@@ -813,7 +819,7 @@
             <p class="footer-office__label">Büyükçekmece Ofis</p>
             <p class="footer-address">Mimaroba Mah. Mustafa Kemal Bulvarı No:2 J Blok Daire:22<br>34535 Büyükçekmece / İstanbul</p>
           </div>
-          <p><a href="tel:+905368475640">0536 847 56 40</a><br>Sabit hat: <a href="tel:+902127271020" data-cta="telefon_sabit">0212 727 10 20</a></p>
+          <p>Telefon: <a href="tel:+902127271020" data-cta="telefon_sabit">0212 727 10 20</a><br>GSM: <a href="tel:+905368475640">0536 847 56 40</a></p>
           <p><a href="mailto:proje@sibelaydinmimarlik.com.tr">proje@sibelaydinmimarlik.com.tr</a></p>
           <p>Pazartesi–Cuma 09:00–19:00<br><span class="muted">Cumartesi–Pazar kapalı</span></p>
         </address>

@@ -56,17 +56,12 @@
         "dateModified": "[[YYYY-AA-GG]]",
         "inLanguage": "tr-TR",
         "mainEntityOfPage": "https://www.sibelaydinmimarlik.com.tr/blog/[[MAKALE-SLUG]]/",
-        "author": {
-          "@type": "Person",
-          "name": "Sibel Aydın",
-          "jobTitle": "Mimar",
-          "url": "https://www.sibelaydinmimarlik.com.tr/kurumsal/ekibimiz/",
-          "worksFor": { "@id": "https://www.sibelaydinmimarlik.com.tr/#firma" }
-        },
+        "author": { "@id": "https://www.sibelaydinmimarlik.com.tr/kurumsal/sibel-aydin-isikondes/#kisi" },
         "publisher": {
           "@type": "Organization",
           "@id": "https://www.sibelaydinmimarlik.com.tr/#firma",
           "name": "Sibel Aydın İnşaat Mimarlık",
+          "founder": { "@id": "https://www.sibelaydinmimarlik.com.tr/kurumsal/sibel-aydin-isikondes/#kisi" },
           "logo": { "@type": "ImageObject", "url": "https://www.sibelaydinmimarlik.com.tr/assets/img/sibelaydinlogo.svg" }
         }
       },
@@ -106,6 +101,7 @@
           <div class="nav__sub" id="sub-kurumsal">
             <ul class="nav__sub-list">
               <li><a href="/kurumsal/">Hakkımızda</a></li>
+              <li><a href="/kurumsal/sibel-aydin-isikondes/">Kurucumuz</a></li>
               <li><a href="/kurumsal/calisma-anlayisimiz/">Çalışma Anlayışımız</a></li>
               <!-- GİZLİ: Ekibimiz sayfası bilgiler gelince açılacak — <li><a href="/kurumsal/ekibimiz/">Ekibimiz</a></li> -->
             </ul>
@@ -177,7 +173,7 @@
       <h1 class="article__title">[[DEĞİŞTİR: Makale başlığı (H1, sayfada tek)]]</h1>
       <p class="article__lead">[[DEĞİŞTİR: 1–2 cümlelik giriş; makalenin neyi cevapladığını söylesin.]]</p>
       <p class="article__meta">
-        <span>Yazan: <a href="#yazar">Sibel Aydın</a>, Mimar</span>
+        <span>Yazan: <a href="#yazar">Mimar Sibel Aydın Işıköndeş</a></span>
         <span>Yayın: <time datetime="[[YYYY-AA-GG]]">[[GG Ay YYYY]]</time></span>
         <span>Güncelleme: <time datetime="[[YYYY-AA-GG]]">[[GG Ay YYYY]]</time></span>
       </p>
@@ -226,14 +222,14 @@
         <!-- Yazar kutusu -->
         <aside class="author-box" id="yazar" aria-labelledby="yazar-adi">
           <div class="author-box__photo media" data-ph="Yazar fotoğrafı">
-            <img src="/assets/img/ekip/sibel-aydin.jpg" width="240" height="240" loading="lazy" alt="Mimar Sibel Aydın">
+            <img src="/assets/img/ekip/sibel-aydin.jpg" width="240" height="240" loading="lazy" alt="Mimar Sibel Aydın Işıköndeş">
           </div>
           <div>
             <p class="eyebrow">Yazar</p>
-            <p class="author-box__name" id="yazar-adi">Sibel Aydın</p>
-            <p class="author-box__title">Mimar · Mimarlar Odası sicil no: [[YER TUTUCU]]</p>
-            <p class="author-box__bio">[[YER TUTUCU: 2–3 cümlelik kısa özgeçmiş — eğitim, uzmanlık alanları. Uydurma bilgi yazmayın.]]</p>
-            <a class="link-arrow" href="/kurumsal/ekibimiz/">Ekibimizi tanıyın <svg class="i-arrow" aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
+            <p class="author-box__name" id="yazar-adi"><a href="/kurumsal/sibel-aydin-isikondes/">Mimar Sibel Aydın Işıköndeş</a></p>
+            <p class="author-box__title">Kurucu Mimar · Mimarlar Odası sicil no: [[YER TUTUCU]]</p>
+            <p class="author-box__bio">Mimar Sinan Güzel Sanatlar Üniversitesi Mimarlık Fakültesi mezunu. 2017'de Sibel Aydın İnşaat Mimarlık'ı kurdu; kamu kurumlarında bilirkişi olarak görev alıyor, Enerji Kimlik Belgesi ve D1 Bina Akustiği Raporu yetkilerine sahip.</p>
+            <a class="link-arrow" href="/kurumsal/sibel-aydin-isikondes/">Sibel Aydın Işıköndeş kimdir? <svg class="i-arrow" aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
           </div>
         </aside>
       </div>
@@ -286,6 +282,7 @@
         <h2 class="footer__title">Kurumsal</h2>
         <ul class="footer__links">
           <li><a href="/kurumsal/">Hakkımızda</a></li>
+          <li><a href="/kurumsal/sibel-aydin-isikondes/">Kurucumuz</a></li>
           <li><a href="/kurumsal/calisma-anlayisimiz/">Çalışma Anlayışımız</a></li>
           <!-- GİZLİ: Ekibimiz sayfası bilgiler gelince açılacak — <li><a href="/kurumsal/ekibimiz/">Ekibimiz</a></li> -->
           <li><a href="/projeler/">Tasarım Projelerimiz</a></li>
@@ -309,7 +306,7 @@
             <p class="footer-office__label">Büyükçekmece Ofis</p>
             <p class="footer-address">Mimaroba Mah. Mustafa Kemal Bulvarı No:2 J Blok Daire:22<br>34535 Büyükçekmece / İstanbul</p>
           </div>
-          <p><a href="tel:+905368475640">0536 847 56 40</a><br>Sabit hat: <a href="tel:+902127271020" data-cta="telefon_sabit">0212 727 10 20</a></p>
+          <p>Telefon: <a href="tel:+902127271020" data-cta="telefon_sabit">0212 727 10 20</a><br>GSM: <a href="tel:+905368475640">0536 847 56 40</a></p>
           <p><a href="mailto:proje@sibelaydinmimarlik.com.tr">proje@sibelaydinmimarlik.com.tr</a></p>
           <p>Pazartesi–Cuma 09:00–19:00<br><span class="muted">Cumartesi–Pazar kapalı</span></p>
         </address>
