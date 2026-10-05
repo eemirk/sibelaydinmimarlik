@@ -240,6 +240,17 @@ a:hover .link-arrow .i-arrow, .link-arrow:hover .i-arrow { transform: translateX
 .nav__mobile-extra { display: none; }
 
 .header-cta { display: flex; gap: 10px; flex: none; }
+/* "Bizimle Çalışın": buton değil, menü linki görünümünde (≥1024px); 1024–1280px'te "Kariyer" */
+.header-cta__link { display: none; align-self: center; padding: 10px 6px; font-size: .9375rem; font-weight: 500; text-decoration: none; color: var(--ink); white-space: nowrap; }
+.header-cta__link:hover { color: var(--accent-dark); }
+.header-cta__short { display: none; }
+@media (min-width: 1024px) { .header-cta__link { display: block; } }
+@media (min-width: 1024px) and (max-width: 1280px) {
+  .header-cta__long { display: none; }
+  .header-cta__short { display: inline; }
+}
+@media (min-width: 1100px) { .nav__item--mobile { display: none; } }
+.site-header.is-over-hero .header-cta__link, .site-header.is-over-dark .header-cta__link { color: #fff; }
 .burger { display: none; width: 44px; height: 44px; margin-right: -10px; place-items: center; }
 .burger__bar { position: relative; display: block; width: 22px; height: 12px; }
 .burger__bar::before, .burger__bar::after {
@@ -1052,6 +1063,13 @@ body.dialog-open { overflow: hidden; }
 .check a { color: var(--accent); font-weight: 600; }
 .hp-field { position: absolute !important; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
 .form-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; margin-top: 28px; }
+/* Kariyer: "Kimleri arıyoruz?" kutusu (.note) */
+.career-note { margin-top: 32px; }
+.career-note .career-note__title { font-size: 1.125rem; margin: 0 0 12px; }
+.career-note__list { list-style: disc; padding-left: 1.2em; margin: 0 0 16px; color: var(--ink); }
+.career-note__list li + li { margin-top: 4px; }
+.note .career-note__foot { margin: 0; font-size: .9375rem; font-weight: 400; color: var(--muted); }
+#calisan-adaylari { scroll-margin-top: calc(var(--header-h) + 24px); }
 .form-status { margin: 0; font-size: .9375rem; }
 .form-status--error { color: #A33A2B; }
 .btn[aria-disabled="true"] { opacity: .65; pointer-events: none; }

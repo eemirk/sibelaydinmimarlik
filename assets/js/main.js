@@ -439,6 +439,7 @@ const MASCOT_SVG = '<svg class="mascot__svg" viewBox="0 0 80 120" aria-hidden="t
   initStudio();
   initContactForm();
   initProjectForm();
+  initCareerForm();
   initDocs();
   initThanks();
   initMascot();
@@ -602,6 +603,189 @@ const MASCOT_SVG = '<svg class="mascot__svg" viewBox="0 0 80 120" aria-hidden="t
      Adım geçişinde yalnızca o adım doğrulanır; gönderim XHR (yükleme yüzdesi) → /api/form.php.
      dataLayer: form_step {step}, form_submit {proje_turu, hizmet_sayisi}. */
 
+  /* ---------------------------------------------------------------- FORM YARDIMCILARI (Projenizi Anlatın + Kariyer) */
+  // Telefon: 0532 123 45 67 / +90 532 123 45 67 biçiminde otomatik boşluk
+  function phoneMask(tel) {
+    tel.addEventListener('input', () => {
+      const raw = tel.value;
+      const plus = raw.trim().startsWith('+');
+      const d = raw.replace(/\D/g, '').slice(0, plus ? 12 : 11);
+      let out;
+      if (plus) out = '+' + [d.slice(0, 2), d.slice(2, 5), d.slice(5, 8), d.slice(8, 10), d.slice(10, 12)].filter(Boolean).join(' ');
+      else if (d.startsWith('0')) out = [d.slice(0, 4), d.slice(4, 7), d.slice(7, 9), d.slice(9, 11)].filter(Boolean).join(' ');
+      else out = [d.slice(0, 3), d.slice(3, 6), d.slice(6, 8), d.slice(8, 10)].filter(Boolean).join(' ');
+      if (out !== raw) tel.value = out;
+    });
+  }
+  const fmtSize = (b) => (b >= 1048576 ? (b / 1048576).toFixed(1).replace('.', ',') + ' MB' : Math.max(1, Math.round(b / 1024)) + ' KB');
+  // Dosya alanı: [data-dropzone] içindeki input + sonraki kardeşler [data-file-list] / [data-file-total].
+  // Sürükle-bırak, seçim, liste, tek tek kaldırma. maxFiles: 1 → yeni dosya eskisinin yerine geçer. Dönüş: { files } (canlı dizi).
+  function fileField(zone, o) {
+    const field = zone.parentElement;
+    const input = $('input[type="file"]', zone), list = $('[data-file-list]', field), total = $('[data-file-total]', field);
+    const files = [];
+    const mb = (b) => Math.round(b / 1048576) + ' MB';
+    function add(incoming) {
+      const msgs = [];
+      Array.from(incoming).forEach((f) => {
+        const ext = (f.name.split('.').pop() || '').toLowerCase();
+        if (!o.types.includes(ext) || f.name.indexOf('.') < 0) { msgs.push(f.name + ': bu dosya türü kabul edilmiyor (' + o.typeLabel + ').'); return; }
+        if (f.size > o.maxFile) { msgs.push(f.name + ': dosya başına en fazla ' + mb(o.maxFile) + ' yükleyebilirsiniz.'); return; }
+        if (files.some((x) => x.name === f.name && x.size === f.size)) return;
+        if (o.maxFiles === 1) { files.splice(0, files.length, f); return; }
+        if (files.length >= o.maxFiles) { msgs.push(f.name + ': en fazla ' + o.maxFiles + ' dosya yükleyebilirsiniz.'); return; }
+        if (files.reduce((t, x) => t + x.size, 0) + f.size > o.maxTotal) { msgs.push(f.name + ': toplam boyut ' + mb(o.maxTotal) + '\'ı aşıyor.'); return; }
+        files.push(f);
+      });
+      render();
+      o.onError(msgs.join(' '));
+    }
+    function render() {
+      list.replaceChildren(...files.map((f, i) => {
+        const li = document.createElement('li');
+        li.innerHTML = '<span class="file-list__name"></span><span class="file-list__size"></span>' +
+          '<button type="button"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg></button>';
+        $('.file-list__name', li).textContent = f.name;
+        $('.file-list__size', li).textContent = fmtSize(f.size);
+        const btn = $('button', li);
+        btn.setAttribute('aria-label', f.name + ' dosyasını kaldır');
+        btn.addEventListener('click', () => {
+          files.splice(i, 1);
+          render();
+          o.onError('');
+          (list.children[Math.min(i, files.length - 1)]?.querySelector('button') || input).focus();
+        });
+        return li;
+      }));
+      if (total) {
+        total.hidden = !files.length;
+        total.textContent = files.length + ' dosya · ' + fmtSize(files.reduce((t, f) => t + f.size, 0)) + ' / ' + mb(o.maxTotal);
+      }
+      if (o.onChange) o.onChange(files);
+    }
+    input.addEventListener('change', () => { add(input.files); input.value = ''; });
+    ['dragenter', 'dragover'].forEach((t) => zone.addEventListener(t, (e) => { e.preventDefault(); zone.classList.add('is-over'); }));
+    ['dragleave', 'drop'].forEach((t) => zone.addEventListener(t, (e) => { e.preventDefault(); zone.classList.remove('is-over'); }));
+    zone.addEventListener('drop', (e) => { if (e.dataTransfer && e.dataTransfer.files.length) add(e.dataTransfer.files); });
+    return { files };
+  }
+
+  /* ---------------------------------------------------------------- KARİYER BAŞVURU FORMU
+     /kariyer/ → POST /api/form.php (form_type=basvuru, XHR + yükleme yüzdesi) → /kariyer/tesekkurler/?no=…
+     Sunucu aynı kuralları tekrar uygular. dataLayer: form_submit (form_type: basvuru). */
+  function initCareerForm() {
+    const form = $('[data-career-form]');
+    if (!form) return;
+    const el = (name) => form.elements[name];
+    const ts = $('[data-form-ts]', form);
+    if (ts) ts.value = String(Math.floor(Date.now() / 1000));
+    const submit = $('[type="submit"]', form), status = $('[data-form-status]', form), alertBox = $('[data-form-alert]', form);
+    const tel = el('telefon');
+    phoneMask(tel);
+    const about = el('hakkinda'), counter = $('[data-counter]', form);
+    const count = () => { counter.textContent = about.value.length + ' / 3000'; };
+    about.addEventListener('input', count);
+    count();
+
+    const cv = fileField($('[data-dropzone="cv"]', form), { types: ['pdf', 'doc', 'docx'], typeLabel: 'PDF, DOC, DOCX', maxFiles: 1, maxFile: 10 * 1048576, maxTotal: 10 * 1048576,
+      onError: (msg) => setError('cv', msg), onChange: (f) => { if (f.length) setError('cv', ''); } });
+    const pf = fileField($('[data-dropzone="portfolyo"]', form), { types: ['pdf', 'jpg', 'jpeg', 'png'], typeLabel: 'PDF, JPG, PNG', maxFiles: 3, maxFile: 20 * 1048576, maxTotal: 20 * 1048576,
+      onError: (msg) => setError('portfolyo', msg) });
+
+    const RULES = {
+      ad_soyad: () => (el('ad_soyad').value.trim().length >= 2 ? '' : 'Lütfen adınızı ve soyadınızı yazın.'),
+      eposta: () => (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(el('eposta').value.trim()) ? '' : 'Lütfen geçerli bir e-posta adresi yazın.'),
+      telefon: () => { const d = tel.value.replace(/\D/g, ''); return d.length >= 10 && d.length <= 13 ? '' : 'Lütfen geçerli bir telefon numarası yazın.'; },
+      alan: () => (el('alan').value ? '' : 'Lütfen çalışmak istediğiniz alanı seçin.'),
+      hakkinda: () => { const n = about.value.trim().length; return n >= 30 && n <= 3000 ? '' : 'Kendinizden biraz daha bahseder misiniz? (30 ile 3000 karakter arası)'; },
+      tecrube: () => (el('tecrube').value.length <= 3000 ? '' : 'Tecrübeleriniz en fazla 3000 karakter olabilir.'),
+      baglanti: () => { const v = el('baglanti').value.trim(); return !v || /^https?:\/\/[^\s.]+\.[^\s]{2,}$/i.test(v) ? '' : 'Lütfen bağlantıyı https:// ile başlayan tam adres olarak yazın.'; },
+      cv: () => (cv.files.length ? '' : 'Lütfen CV\'nizi ekleyin (PDF, DOC ya da DOCX).'),
+      kvkk: () => (el('kvkk').checked ? '' : 'Devam etmek için çalışan adayı aydınlatma metnini okuduğunuzu onaylayın.')
+    };
+    const control = (name) => (name === 'cv' || name === 'portfolyo' ? $('#f-' + name, form) : form.elements[name]);
+    function setError(name, msg) {
+      const err = $('#e-' + CSS.escape(name), form);
+      if (err) err.textContent = msg || '';
+      const c = control(name);
+      if (c && c.nodeType === 1) { if (msg) c.setAttribute('aria-invalid', 'true'); else c.removeAttribute('aria-invalid'); }
+    }
+    function validate() {
+      let first = null;
+      Object.keys(RULES).forEach((name) => { const msg = RULES[name](); setError(name, msg); if (msg && !first) first = name; });
+      return first;
+    }
+    form.addEventListener('change', (e) => {
+      const name = e.target.name;
+      if (e.target.type === 'file') return;      // dosya alanlarını fileField yönetir (tür/boyut mesajı korunur)
+      if (RULES[name] && $('#e-' + CSS.escape(name), form)?.textContent) setError(name, RULES[name]());
+    });
+    form.addEventListener('input', (e) => {
+      const name = e.target.name;
+      if (RULES[name] && $('#e-' + CSS.escape(name), form)?.textContent && !RULES[name]()) setError(name, '');
+    });
+
+    let sending = false;
+    function showAlert(message) {
+      alertBox.replaceChildren();
+      const p1 = document.createElement('p');
+      p1.textContent = message;
+      const p2 = document.createElement('p');
+      p2.innerHTML = 'Sorun sürerse CV\'nizi <a href="mailto:proje@sibelaydinmimarlik.com.tr?subject=%C4%B0%C5%9F%20ba%C5%9Fvurusu">proje@sibelaydinmimarlik.com.tr</a> adresine e-postayla da gönderebilirsiniz.';
+      alertBox.append(p1, p2);
+      alertBox.hidden = false;
+      alertBox.focus();
+    }
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (sending) return;
+      const bad = validate();
+      if (bad) { control(bad).focus(); return; }
+      sending = true;
+      alertBox.hidden = true;
+      submit.setAttribute('aria-disabled', 'true');
+      status.className = 'form-status';
+      status.textContent = 'Gönderiliyor…';
+      const fd = new FormData(form);
+      fd.delete('cv'); fd.delete('portfolyo[]');
+      cv.files.forEach((f) => fd.append('cv', f, f.name));
+      pf.files.forEach((f) => fd.append('portfolyo[]', f, f.name));
+      const alan = el('alan').value;
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', form.action);
+      xhr.setRequestHeader('Accept', 'application/json');
+      xhr.upload.addEventListener('progress', (ev) => {
+        if (ev.lengthComputable) status.textContent = 'Gönderiliyor… %' + Math.round((ev.loaded / ev.total) * 100);
+      });
+      const fail = (message) => {
+        sending = false;
+        submit.removeAttribute('aria-disabled');
+        status.textContent = '';
+        showAlert(message || 'Başvurunuz şu anda gönderilemedi. Bilgileriniz formda duruyor; lütfen tekrar deneyin.');
+      };
+      xhr.addEventListener('load', () => {
+        let data = null;
+        try { data = JSON.parse(xhr.responseText); } catch (err) { /* PHP çalışmıyor ya da beklenmeyen yanıt */ }
+        if (data && data.ok) {
+          status.textContent = 'Başvurunuz alındı, yönlendiriliyorsunuz…';
+          let done = false;
+          const once = () => { if (!done) { done = true; location.href = data.redirect || '/kariyer/tesekkurler/'; } };
+          window.dataLayer.push({ event: 'form_submit', form_type: 'basvuru', alan: alan, page_path: location.pathname, eventCallback: once, eventTimeout: 1500 });
+          setTimeout(once, 600);
+          return;
+        }
+        if (xhr.status === 422 && data && data.errors) {
+          Object.keys(data.errors).forEach((name) => setError(name, data.errors[name]));
+          const first = Object.keys(RULES).concat('portfolyo').find((n) => data.errors[n]);
+          if (first && control(first)) control(first).focus({ preventScroll: false });
+        }
+        fail(data && data.message);
+      });
+      xhr.addEventListener('error', () => fail());
+      xhr.send(fd);
+    });
+  }
+
   function initProjectForm() {
     const form = $('[data-project-form]');
     if (!form) return;
@@ -613,7 +797,6 @@ const MASCOT_SVG = '<svg class="mascot__svg" viewBox="0 0 80 120" aria-hidden="t
     const ts = $('[data-form-ts]', form);
     if (ts) ts.value = String(Math.floor(Date.now() / 1000));
     let current = 0;
-    let files = [];
 
     // ?hizmet=<slug> → ilgili hizmet seçili gelsin
     const want = new URLSearchParams(location.search).get('hizmet');
@@ -643,16 +826,7 @@ const MASCOT_SVG = '<svg class="mascot__svg" viewBox="0 0 80 120" aria-hidden="t
 
     // Telefon: 0532 123 45 67 / +90 532 123 45 67 biçiminde otomatik boşluk
     const tel = el('telefon');
-    tel.addEventListener('input', () => {
-      const raw = tel.value;
-      const plus = raw.trim().startsWith('+');
-      let d = raw.replace(/\D/g, '').slice(0, plus ? 12 : 11);
-      let out;
-      if (plus) out = '+' + [d.slice(0, 2), d.slice(2, 5), d.slice(5, 8), d.slice(8, 10), d.slice(10, 12)].filter(Boolean).join(' ');
-      else if (d.startsWith('0')) out = [d.slice(0, 4), d.slice(4, 7), d.slice(7, 9), d.slice(9, 11)].filter(Boolean).join(' ');
-      else out = [d.slice(0, 3), d.slice(3, 6), d.slice(6, 8), d.slice(8, 10)].filter(Boolean).join(' ');
-      if (out !== raw) tel.value = out;
-    });
+    phoneMask(tel);
 
     // Açıklama sayacı
     const desc = el('aciklama'), counter = $('[data-counter]', form);
@@ -660,49 +834,13 @@ const MASCOT_SVG = '<svg class="mascot__svg" viewBox="0 0 80 120" aria-hidden="t
     desc.addEventListener('input', count);
     count();
 
-    // Dosyalar: sürükle-bırak + seç, önizleme listesi, tek tek kaldırma
-    const input = $('#f-dosyalar', form), zone = $('[data-dropzone]', form);
-    const list = $('[data-file-list]', form), total = $('[data-file-total]', form);
-    const fmt = (b) => (b >= 1048576 ? (b / 1048576).toFixed(1).replace('.', ',') + ' MB' : Math.max(1, Math.round(b / 1024)) + ' KB');
-    function addFiles(incoming) {
-      const msgs = [];
-      Array.from(incoming).forEach((f) => {
-        const ext = (f.name.split('.').pop() || '').toLowerCase();
-        if (!PF_FILE_TYPES.includes(ext) || f.name.indexOf('.') < 0) { msgs.push(f.name + ': bu dosya türü kabul edilmiyor (JPG, PNG, HEIC, WEBP, PDF, DWG, DXF).'); return; }
-        if (f.size > PF_MAX_FILE) { msgs.push(f.name + ': dosya başına en fazla 15 MB yükleyebilirsiniz.'); return; }
-        if (files.some((x) => x.name === f.name && x.size === f.size)) return;
-        if (files.length >= PF_MAX_FILES) { msgs.push(f.name + ': en fazla 10 dosya yükleyebilirsiniz.'); return; }
-        if (files.reduce((s, x) => s + x.size, 0) + f.size > PF_MAX_TOTAL) { msgs.push(f.name + ': toplam boyut 25 MB\'ı aşıyor.'); return; }
-        files.push(f);
-      });
-      renderFiles();
-      setError('dosyalar', msgs.join(' '));
-    }
-    function renderFiles() {
-      list.replaceChildren(...files.map((f, i) => {
-        const li = document.createElement('li');
-        li.innerHTML = '<span class="file-list__name"></span><span class="file-list__size"></span>' +
-          '<button type="button"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg></button>';
-        $('.file-list__name', li).textContent = f.name;
-        $('.file-list__size', li).textContent = fmt(f.size);
-        const btn = $('button', li);
-        btn.setAttribute('aria-label', f.name + ' dosyasını kaldır');
-        btn.addEventListener('click', () => {
-          files.splice(i, 1);
-          renderFiles();
-          setError('dosyalar', '');
-          (list.children[Math.min(i, files.length - 1)]?.querySelector('button') || input).focus();
-        });
-        return li;
-      }));
-      const sum = files.reduce((s, f) => s + f.size, 0);
-      total.hidden = !files.length;
-      total.textContent = files.length + ' dosya · ' + fmt(sum) + ' / 25 MB';
-    }
-    input.addEventListener('change', () => { addFiles(input.files); input.value = ''; });
-    ['dragenter', 'dragover'].forEach((t) => zone.addEventListener(t, (e) => { e.preventDefault(); zone.classList.add('is-over'); }));
-    ['dragleave', 'drop'].forEach((t) => zone.addEventListener(t, (e) => { e.preventDefault(); zone.classList.remove('is-over'); }));
-    zone.addEventListener('drop', (e) => { if (e.dataTransfer && e.dataTransfer.files.length) addFiles(e.dataTransfer.files); });
+    // Dosyalar: sürükle-bırak + seç, önizleme listesi, tek tek kaldırma (ortak bileşen: fileField)
+    const input = $('#f-dosyalar', form);
+    const ff = fileField($('[data-dropzone]', form), {
+      types: PF_FILE_TYPES, typeLabel: 'JPG, PNG, HEIC, WEBP, PDF, DWG, DXF', maxFiles: PF_MAX_FILES, maxFile: PF_MAX_FILE, maxTotal: PF_MAX_TOTAL,
+      onError: (msg) => setError('dosyalar', msg)
+    });
+    const files = ff.files;
 
     // Doğrulama (sunucu aynı kuralları tekrar uygular)
     const checked = (name) => $$('input[name="' + name + '"]:checked', form);
@@ -861,12 +999,14 @@ const MASCOT_SVG = '<svg class="mascot__svg" viewBox="0 0 80 120" aria-hidden="t
     const box = $('[data-thanks]');
     if (!box) return;
     const no = new URLSearchParams(location.search).get('no') || '';
-    const valid = /^SA-\d{4}-(\d{4}|R[0-9A-F]{4})$/.test(no);
+    const kind = box.dataset.thanks || 'proje';          // "proje" | "basvuru"
+    const valid = (kind === 'basvuru' ? /^SA-BSV-\d{4}-(\d{4}|R[0-9A-F]{4})$/ : /^SA-\d{4}-(\d{4}|R[0-9A-F]{4})$/).test(no);
     const wa = $('[data-thanks-wa]', box);
     if (valid) {
       $('[data-thanks-no]', box).textContent = no;
       $('[data-thanks-line]', box).hidden = false;
     }
+    if (!wa) return;
     wa.href = WA_BASE + '?text=' + encodeURIComponent(valid
       ? 'Merhaba, web sitenizden ' + no + ' numaralı proje talebini gönderdim.'
       : 'Merhaba, web sitenizden proje talebi gönderdim.');

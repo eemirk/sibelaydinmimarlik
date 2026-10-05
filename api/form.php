@@ -4,6 +4,7 @@
  *
  *   POST /api/form.php   form_type=iletisim   İletişim sayfası kısa formu        talep no SA-ILT-YIL-####
  *                        form_type=proje      Projenizi Anlatın (dosya yüklemeli) talep no SA-YIL-####
+ *                        form_type=basvuru    Kariyer başvurusu (CV + portfolyo)  başvuru no SA-BSV-YIL-####
  *
  * Yanıt: fetch/XHR ile (Accept: application/json) JSON; JS kapalıysa HTML sayfa (proje: teşekkür sayfasına 303).
  *   200 {ok:true, talep_no[, redirect]}   422 {ok:false, errors:{alan: mesaj}}   413 çok büyük   429 çok sık   403 başka site
@@ -13,7 +14,8 @@
  *   SMTP ayarı yoksa ya da gönderim başarısızsa talep yine kaydedilir ve kullanıcıya başarı döner; hata log'a yazılır.
  *
  * Veri: public_html DIŞINDA  <DOCUMENT_ROOT'un üstü>/private_data/
- *   talepler/<NO>.json   uploads/<NO>/   sayac/   rate/   mail-out/   logs/form.log
+ *   talepler/<NO>.json   uploads/<NO>/   basvurular/<NO>/ (dosyalar + basvuru.json)   sayac/   rate/   mail-out/   logs/form.log
+ *   Başvurular: her yeni başvuruda 365 günden eski, "1 yıl saklansın" onayı olmayanlarda 180 günden eski klasörler silinir (log'a yazılır).
  *   Yazılamıyorsa api/_data/ (web'den kapalı) yedek olarak kullanılır ve log'a uyarı düşülür.
  * Test: SA_MAIL_DRIVER=file, SA_DATA_DIR=<klasör> ortam değişkenleri ayarları ezer.
  */
@@ -78,6 +80,21 @@ const UPLOAD_TYPES = [
 const EXEC_EXT = ['php', 'php3', 'php4', 'php5', 'php7', 'php8', 'phtml', 'phar', 'pht', 'phps', 'cgi', 'pl', 'py', 'rb', 'sh', 'bash',
     'asp', 'aspx', 'jsp', 'exe', 'com', 'bat', 'cmd', 'msi', 'dll', 'scr', 'vbs', 'js', 'mjs', 'jar', 'htm', 'html', 'shtml', 'svg', 'htaccess', 'ini'];
 
+// Kariyer başvurusu: CV (tek dosya) + portfolyo (en fazla 3 dosya)
+const CV_TYPES = [
+    'pdf'  => ['application/pdf'],
+    'doc'  => ['application/msword', 'application/vnd.ms-office', 'application/x-ole-storage', 'application/CDFV2', 'application/octet-stream'],
+    'docx' => ['application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/zip', 'application/octet-stream'],
+];
+const PORTFOLYO_TYPES = ['pdf' => ['application/pdf'], 'jpg' => ['image/jpeg'], 'jpeg' => ['image/jpeg'], 'png' => ['image/png']];
+const CV_MAX_FILE = 10 * 1024 * 1024;
+const PORTFOLYO_MAX_FILES = 3;
+const PORTFOLYO_MAX_TOTAL = 20 * 1024 * 1024;
+const BASVURU_ATTACH_MAX = 15 * 1024 * 1024;   // ekler toplamı bunu aşarsa ek konmaz, sunucudaki dosya adları yazılır
+const BASVURU_SAKLAMA_GUN = ['1 yıl' => 365, '6 ay' => 180];
+const BASVURU_ALANLARI = ['mimar' => 'Mimar', 'ic-mimar' => 'İç Mimar', 'insaat-muhendisi' => 'İnşaat Mühendisi', 'santiye-sefi' => 'Şantiye Şefi',
+    'teknik-ressam' => 'Teknik Ressam', 'saha-ekibi' => 'Saha Ekibi – Usta', 'stajyer' => 'Stajyer', 'diger' => 'Diğer'];
+
 const PROJE_TURLERI = ['villa' => 'Villa / Müstakil', 'konut' => 'Konut / Apartman', 'ticari' => 'Ticari Yapı', 'tadilat' => 'Tadilat', 'ic-mekan' => 'İç Mekân', 'diger' => 'Diğer'];
 const HIZMETLER = ['mimari-proje' => 'Mimari Proje', 'ruhsat' => 'Ruhsat', 'iskan' => 'İskân', 'ic-mimari' => 'İç Mimari', '3d-gorsellestirme' => '3D Görselleştirme',
     'uygulama' => 'İnşaat ve Uygulama', 'prefabrik-yapilar' => 'Prefabrik Yapılar', 'santiye-teknik' => 'Şantiye / Teknik', 'mimari-danismanlik' => 'Mimari Danışmanlık', 'kentsel-donusum' => 'Kentsel Dönüşüm',
@@ -97,6 +114,7 @@ const ULASIM = ['telefon' => 'Telefon', 'whatsapp' => 'WhatsApp', 'eposta' => 'E
 $FORMS = [
     'iletisim' => ['prefix' => 'SA-ILT', 'max_bytes' => 65536, 'konular' => ['Genel bilgi', 'Teklif', 'Randevu', 'Diğer']],
     'proje'    => ['prefix' => 'SA', 'max_bytes' => UPLOAD_MAX_TOTAL + 2 * 1024 * 1024],
+    'basvuru'  => ['prefix' => 'SA-BSV', 'max_bytes' => CV_MAX_FILE + PORTFOLYO_MAX_TOTAL + 2 * 1024 * 1024],
 ];
 
 $wantsJson = stripos($_SERVER['HTTP_ACCEPT'] ?? '', 'application/json') !== false;
@@ -329,14 +347,29 @@ function signature_ok(string $ext, string $path): bool
         case 'heic': return substr($head, 4, 4) === 'ftyp' && in_array(substr($head, 8, 4), ['heic', 'heix', 'hevc', 'hevx', 'heim', 'heis', 'mif1', 'msf1'], true);
         case 'dwg':  return strncmp($head, 'AC10', 4) === 0 || strncmp($head, 'AC1.', 4) === 0 || strncmp($head, 'AC2.', 4) === 0;
         case 'dxf':  return strncmp($head, 'AutoCAD Binary DXF', 18) === 0 || (bool) preg_match('/^\s*0\s*\r?\n\s*SECTION/', $head) || (bool) preg_match('/^\s*999\s*\r?\n/', $head);
+        case 'doc':  return strncmp($head, "\xD0\xCF\x11\xE0\xA1\xB1\x1A\xE1", 8) === 0;   // OLE (Word 97–2003)
+        case 'docx':                                                                      // ZIP + word/document.xml
+            if (strncmp($head, "PK\x03\x04", 4) !== 0) return false;
+            if (!class_exists('ZipArchive')) return true;
+            $z = new ZipArchive();
+            if ($z->open($path) !== true) return false;
+            $ok = $z->locateName('word/document.xml') !== false;
+            $z->close();
+            return $ok;
     }
     return false;
 }
 
-/** Yüklenen dosyaları doğrular. Dönüş: [[tmp, ad, uzantı, boyut, mime], ...]; hata varsa $errors['dosyalar']. */
-function collect_uploads(array &$errors): array
+/**
+ * Yüklenen dosyaları doğrular. Dönüş: [[tmp, ad, uzantı, boyut, mime], ...]; hata varsa $errors[$field].
+ * $o: types, max_files, max_file, max_total, label (kabul edilen türler) — varsayılanlar Projenizi Anlatın formu.
+ */
+function collect_uploads(array &$errors, string $field = 'dosyalar', array $o = []): array
 {
-    $f = $_FILES['dosyalar'] ?? null;
+    $o += ['types' => UPLOAD_TYPES, 'max_files' => UPLOAD_MAX_FILES, 'max_file' => UPLOAD_MAX_FILE, 'max_total' => UPLOAD_MAX_TOTAL,
+        'label' => 'JPG, PNG, HEIC, WEBP, PDF, DWG, DXF'];
+    $mb = fn(int $b) => (int) round($b / 1048576) . ' MB';
+    $f = $_FILES[$field] ?? null;
     if (!$f || !isset($f['name'])) return [];
     $count = is_array($f['name']) ? count($f['name']) : 1;
     $norm = fn($k, $i) => is_array($f[$k]) ? $f[$k][$i] : $f[$k];
@@ -351,7 +384,7 @@ function collect_uploads(array &$errors): array
         $name = clean_line((string) $norm('name', $i));
         $name = len($name) > 120 ? mb_substr($name, 0, 120, 'UTF-8') : $name;
         $shown = $name !== '' ? $name : 'Dosya';
-        if ($err === UPLOAD_ERR_INI_SIZE || $err === UPLOAD_ERR_FORM_SIZE) { $msgs[] = "$shown: dosya başına en fazla 15 MB yükleyebilirsiniz."; continue; }
+        if ($err === UPLOAD_ERR_INI_SIZE || $err === UPLOAD_ERR_FORM_SIZE) { $msgs[] = "$shown: dosya başına en fazla " . $mb($o['max_file']) . ' yükleyebilirsiniz.'; continue; }
         if ($err !== UPLOAD_ERR_OK) { $msgs[] = "$shown yüklenemedi, lütfen tekrar deneyin."; continue; }
         $tmp = (string) $norm('tmp_name', $i);
         $size = (int) $norm('size', $i);
@@ -359,19 +392,19 @@ function collect_uploads(array &$errors): array
         $parts = array_map('strtolower', explode('.', $name));
         $ext = count($parts) > 1 ? end($parts) : '';
         if (count(array_intersect(array_slice($parts, 1), EXEC_EXT)) > 0) { $msgs[] = "$shown: güvenlik nedeniyle bu dosya kabul edilmiyor."; continue; }
-        if (!isset(UPLOAD_TYPES[$ext])) { $msgs[] = "$shown: bu dosya türü kabul edilmiyor (JPG, PNG, HEIC, WEBP, PDF, DWG, DXF)."; continue; }
-        if ($size > UPLOAD_MAX_FILE) { $msgs[] = "$shown: dosya başına en fazla 15 MB yükleyebilirsiniz."; continue; }
+        if (!isset($o['types'][$ext])) { $msgs[] = "$shown: bu dosya türü kabul edilmiyor ({$o['label']})."; continue; }
+        if ($size > $o['max_file']) { $msgs[] = "$shown: dosya başına en fazla " . $mb($o['max_file']) . ' yükleyebilirsiniz.'; continue; }
         $mime = $finfo ? (string) $finfo->file($tmp) : 'bilinmiyor';
-        if (($finfo && !in_array($mime, UPLOAD_TYPES[$ext], true)) || !signature_ok($ext, $tmp)) {
+        if (($finfo && !in_array($mime, $o['types'][$ext], true)) || !signature_ok($ext, $tmp)) {
             $msgs[] = "$shown: dosya içeriği uzantısıyla uyuşmuyor ya da dosya bozuk.";
             continue;
         }
         $total += $size;
         $files[] = ['tmp' => $tmp, 'ad' => $name, 'uzanti' => $ext, 'boyut' => $size, 'mime' => $mime];
     }
-    if (count($files) > UPLOAD_MAX_FILES) $msgs[] = 'En fazla 10 dosya yükleyebilirsiniz.';
-    if ($total > UPLOAD_MAX_TOTAL) $msgs[] = 'Dosyaların toplam boyutu 25 MB\'ı aşamaz.';
-    if ($msgs) $errors['dosyalar'] = implode(' ', $msgs);
+    if (count($files) > $o['max_files']) $msgs[] = $o['max_files'] === 1 ? 'Yalnızca bir dosya yükleyebilirsiniz.' : "En fazla {$o['max_files']} dosya yükleyebilirsiniz.";
+    if ($total > $o['max_total']) $msgs[] = 'Dosyaların toplam boyutu ' . $mb($o['max_total']) . '\'ı aşamaz.';
+    if ($msgs) $errors[$field] = implode(' ', $msgs);
     return $files;
 }
 
@@ -404,6 +437,49 @@ function text_table(array $rows): string
     return $out;
 }
 
+/** Klasörü içeriğiyle siler (yalnızca dosya + alt klasör; sembolik bağlantı izlenmez). */
+function rm_tree(string $dir): bool
+{
+    if (!is_dir($dir) || is_link($dir)) return false;
+    foreach (scandir($dir) ?: [] as $n) {
+        if ($n === '.' || $n === '..') continue;
+        $p = $dir . '/' . $n;
+        if (is_dir($p) && !is_link($p)) rm_tree($p); else @unlink($p);
+    }
+    return @rmdir($dir);
+}
+
+/**
+ * Başvuru saklama süresi: basvurular/<NO>/ klasörleri, basvuru.json'daki tarih + saklama ("1 yıl" / "6 ay") ile
+ * değerlendirilir; kayıt okunamazsa klasör tarihi ve en kısa süre (6 ay) esas alınır. Silinenler log'a yazılır.
+ * $now testte sahte tarih vermek için.
+ */
+function prune_applications(?int $now = null): array
+{
+    $now = $now ?? time();
+    $base = data_sub('basvurular');
+    $deleted = [];
+    foreach (scandir($base) ?: [] as $no) {
+        if ($no === '.' || $no === '..' || !preg_match('/^SA-BSV-\d{4}-(\d{4}|R[0-9A-F]{4})$/', $no)) continue;
+        $dir = $base . '/' . $no;
+        if (!is_dir($dir)) continue;
+        $rec = json_decode((string) @file_get_contents($dir . '/basvuru.json'), true);
+        $t = is_array($rec) && !empty($rec['tarih']) ? strtotime((string) $rec['tarih']) : false;
+        $created = $t ?: (int) @filemtime($dir);
+        $keep = is_array($rec) && isset(BASVURU_SAKLAMA_GUN[$rec['saklama'] ?? '']) ? BASVURU_SAKLAMA_GUN[$rec['saklama']] : 180;
+        $limit = min($keep, 365);
+        $age = (int) floor(($now - $created) / 86400);
+        if ($age < $limit) continue;
+        if (rm_tree($dir)) {
+            $deleted[] = $no;
+            log_msg("SAKLAMA: $no silindi (başvuru " . date('d.m.Y', $created) . ", saklama " . ($rec['saklama'] ?? 'bilinmiyor') . ", $age gün).");
+        } else {
+            log_msg("HATA: SAKLAMA: $no silinemedi.");
+        }
+    }
+    return $deleted;
+}
+
 // ---------------------------------------------------------------- İstek kontrolleri
 if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
     header('Allow: POST');
@@ -419,7 +495,7 @@ if ($origin !== '' && parse_url($origin, PHP_URL_HOST) !== parse_url('//' . ($_S
 // post_max_size aşılınca PHP $_POST ve $_FILES'ı boşaltır
 $contentLength = (int) ($_SERVER['CONTENT_LENGTH'] ?? 0);
 if ($contentLength > 0 && empty($_POST) && empty($_FILES)) {
-    respond(413, ['ok' => false, 'message' => 'Gönderdiğiniz dosyalar çok büyük. Toplam en fazla 25 MB yükleyebilirsiniz.']);
+    respond(413, ['ok' => false, 'message' => 'Gönderdiğiniz dosyalar çok büyük. Lütfen dosya boyutu sınırlarını kontrol edip tekrar deneyin.']);
 }
 
 $type = clean_line($_POST['form_type'] ?? '');
@@ -434,7 +510,8 @@ if ($contentLength > $form['max_bytes']) {
 // Bot tuzakları: honeypot doluysa ya da form çok hızlı gönderildiyse sessizce "başarılı" dön
 $ts = (int) ($_POST['ts'] ?? 0);
 if (clean_line($_POST['website'] ?? '') !== '' || ($ts > 0 && time() - $ts < MIN_SECONDS)) {
-    respond(200, ['ok' => true, 'talep_no' => null] + ($type === 'proje' ? ['redirect' => '/projenizi-anlatin/tesekkurler/'] : []));
+    $botRedirect = ['proje' => '/projenizi-anlatin/tesekkurler/', 'basvuru' => '/kariyer/tesekkurler/'];
+    respond(200, ['ok' => true, 'talep_no' => null] + (isset($botRedirect[$type]) ? ['redirect' => $botRedirect[$type]] : []));
 }
 
 $ip = $_SERVER['REMOTE_ADDR'] ?? '';
@@ -480,6 +557,128 @@ if ($type === 'iletisim') {
     save_request($no, $record);
 
     respond(200, ['ok' => true, 'talep_no' => $no]);
+}
+
+// ================================================================ BAŞVURU (Kariyer)
+if ($type === 'basvuru') {
+    $c = validate_contact($errors);
+    if (isset($errors['kvkk'])) $errors['kvkk'] = 'Devam etmek için çalışan adayı aydınlatma metnini okuduğunuzu onaylayın.';
+    $alan = clean_line($_POST['alan'] ?? '');
+    if (!isset(BASVURU_ALANLARI[$alan])) $errors['alan'] = 'Lütfen çalışmak istediğiniz alanı seçin.';
+    $hakkinda = clean_text($_POST['hakkinda'] ?? '');
+    if (len($hakkinda) < 30 || len($hakkinda) > 3000) $errors['hakkinda'] = 'Kendinizden biraz daha bahseder misiniz? (30 ile 3000 karakter arası)';
+    $tecrube = clean_text($_POST['tecrube'] ?? '');
+    if (len($tecrube) > 3000) $errors['tecrube'] = 'Tecrübeleriniz en fazla 3000 karakter olabilir.';
+    $baglanti = clean_line($_POST['baglanti'] ?? '');
+    if ($baglanti !== '' && (len($baglanti) > 300 || !preg_match('#^https?://#i', $baglanti) || !filter_var($baglanti, FILTER_VALIDATE_URL))) {
+        $errors['baglanti'] = 'Lütfen bağlantıyı https:// ile başlayan tam adres olarak yazın.';
+    }
+    $saklama = isset($_POST['saklama_onay']) ? '1 yıl' : '6 ay';
+    $cv = collect_uploads($errors, 'cv', ['types' => CV_TYPES, 'max_files' => 1, 'max_file' => CV_MAX_FILE, 'max_total' => CV_MAX_FILE, 'label' => 'PDF, DOC, DOCX']);
+    if (!$cv && !isset($errors['cv'])) $errors['cv'] = 'Lütfen CV\'nizi ekleyin (PDF, DOC ya da DOCX).';
+    $portfolyo = collect_uploads($errors, 'portfolyo', ['types' => PORTFOLYO_TYPES, 'max_files' => PORTFOLYO_MAX_FILES, 'max_file' => PORTFOLYO_MAX_TOTAL,
+        'max_total' => PORTFOLYO_MAX_TOTAL, 'label' => 'PDF, JPG, PNG']);
+
+    if ($errors) respond(422, ['ok' => false, 'message' => 'Lütfen işaretli alanları kontrol edin.', 'errors' => $errors]);
+    if (!rate_ok($ip)) respond(429, ['ok' => false, 'message' => 'Kısa sürede çok sayıda gönderim yapıldı. Lütfen daha sonra tekrar deneyin ya da bizi arayın.']);
+
+    $no = next_ticket($form['prefix']);
+    // Dosyalar + kayıt: basvurular/<NO>/ (klasör 0750, dosyalar 0640; dosya adları rastgele)
+    $dir = data_sub('basvurular') . '/' . $no;
+    @mkdir($dir, 0750, true);
+    @chmod($dir, 0750);
+    $stored = [];
+    foreach ([['cv', $cv], ['portfolyo', $portfolyo]] as [$kind, $list]) {
+        foreach ($list as $u) {
+            $file = $kind . '-' . bin2hex(random_bytes(8)) . '.' . $u['uzanti'];
+            if (@move_uploaded_file($u['tmp'], $dir . '/' . $file)) {
+                @chmod($dir . '/' . $file, 0640);
+                $stored[] = ['tur' => $kind, 'ad' => $u['ad'], 'dosya' => $file, 'boyut' => $u['boyut'], 'mime' => $u['mime'], 'yol' => $dir . '/' . $file];
+            } else {
+                log_msg("HATA: $no dosyası taşınamadı: {$u['ad']}");
+            }
+        }
+    }
+    $record = ['basvuru_no' => $no, 'tip' => 'basvuru', 'tarih' => date('c'), 'ip' => $ip, 'saklama' => $saklama,
+        'saklama_bitis' => date('Y-m-d', strtotime('+' . BASVURU_SAKLAMA_GUN[$saklama] . ' days')),
+        'ad_soyad' => $c['ad'], 'eposta' => $c['eposta'], 'telefon' => $c['telefon'], 'alan' => BASVURU_ALANLARI[$alan],
+        'hakkinda' => $hakkinda, 'tecrube' => $tecrube, 'baglanti' => $baglanti, 'kvkk_okundu' => true, 'saklama_acik_riza' => $saklama === '1 yıl',
+        'dosyalar' => array_map(fn($s) => ['tur' => $s['tur'], 'ad' => $s['ad'], 'dosya' => $s['dosya'], 'boyut' => $s['boyut'], 'mime' => $s['mime']], $stored)];
+    $save = function () use (&$record, $dir, $no): void {
+        if (@file_put_contents($dir . '/basvuru.json', json_encode($record, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT), LOCK_EX) === false) log_msg("HATA: $no başvuru kaydı yazılamadı.");
+        else @chmod($dir . '/basvuru.json', 0640);
+    };
+    $save();
+
+    // Firma e-postası: tüm alanlar; CV + portfolyo ekte (toplam 15 MB'a kadar), aşarsa yalnızca sunucudaki dosya adları
+    $sum = array_sum(array_column($stored, 'boyut'));
+    $attach = $stored && $sum <= BASVURU_ATTACH_MAX;
+    $fileText = fn(string $kind) => implode("
+", array_map(fn($s) => $s['ad'] . ' (' . size_text($s['boyut']) . ')' . ($attach ? '' : ' → ' . $s['dosya']),
+        array_filter($stored, fn($s) => $s['tur'] === $kind))) ?: 'Yok';
+    $fileNote = $attach ? 'CV ve dosyalar bu e-postanın ekindedir.'
+        : 'Dosyalar toplam ' . size_text($sum) . ' olduğu için e-postaya eklenmedi; sunucuda: private_data/basvurular/' . $no . '/';
+    $rows = ['Başvuru No' => $no, 'Tarih' => $now, 'Alan' => BASVURU_ALANLARI[$alan], 'Ad Soyad' => $c['ad'], 'E-posta' => $c['eposta'], 'Telefon' => $c['telefon'],
+        'Kendisi ve yaptığı işler' => $hakkinda, 'Tecrübeleri' => $tecrube !== '' ? $tecrube : '—', 'Portfolyo / LinkedIn' => $baglanti !== '' ? $baglanti : '—',
+        'CV' => $fileText('cv'), 'Portfolyo dosyaları' => $fileText('portfolyo'),
+        'Saklama' => $saklama === '1 yıl' ? '1 yıl (ileride açılacak pozisyonlar için açık rıza verdi)' : '6 ay',
+        'Silinme tarihi' => date('d.m.Y', strtotime($record['saklama_bitis']))];
+    $m = mailer();
+    foreach (notify_addresses() as $a) $m->addAddress($a);
+    $m->addReplyTo($c['eposta'], $c['ad']);
+    $m->Subject = 'İş başvurusu: ' . $c['ad'] . ' – ' . BASVURU_ALANLARI[$alan];
+    $m->isHTML(true);
+    $m->Body = html_table("İş başvurusu $no", $rows, h($fileNote), 'Çalışan adayı aydınlatma metni: okundu olarak işaretlendi · IP: ' . h($ip) . ' · Form: /kariyer/');
+    $m->AltBody = "İş başvurusu $no
+
+" . text_table($rows) . "
+$fileNote
+
+---
+Çalışan adayı aydınlatma metni: okundu olarak işaretlendi
+IP: $ip
+Form: /kariyer/
+";
+    if ($attach) foreach ($stored as $s) $m->addAttachment($s['yol'], $s['ad']);
+    $record['firma_eposta'] = deliver($m, "$no-firma");
+    $record['dosyalar_ekte'] = $attach;
+
+    // Adaya kısa teşekkür
+    $m = mailer();
+    $m->addAddress($c['eposta'], $c['ad']);
+    $m->addReplyTo(notify_addresses()[0], 'Sibel Aydın İnşaat Mimarlık');
+    $m->Subject = "Başvurunuz bize ulaştı – $no | Sibel Aydın İnşaat Mimarlık";
+    $m->isHTML(false);
+    $m->Body = "Merhaba {$c['ad']},
+
+"
+        . "Bizimle çalışmak istediğiniz için teşekkür ederiz. Başvurunuz bize ulaştı; başvuru numaranız: $no
+
+"
+        . "Başvurunuzu dikkatle okuyacağız ve uygun bir fırsat olduğunda size dönüş yapacağız.
+
+"
+        . "Bize ulaşmak isterseniz:
+Telefon: " . TEL_DISPLAY . "
+GSM: " . GSM_DISPLAY . "
+E-posta: " . notify_addresses()[0] . "
+
+"
+        . "Sevgiyle,
+Sibel Aydın İnşaat Mimarlık
+Piri Mehmet Paşa Mah. Şerif Sk. Osmanoğlu İş Merkezi No:1 İç Kapı No:10, 34570 Silivri / İstanbul
+" . SITE_URL . "
+
+"
+        . 'Başvurunuz ' . ($saklama === '1 yıl' ? '1 yıl' : '6 ay') . ' saklanır ve sonra silinir. Çalışan adayı aydınlatma metni: ' . SITE_URL . "/kvkk/#calisan-adaylari
+";
+    $record['aday_eposta'] = deliver($m, "$no-aday");
+    $save();
+
+    // Saklama süresi dolan başvurular (365 gün; açık rıza yoksa 180 gün)
+    prune_applications();
+
+    respond(200, ['ok' => true, 'talep_no' => $no, 'redirect' => '/kariyer/tesekkurler/?no=' . rawurlencode($no)]);
 }
 
 // ================================================================ PROJE (Projenizi Anlatın)

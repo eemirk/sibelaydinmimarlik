@@ -1,15 +1,11 @@
 <!doctype html>
-<!--
-  KURUMSAL › ÇALIŞMA ANLAYIŞIMIZ — tools/templates/ic-sayfa.html yapısıyla. Header/footer: node tools/sync-partials.mjs
-  Süreç bölümü ana sayfadaki "Nasıl çalışıyoruz?" bileşeninin aynısıdır (.process); metni değişirse ikisini birlikte güncelleyin.
--->
 <html lang="tr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Çalışma Anlayışımız | Sibel Aydın İnşaat Mimarlık – Silivri</title>
-  <meta name="description" content="Dinleyerek başlayan, mevzuata hâkim, projeye sadık ve şeffaf bir çalışma anlayışı. Sibel Aydın İnşaat Mimarlık'ın proje ve uygulama süreçlerindeki ilkeleri.">
-  <link rel="canonical" href="https://www.sibelaydinmimarlik.com.tr/kurumsal/calisma-anlayisimiz/">
+  <title>Kariyer | Bizimle Çalışın – Sibel Aydın İnşaat Mimarlık</title>
+  <meta name="description" content="Sibel Aydın İnşaat Mimarlık ekibine katılmak ister misiniz? Mimar, iç mimar, mühendis ve saha ekibi başvurularınızı CV'nizle birlikte bekliyoruz.">
+  <link rel="canonical" href="https://www.sibelaydinmimarlik.com.tr/kariyer/">
   <!-- GSC: <meta name="google-site-verification" content="..."> -->
   <meta name="theme-color" content="#F6F7F6">
   <meta property="og:type" content="website">
@@ -17,7 +13,7 @@
   <meta property="og:site_name" content="Sibel Aydın İnşaat Mimarlık">
   <meta property="og:title" content="{{title}}">
   <meta property="og:description" content="{{description}}">
-  <meta property="og:url" content="https://www.sibelaydinmimarlik.com.tr/kurumsal/calisma-anlayisimiz/">
+  <meta property="og:url" content="https://www.sibelaydinmimarlik.com.tr/kariyer/">
   <meta property="og:image" content="https://www.sibelaydinmimarlik.com.tr/assets/img/og-paylasim.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@mimarsibelaydin">
@@ -36,10 +32,10 @@
     "@graph": [
       {
         "@type": "WebPage",
-        "@id": "https://www.sibelaydinmimarlik.com.tr/kurumsal/calisma-anlayisimiz/#sayfa",
-        "url": "https://www.sibelaydinmimarlik.com.tr/kurumsal/calisma-anlayisimiz/",
-        "name": "Çalışma Anlayışımız",
-        "description": "Dinleyerek başlayan, mevzuata hâkim, projeye sadık ve şeffaf bir çalışma anlayışı. Sibel Aydın İnşaat Mimarlık'ın proje ve uygulama süreçlerindeki ilkeleri.",
+        "@id": "https://www.sibelaydinmimarlik.com.tr/kariyer/#sayfa",
+        "url": "https://www.sibelaydinmimarlik.com.tr/kariyer/",
+        "name": "Kariyer",
+        "description": "Sibel Aydın İnşaat Mimarlık ekibine katılmak ister misiniz? Mimar, iç mimar, mühendis ve saha ekibi başvurularınızı CV'nizle birlikte bekliyoruz.",
         "inLanguage": "tr-TR",
         "isPartOf": { "@type": "WebSite", "@id": "https://www.sibelaydinmimarlik.com.tr/#site" },
         "about": { "@id": "https://www.sibelaydinmimarlik.com.tr/#firma" }
@@ -48,8 +44,7 @@
         "@type": "BreadcrumbList",
         "itemListElement": [
           { "@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": "https://www.sibelaydinmimarlik.com.tr/" },
-          { "@type": "ListItem", "position": 2, "name": "Kurumsal", "item": "https://www.sibelaydinmimarlik.com.tr/kurumsal/" },
-          { "@type": "ListItem", "position": 3, "name": "Çalışma Anlayışımız", "item": "https://www.sibelaydinmimarlik.com.tr/kurumsal/calisma-anlayisimiz/" }
+          { "@type": "ListItem", "position": 2, "name": "Kariyer", "item": "https://www.sibelaydinmimarlik.com.tr/kariyer/" }
         ]
       }
     ]
@@ -58,7 +53,12 @@
   <!-- İç sayfalarda GSAP gerekmez; yalnızca main.js -->
   <script src="/assets/js/main.js?v=dev" defer></script>
 </head>
-<body class="page-inner" data-wa-msg="Merhaba, Sibel Aydın İnşaat Mimarlık web sitenizden yazıyorum. Projem hakkında bilgi almak istiyorum.">
+<!--
+  KARİYER — başvuru formu (JS kapalıysa normal multipart POST). Gönderim: POST /api/form.php form_type=basvuru.
+  Seçenek listesi (alan) api/form.php BASVURU_ALANLARI ile AYNI olmalı. Başarı: /kariyer/tesekkurler/?no=<BAŞVURU_NO>
+  KVKK: /kvkk/#calisan-adaylari. JobPosting EKLENMEZ (açık ilan yok).
+-->
+<body class="page-inner" data-wa-msg="Merhaba, Sibel Aydın İnşaat Mimarlık web sitenizden yazıyorum. Bizimle çalışmak istiyorum, başvuru hakkında bilgi almak istiyorum.">
 
 <!-- HEADER START -->
 <a class="skip-link" href="#main">İçeriğe geç</a>
@@ -144,124 +144,129 @@
   <nav class="breadcrumb container" aria-label="Sayfa konumu">
     <ol>
       <li><a href="/">Ana Sayfa</a></li>
-      <li><a href="/kurumsal/">Kurumsal</a></li>
-      <li aria-current="page">Çalışma Anlayışımız</li>
+      <li aria-current="page">Kariyer</li>
     </ol>
   </nav>
-  <nav class="subnav container" aria-label="Kurumsal sayfalar">
-    <ul>
-      <li><a href="/kurumsal/">Hakkımızda</a></li>
-      <li><a href="/kurumsal/sibel-aydin-isikondes/">Kurucumuz</a></li>
-      <li><a href="/kurumsal/calisma-anlayisimiz/" aria-current="page">Çalışma Anlayışımız</a></li>
-      <!-- GİZLİ: Ekibimiz sayfası bilgiler gelince açılacak — <li><a href="/kurumsal/ekibimiz/">Ekibimiz</a></li> -->
-    </ul>
-  </nav>
 
-  <section class="page-hero">
-    <div class="container">
-      <p class="eyebrow">Kurumsal</p>
-      <h1 class="page-hero__title">Çalışma Anlayışımız</h1>
-      <p class="page-hero__lead">İyi bir yapı, doğru sorularla başlar ve her aşamada aynı özenle sürer. Projelerimizde bağlı kaldığımız ilkeler bunlar.</p>
-    </div>
-  </section>
+  <div class="container pf-layout">
+    <!-- SOL -->
+    <div class="pf-aside">
+      <p class="eyebrow">Kariyer</p>
+      <h1 class="page-hero__title">Bizimle çalışmak ister misiniz?</h1>
+      <p class="page-hero__lead">Tasarımdan şantiyeye kadar işinin her aşamasını önemseyen insanlarla çalışmayı seviyoruz. Kendinizi kısaca anlatın, CV'nizi ekleyin; uygun bir fırsat olduğunda size dönelim.</p>
 
-  <!-- İLKELERİMİZ -->
-  <section class="section" aria-labelledby="ilkeler-baslik">
-    <div class="container">
-      <header class="section__head reveal">
-        <p class="eyebrow">İlkelerimiz</p>
-        <h2 id="ilkeler-baslik" class="section__title">Nasıl çalışıyoruz?</h2>
-      </header>
-      <ol class="principles">
-        <li class="reveal">
-          <span class="principles__num" aria-hidden="true">01</span>
-          <h3>Önce dinliyoruz</h3>
-          <p>Çizmeye başlamadan önce ihtiyaçlarınızı, alışkanlıklarınızı ve bütçenizi anlamaya zaman ayırıyoruz. Doğru tasarım, doğru sorulmuş sorulardan çıkar.</p>
-        </li>
-        <li class="reveal">
-          <span class="principles__num" aria-hidden="true">02</span>
-          <h3>Mevzuatı baştan hesaba katıyoruz</h3>
-          <p>İmar koşullarını ve yönetmelikleri tasarımın ilk gününden itibaren değerlendiriyoruz. Böylece ruhsat ve iskân aşamasında sürprizlerle karşılaşmazsınız.</p>
-        </li>
-        <li class="reveal">
-          <span class="principles__num" aria-hidden="true">03</span>
-          <h3>Uygulanabilir tasarlıyoruz</h3>
-          <p>Çizdiğimiz her detayın sahada nasıl yapılacağını biliyoruz. Projelerimiz kâğıt üzerinde değil, şantiyede de çalışacak şekilde hazırlanır.</p>
-        </li>
-        <li class="reveal">
-          <span class="principles__num" aria-hidden="true">04</span>
-          <h3>Projeye sadık kalıyoruz</h3>
-          <p>Uygulamada tasarımdan sapmaları önlemek için şantiyeyi düzenli takip ediyoruz. Tasarımda verilen kararlar sahada kaybolmaz.</p>
-        </li>
-        <li class="reveal">
-          <span class="principles__num" aria-hidden="true">05</span>
-          <h3>Şeffaf iletişim kuruyoruz</h3>
-          <p>Teklifleri kalem kalem hazırlıyor, süreç boyunca sizi düzenli bilgilendiriyoruz. Önemli kararları her zaman birlikte veriyoruz.</p>
-        </li>
-        <li class="reveal">
-          <span class="principles__num" aria-hidden="true">06</span>
-          <h3>Uzun ömrü ve verimliliği önemsiyoruz</h3>
-          <p>Malzeme ve sistem seçimlerinde dayanıklılığı, bakım kolaylığını ve enerji verimliliğini öncelikli tutuyoruz.</p>
-        </li>
-      </ol>
+      <aside class="note career-note" aria-labelledby="kimler-baslik">
+        <h2 id="kimler-baslik" class="career-note__title">Kimleri arıyoruz?</h2>
+        <ul class="career-note__list">
+          <li>Mimar ve iç mimarlar</li>
+          <li>İnşaat mühendisleri ve şantiye şefleri</li>
+          <li>Teknik ressamlar</li>
+          <li>Saha ekibi ve ustalar</li>
+          <li>Stajyer öğrenciler</li>
+        </ul>
+        <p class="career-note__foot">Şu an açık bir ilanımız olmasa da başvurularınızı okuyor ve saklıyoruz.</p>
+      </aside>
     </div>
-  </section>
 
-  <!-- ATMOSFER (yapay zekâ ile üretilmiş temsilî görsel; ofis/ekip fotoğrafı değildir) -->
-  <figure class="container atmos reveal">
-    <div class="media media--wide" data-ph="Atmosfer: Silivri kırsalı">
-      <picture><source type="image/avif" srcset="/assets/img/kurumsal/silivri-kirsalinda-cagdas-ev-480.avif 480w, /assets/img/kurumsal/silivri-kirsalinda-cagdas-ev-960.avif 960w, /assets/img/kurumsal/silivri-kirsalinda-cagdas-ev-1600.avif 1600w" sizes="(min-width: 1376px) 1280px, 94vw"><img src="/assets/img/kurumsal/silivri-kirsalinda-cagdas-ev-960.webp" srcset="/assets/img/kurumsal/silivri-kirsalinda-cagdas-ev-480.webp 480w, /assets/img/kurumsal/silivri-kirsalinda-cagdas-ev-960.webp 960w, /assets/img/kurumsal/silivri-kirsalinda-cagdas-ev-1600.webp 1600w" sizes="(min-width: 1376px) 1280px, 94vw" width="1600" height="686" loading="lazy" decoding="async" alt="Silivri kırsalında zeytin ağaçları ve tarlalar arasında çağdaş bir ev; ufukta Marmara Denizi"></picture>
-    </div>
-    <figcaption>Temsilî görselleştirme</figcaption>
-  </figure>
+    <!-- SAĞ: form -->
+    <div class="form-card" id="basvuru-formu">
+      <h2 class="sr-only">Başvuru formu</h2>
+      <form action="/api/form.php" method="post" enctype="multipart/form-data" novalidate data-career-form>
+        <input type="hidden" name="form_type" value="basvuru">
+        <input type="hidden" name="ts" value="" data-form-ts>
+        <div class="hp-field" aria-hidden="true">
+          <label for="f-website">Web siteniz</label>
+          <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off">
+        </div>
+        <div class="pf-alert" role="alert" tabindex="-1" data-form-alert hidden></div>
 
-  <!-- SÜREÇ (ana sayfadaki bileşenin aynısı) -->
-  <section class="section process" aria-labelledby="surec-baslik">
-    <div class="container">
-      <header class="section__head reveal">
-        <p class="eyebrow">Süreç</p>
-        <h2 id="surec-baslik" class="section__title">Bir projenin yolculuğu</h2>
-      </header>
-      <ol class="process__list">
-        <li class="process__step reveal">
-          <span class="process__num" aria-hidden="true">01</span>
-          <h3 class="process__title">Tanışma ve İhtiyaç Analizi</h3>
-          <p>Arsanızı ya da yapınızı, beklentilerinizi ve bütçe çerçevenizi dinliyor; imar durumunu inceleyerek yol haritasını çıkarıyoruz.</p>
-        </li>
-        <li class="process__step reveal">
-          <span class="process__num" aria-hidden="true">02</span>
-          <h3 class="process__title">Konsept ve Proje</h3>
-          <p>Konsept tasarımı birlikte netleştiriyor, ardından mimari ve mühendislik projelerini uygulanabilir ayrıntıda hazırlıyoruz.</p>
-        </li>
-        <li class="process__step reveal">
-          <span class="process__num" aria-hidden="true">03</span>
-          <h3 class="process__title">Ruhsat ve Onay Süreçleri</h3>
-          <p>Belediye ve ilgili kurumlardaki başvuruları hazırlıyor, onay sürecini takip ediyor ve her gelişmeyi sizinle paylaşıyoruz.</p>
-        </li>
-        <li class="process__step reveal">
-          <span class="process__num" aria-hidden="true">04</span>
-          <h3 class="process__title">İnşaat ve Anahtar Teslim</h3>
-          <p>Sahada projeye uygun uygulamayı koordine ediyor, iskân dahil kapanış adımlarını tamamlayarak teslim ediyoruz.</p>
-        </li>
-      </ol>
-      <p class="process__more reveal"><a class="link-arrow link-arrow--lg" href="/hizmetler/">Hizmetlerimizi inceleyin<svg class="i-arrow" aria-hidden="true"><use href="#i-arrow-r"/></svg></a></p>
-    </div>
-  </section>
+        <div class="form-grid">
+          <div class="field field--full">
+            <label for="f-ad">Ad Soyad <span class="field__req" aria-hidden="true">*</span></label>
+            <input id="f-ad" name="ad_soyad" type="text" autocomplete="name" maxlength="100" required aria-describedby="e-ad_soyad">
+            <p class="field__error" id="e-ad_soyad"></p>
+          </div>
+          <div class="field">
+            <label for="f-eposta">E-posta <span class="field__req" aria-hidden="true">*</span></label>
+            <input id="f-eposta" name="eposta" type="email" autocomplete="email" maxlength="150" required aria-describedby="e-eposta">
+            <p class="field__error" id="e-eposta"></p>
+          </div>
+          <div class="field">
+            <label for="f-tel">Telefon <span class="field__req" aria-hidden="true">*</span></label>
+            <input id="f-tel" name="telefon" type="tel" autocomplete="tel" inputmode="tel" maxlength="20" placeholder="05xx xxx xx xx" required aria-describedby="e-telefon" data-phone>
+            <p class="field__error" id="e-telefon"></p>
+          </div>
+          <div class="field field--full">
+            <label for="f-alan">Hangi alanda çalışmak istersiniz? <span class="field__req" aria-hidden="true">*</span></label>
+            <select id="f-alan" name="alan" required aria-describedby="e-alan">
+              <option value="">Seçin</option>
+              <option value="mimar">Mimar</option>
+              <option value="ic-mimar">İç Mimar</option>
+              <option value="insaat-muhendisi">İnşaat Mühendisi</option>
+              <option value="santiye-sefi">Şantiye Şefi</option>
+              <option value="teknik-ressam">Teknik Ressam</option>
+              <option value="saha-ekibi">Saha Ekibi – Usta</option>
+              <option value="stajyer">Stajyer</option>
+              <option value="diger">Diğer</option>
+            </select>
+            <p class="field__error" id="e-alan"></p>
+          </div>
+          <div class="field field--full">
+            <label for="f-hakkinda">Kendinizden ve yaptığınız işlerden biraz bahseder misiniz? <span class="field__req" aria-hidden="true">*</span></label>
+            <textarea id="f-hakkinda" name="hakkinda" rows="6" minlength="30" maxlength="3000" required aria-describedby="f-hakkinda-meta e-hakkinda" placeholder="Neler yapmaktan keyif alırsınız, hangi işlerde yer aldınız? Resmi olmasına gerek yok."></textarea>
+            <div class="field__meta" id="f-hakkinda-meta"><span>En az 30 karakter</span><span data-counter>0 / 3000</span></div>
+            <p class="field__error" id="e-hakkinda"></p>
+          </div>
+          <div class="field field--full">
+            <label for="f-tecrube">Tecrübeleriniz <span class="field__opt">isteğe bağlı</span></label>
+            <textarea id="f-tecrube" name="tecrube" rows="4" maxlength="3000" aria-describedby="e-tecrube" placeholder="Kaç yıldır bu işi yapıyorsunuz, nerelerde çalıştınız, hangi programları kullanıyorsunuz?"></textarea>
+            <p class="field__error" id="e-tecrube"></p>
+          </div>
+          <div class="field field--full">
+            <label for="f-baglanti">Portfolyo veya LinkedIn bağlantısı <span class="field__opt">isteğe bağlı</span></label>
+            <input id="f-baglanti" name="baglanti" type="url" inputmode="url" maxlength="300" placeholder="https://" autocomplete="url" aria-describedby="e-baglanti">
+            <p class="field__error" id="e-baglanti"></p>
+          </div>
+          <div class="field field--full">
+            <label for="f-cv">CV <span class="field__req" aria-hidden="true">*</span></label>
+            <div class="dropzone" data-dropzone="cv">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V4M7.5 8.5 12 4l4.5 4.5M4 15v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4"/></svg>
+              <p class="dropzone__title">CV'nizi buraya sürükleyin ya da <u>bilgisayarınızdan seçin</u></p>
+              <input id="f-cv" name="cv" type="file" accept=".pdf,.doc,.docx" required aria-describedby="f-cv-hint e-cv">
+              <p class="dropzone__hint" id="f-cv-hint">PDF, DOC, DOCX · tek dosya · en fazla 10 MB</p>
+            </div>
+            <ul class="file-list" data-file-list aria-live="polite"></ul>
+            <p class="field__error" id="e-cv"></p>
+          </div>
+          <div class="field field--full">
+            <label for="f-portfolyo">Portfolyo dosyası <span class="field__opt">isteğe bağlı</span></label>
+            <div class="dropzone" data-dropzone="portfolyo">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V4M7.5 8.5 12 4l4.5 4.5M4 15v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4"/></svg>
+              <p class="dropzone__title">Dosyaları buraya sürükleyin ya da <u>bilgisayarınızdan seçin</u></p>
+              <input id="f-portfolyo" name="portfolyo[]" type="file" multiple accept=".pdf,.jpg,.jpeg,.png" aria-describedby="f-portfolyo-hint e-portfolyo">
+              <p class="dropzone__hint" id="f-portfolyo-hint">PDF, JPG, PNG · en fazla 3 dosya · toplam 20 MB</p>
+            </div>
+            <ul class="file-list" data-file-list aria-live="polite"></ul>
+            <p class="file-total" data-file-total hidden></p>
+            <p class="field__error" id="e-portfolyo"></p>
+          </div>
+          <div class="field field--full">
+            <label class="check" for="f-kvkk"><input id="f-kvkk" name="kvkk" type="checkbox" value="1" required aria-describedby="e-kvkk"><span><a href="/kvkk/#calisan-adaylari" target="_blank" rel="noopener">Çalışan adayı aydınlatma metnini</a> okudum. <span class="field__req" aria-hidden="true">*</span></span></label>
+            <p class="field__error" id="e-kvkk"></p>
+          </div>
+          <div class="field field--full">
+            <label class="check" for="f-saklama"><input id="f-saklama" name="saklama_onay" type="checkbox" value="1"><span>Başvurumun ileride açılabilecek pozisyonlar için 1 yıl saklanmasını kabul ediyorum. <span class="field__opt">isteğe bağlı</span></span></label>
+          </div>
+        </div>
 
-  <!-- CTA BANDI -->
-  <section class="cta-band" aria-labelledby="cta-baslik">
-    <div class="container cta-band__inner reveal">
-      <div>
-        <p class="eyebrow eyebrow--light">İletişim</p>
-        <h2 id="cta-baslik" class="cta-band__title">Birlikte çalışalım</h2>
-      </div>
-      <div class="btn-row">
-        <a class="btn btn--light" href="/projenizi-anlatin/" data-cta="projenizi_anlatin_band">Projenizi Anlatın<span class="btn__arrow" aria-hidden="true"><svg><use href="#i-arrow-ne"/></svg></span></a>
-        <a class="btn btn--ghost-light btn--wa" href="https://wa.me/905368475640?text=Merhaba%2C%20Sibel%20Ayd%C4%B1n%20%C4%B0n%C5%9Faat%20Mimarl%C4%B1k%20ile%20g%C3%B6r%C3%BC%C5%9Fme%20randevusu%20almak%20istiyorum.%20Uygun%20oldu%C4%9Fum%20g%C3%BCn%20ve%20saat%3A%20" target="_blank" rel="noopener" aria-label="WhatsApp üzerinden randevu alın" data-appointment data-cta="randevu_band"><svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>Randevu Alın<span class="btn__arrow" aria-hidden="true"><svg><use href="#i-arrow-ne"/></svg></span></a>
-        <a class="btn btn--ghost-light" href="tel:+905368475640" data-cta="ara_band"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>Bizi Arayın</a>
-      </div>
+        <div class="form-actions">
+          <button class="btn btn--primary" type="submit">Başvurumu Gönder<span class="btn__arrow" aria-hidden="true"><svg><use href="#i-arrow-ne"/></svg></span></button>
+        </div>
+        <p class="form-status" role="status" aria-live="polite" data-form-status></p>
+        <p class="form-note"><span aria-hidden="true">*</span> Zorunlu alanlar</p>
+      </form>
     </div>
-  </section>
+  </div>
 </main>
 
 <!-- FOOTER START -->
