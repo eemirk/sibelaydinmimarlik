@@ -185,7 +185,9 @@ async function sheet() {
 async function build() {
   const sharp = (await import('sharp')).default;
   const made = [];
+  const only = opt('only') ? opt('only').split(',') : null;
   for (const [id, s] of Object.entries(SELECT)) {
+    if (only && !only.includes(id)) continue;
     let src = candidate(id, s.aday);
     if (!existsSync(src)) { console.error('Yok: ' + src); process.exit(1); }
     // Rötuş: cetvel/kalem üzerindeki küçük rakam ve yazılar → yalnızca çokgen içinde hafif bulanıklaştırma

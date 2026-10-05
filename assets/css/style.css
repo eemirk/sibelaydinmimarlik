@@ -133,7 +133,8 @@ a:hover .link-arrow .i-arrow, .link-arrow:hover .i-arrow { transform: translateX
 .media--4x5 { aspect-ratio: 4 / 5; }
 .media--wide { aspect-ratio: 21 / 9; }
 @media (max-width: 767px) { .media--wide { aspect-ratio: 16 / 9; } }
-.atmos { margin: 0 auto; }
+.atmos { margin: 0 auto; padding-bottom: clamp(40px, 5vw, 64px); }
+.atmos figcaption { margin-top: 10px; font-size: .8125rem; color: var(--muted); }
 .media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
 .media.is-missing {
   background:
