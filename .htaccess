@@ -21,8 +21,7 @@ AddType image/x-icon .ico
   # Hedefler doğrudan kanonik adrese gider; http/www yönlendirmesiyle zincir oluşmaz.
   RewriteRule ^Icerik/Iletisim/?$   https://www.sibelaydinmimarlik.com.tr/iletisim/ [R=301,L,NC]
   RewriteRule ^Icerik/Kurumsal/?$   https://www.sibelaydinmimarlik.com.tr/kurumsal/ [R=301,L,NC]
-  # GİZLİ: /projeler/ yayına girince açın (o zamana kadar alttaki genel Icerik kuralı ana sayfaya yönlendirir)
-  # RewriteRule ^Icerik/Referanslar/?$ https://www.sibelaydinmimarlik.com.tr/projeler/ [R=301,L,NC]
+  RewriteRule ^Icerik/Referanslar/?$ https://www.sibelaydinmimarlik.com.tr/projeler/ [R=301,L,NC]
   RewriteRule ^Icerik/.*$           https://www.sibelaydinmimarlik.com.tr/ [R=301,L,NC]
   # Ayrı randevu sayfası yok (randevu WhatsApp üzerinden) → iletişim
   RewriteRule ^randevu/?$           https://www.sibelaydinmimarlik.com.tr/iletisim/ [R=301,L,NC]

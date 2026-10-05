@@ -1,58 +1,488 @@
 [
   {
-    "slug": "iki-katli-modern-villa",
-    "baslik": "İki katlı modern villa",
-    "etiket": "Konsept çalışma · Temsilî görselleştirme",
-    "tanim": "Beyaz sıva ve traverten cepheli, geniş açıklıklı, havuzlu ve zeytin ağaçlı bahçesiyle iki katlı villa konsepti.",
+    "slug": "ahsap-detayli-semer-catili-villa",
+    "baslik": "Ahşap Detaylı Villa",
+    "tip": "Villa",
+    "etiket": "3D görselleştirme",
+    "tanim": "Beşik çatılı, iki katlı villa tasarımı: açık renk sıva cephe, ahşap kaplamalı bölümler ve ferforje balkon korkulukları.",
     "galeri": [
-      { "gorsel": "/assets/img/konsept/iki-katli-modern-villa-cephe", "baslik": "Dış cephe", "alt": "İki katlı modern villa görselleştirmesi: beyaz sıva ve traverten cephe, zeytin ağaçlı bahçe" },
-      { "gorsel": "/assets/img/konsept/iki-katli-modern-villa-havuz-teras", "baslik": "Havuz ve teras", "alt": "İki katlı modern villanın havuzu ve pergolalı terası – görselleştirme" },
-      { "gorsel": "/assets/img/konsept/iki-katli-modern-villa-salon", "baslik": "Salon", "alt": "İki katlı modern villanın çift yükseklikli salonu – görselleştirme" }
+      {
+        "gorsel": "/assets/img/tasarim/ahsap-detayli-semer-catili-villa/ahsap-detayli-semer-catili-villa-on-cephe",
+        "genislikler": [
+          480,
+          960,
+          1600
+        ],
+        "en": 1600,
+        "boy": 893,
+        "baslik": "Ön cephe",
+        "alt": "Ahşap Detaylı Villa – ön cephe, firmamızın tasarımından 3D görselleştirme"
+      },
+      {
+        "gorsel": "/assets/img/tasarim/ahsap-detayli-semer-catili-villa/ahsap-detayli-semer-catili-villa-kose-cephe",
+        "genislikler": [
+          480,
+          960,
+          1600
+        ],
+        "en": 1600,
+        "boy": 893,
+        "baslik": "Köşe cephe",
+        "alt": "Ahşap Detaylı Villa – köşe cephe, firmamızın tasarımından 3D görselleştirme"
+      },
+      {
+        "gorsel": "/assets/img/tasarim/ahsap-detayli-semer-catili-villa/ahsap-detayli-semer-catili-villa-bahce-cephesi",
+        "genislikler": [
+          480,
+          960,
+          1600
+        ],
+        "en": 1600,
+        "boy": 893,
+        "baslik": "Bahçe cephesi",
+        "alt": "Ahşap Detaylı Villa – bahçe cephesi, firmamızın tasarımından 3D görselleştirme"
+      }
     ]
   },
   {
-    "slug": "deniz-manzarali-yazlik",
-    "baslik": "Deniz manzaralı yazlık",
-    "etiket": "Konsept çalışma · Temsilî görselleştirme",
-    "tanim": "Marmara'ya bakan eğimli arazide teraslarla yere oturan, geniş cam açıklıklı yazlık konsepti.",
+    "slug": "kirma-catili-iki-katli-ev",
+    "baslik": "Kırma Çatılı İki Katlı Ev",
+    "tip": "Müstakil ev",
+    "etiket": "3D görselleştirme",
+    "tanim": "Kırma çatılı, iki katlı müstakil ev tasarımı: ahşap dikey detaylar, cam korkuluklu balkon ve bahçe düzenlemesi.",
     "galeri": [
-      { "gorsel": "/assets/img/konsept/deniz-manzarali-yazlik-cephe", "baslik": "Dış cephe", "alt": "Denize bakan eğimli arazide teraslı yazlık görselleştirmesi" },
-      { "gorsel": "/assets/img/konsept/deniz-manzarali-yazlik-teras", "baslik": "Deniz terası", "alt": "Deniz manzaralı yazlığın ahşap terası – görselleştirme" },
-      { "gorsel": "/assets/img/konsept/deniz-manzarali-yazlik-salon", "baslik": "Salon", "alt": "Deniz manzaralı yazlığın terasa açılan salonu – görselleştirme" }
+      {
+        "gorsel": "/assets/img/tasarim/kirma-catili-iki-katli-ev/kirma-catili-iki-katli-ev-balkon-cephesi",
+        "genislikler": [
+          480,
+          960,
+          1600
+        ],
+        "en": 1600,
+        "boy": 893,
+        "baslik": "Balkon cephesi",
+        "alt": "Kırma Çatılı İki Katlı Ev – balkon cephesi, firmamızın tasarımından 3D görselleştirme"
+      },
+      {
+        "gorsel": "/assets/img/tasarim/kirma-catili-iki-katli-ev/kirma-catili-iki-katli-ev-kus-bakisi-kose",
+        "genislikler": [
+          480,
+          960,
+          1600
+        ],
+        "en": 1600,
+        "boy": 893,
+        "baslik": "Kuş bakışı",
+        "alt": "Kırma Çatılı İki Katlı Ev – kuş bakışı, firmamızın tasarımından 3D görselleştirme"
+      },
+      {
+        "gorsel": "/assets/img/tasarim/kirma-catili-iki-katli-ev/kirma-catili-iki-katli-ev-kose-cephe",
+        "genislikler": [
+          480,
+          960,
+          1600
+        ],
+        "en": 1600,
+        "boy": 893,
+        "baslik": "Köşe cephe",
+        "alt": "Kırma Çatılı İki Katlı Ev – köşe cephe, firmamızın tasarımından 3D görselleştirme"
+      }
     ]
   },
   {
-    "slug": "tadilat-oncesi-sonrasi",
-    "baslik": "Tadilat: öncesi ve sonrası",
-    "etiket": "Konsept çalışma · Temsilî görselleştirme",
-    "tanim": "Eski bir dairenin salonu ile mutfağını birleştiren ve depolama alanlarını yeniden düzenleyen tadilat konsepti.",
-    "kapak": 1,
+    "slug": "kis-bahceli-tek-katli-ev",
+    "baslik": "Kış Bahçeli Tek Katlı Ev",
+    "tip": "Müstakil ev",
+    "etiket": "3D görselleştirme",
+    "tanim": "Tek katlı, beşik çatılı ev tasarımı: taş kaplama subasman, yatay ahşap panel detayları ve camlı kış bahçesi.",
     "galeri": [
-      { "gorsel": "/assets/img/konsept/tadilat-oncesi-salon", "baslik": "Önce", "alt": "Tadilat öncesi eski bir daire salonu – temsilî görsel" },
-      { "gorsel": "/assets/img/konsept/tadilat-sonrasi-salon", "baslik": "Sonra", "alt": "Tadilat sonrası açık mutfaklı daire salonu – görselleştirme" },
-      { "gorsel": "/assets/img/konsept/tadilat-sonrasi-mutfak", "baslik": "Mutfak", "alt": "Tadilat sonrası meşe dolaplı mutfak köşesi – görselleştirme" }
+      {
+        "gorsel": "/assets/img/tasarim/kis-bahceli-tek-katli-ev/kis-bahceli-tek-katli-ev-sokak-cephesi",
+        "genislikler": [
+          480,
+          960,
+          1024
+        ],
+        "en": 1024,
+        "boy": 1024,
+        "baslik": "Sokak cephesi",
+        "alt": "Kış Bahçeli Tek Katlı Ev – sokak cephesi, firmamızın tasarımından 3D görselleştirme"
+      },
+      {
+        "gorsel": "/assets/img/tasarim/kis-bahceli-tek-katli-ev/kis-bahceli-tek-katli-ev-kis-bahcesi",
+        "genislikler": [
+          480,
+          960,
+          1024
+        ],
+        "en": 1024,
+        "boy": 1024,
+        "baslik": "Kış bahçesi",
+        "alt": "Kış Bahçeli Tek Katlı Ev – kış bahçesi, firmamızın tasarımından 3D görselleştirme"
+      },
+      {
+        "gorsel": "/assets/img/tasarim/kis-bahceli-tek-katli-ev/kis-bahceli-tek-katli-ev-bahce-cephesi",
+        "genislikler": [
+          480,
+          960,
+          1024
+        ],
+        "en": 1024,
+        "boy": 1024,
+        "baslik": "Bahçe cephesi",
+        "alt": "Kış Bahçeli Tek Katlı Ev – bahçe cephesi, firmamızın tasarımından 3D görselleştirme"
+      },
+      {
+        "gorsel": "/assets/img/tasarim/kis-bahceli-tek-katli-ev/kis-bahceli-tek-katli-ev-on-cephe",
+        "genislikler": [
+          480,
+          960,
+          1024
+        ],
+        "en": 1024,
+        "boy": 1024,
+        "baslik": "Ön cephe",
+        "alt": "Kış Bahçeli Tek Katlı Ev – ön cephe, firmamızın tasarımından 3D görselleştirme"
+      }
     ]
   },
   {
-    "slug": "mustakil-bahceli-ev",
-    "baslik": "Müstakil bahçeli ev",
-    "etiket": "Konsept çalışma · Temsilî görselleştirme",
-    "tanim": "Kiremit çatılı, taş kaideli ve ahşap panjurlu; ön ve arka bahçesiyle aile yaşamına göre kurgulanmış müstakil ev konsepti.",
+    "slug": "teras-sundurmali-modern-villa",
+    "baslik": "Teraslı Modern Villa",
+    "tip": "Villa",
+    "etiket": "3D görselleştirme",
+    "tanim": "Düz çatılı, iki katlı modern villa tasarımı: ahşap tavanlı geniş teras sundurması ve üst katta ferforje korkuluklu balkon.",
     "galeri": [
-      { "gorsel": "/assets/img/konsept/mustakil-bahceli-ev-cephe", "baslik": "Dış cephe", "alt": "Kiremit çatılı, taş kaideli müstakil bahçeli ev görselleştirmesi" },
-      { "gorsel": "/assets/img/konsept/mustakil-bahceli-ev-arka-bahce", "baslik": "Arka bahçe", "alt": "Müstakil evin pergolalı taş terası ve arka bahçesi – görselleştirme" },
-      { "gorsel": "/assets/img/konsept/mustakil-bahceli-ev-mutfak", "baslik": "Mutfak ve yemek alanı", "alt": "Müstakil evin bahçeye bakan mutfak ve yemek alanı – görselleştirme" }
+      {
+        "gorsel": "/assets/img/tasarim/teras-sundurmali-modern-villa/teras-sundurmali-modern-villa-bahce-cephesi",
+        "genislikler": [
+          480,
+          960,
+          1600
+        ],
+        "en": 1600,
+        "boy": 900,
+        "baslik": "Bahçe cephesi",
+        "alt": "Teraslı Modern Villa – bahçe cephesi, firmamızın tasarımından 3D görselleştirme"
+      }
     ]
   },
   {
-    "slug": "kucuk-ticari-yapi",
-    "baslik": "Küçük ticari yapı",
-    "etiket": "Konsept çalışma · Temsilî görselleştirme",
-    "tanim": "Zemin katta vitrinli satış alanı, üst katta ahşap panjurlu ofis bulunan köşe parsel ticari yapı konsepti.",
+    "slug": "uc-katli-modern-konut",
+    "baslik": "Üç Katlı Modern Konut",
+    "tip": "Konut",
+    "etiket": "3D görselleştirme",
+    "tanim": "Köşe parselde üç katlı konut tasarımı: geniş cam yüzeyler, taş görünümlü cephe panelleri ve beyaz kat silmeleri.",
     "galeri": [
-      { "gorsel": "/assets/img/konsept/kucuk-ticari-yapi-cephe", "baslik": "Cephe", "alt": "Taş ve koyu metal cepheli, iki katlı küçük ticari yapı görselleştirmesi" },
-      { "gorsel": "/assets/img/konsept/kucuk-ticari-yapi-giris", "baslik": "Giriş", "alt": "Küçük ticari yapının cam girişi ve ön alanı – görselleştirme" },
-      { "gorsel": "/assets/img/konsept/kucuk-ticari-yapi-showroom", "baslik": "Showroom", "alt": "Küçük ticari yapının zemin kattaki aydınlık showroom iç mekânı – görselleştirme" }
+      {
+        "gorsel": "/assets/img/tasarim/uc-katli-modern-konut/uc-katli-modern-konut-kose-cephe",
+        "genislikler": [
+          480,
+          960,
+          1600
+        ],
+        "en": 1600,
+        "boy": 893,
+        "baslik": "Köşe cephe",
+        "alt": "Üç Katlı Modern Konut – köşe cephe, firmamızın tasarımından 3D görselleştirme"
+      },
+      {
+        "gorsel": "/assets/img/tasarim/uc-katli-modern-konut/uc-katli-modern-konut-yan-cephe",
+        "genislikler": [
+          480,
+          960,
+          1600
+        ],
+        "en": 1600,
+        "boy": 893,
+        "baslik": "Yan cephe",
+        "alt": "Üç Katlı Modern Konut – yan cephe, firmamızın tasarımından 3D görselleştirme"
+      }
+    ]
+  },
+  {
+    "slug": "ikiz-villa",
+    "baslik": "İkiz Villa",
+    "tip": "Villa",
+    "etiket": "3D görselleştirme",
+    "tanim": "Simetrik iki bağımsız birimden oluşan ikiz villa tasarımı: çıkma pencereler, dikey ahşap çıtalar ve ayrı giriş merdivenleri.",
+    "galeri": [
+      {
+        "gorsel": "/assets/img/tasarim/ikiz-villa/ikiz-villa-on-cephe",
+        "genislikler": [
+          480,
+          960,
+          1600
+        ],
+        "en": 1600,
+        "boy": 893,
+        "baslik": "Ön cephe",
+        "alt": "İkiz Villa – ön cephe, firmamızın tasarımından 3D görselleştirme"
+      }
+    ]
+  },
+  {
+    "slug": "koyu-zeminli-semer-catili-villa",
+    "baslik": "Beşik Çatılı Modern Villa",
+    "tip": "Villa",
+    "etiket": "3D görselleştirme",
+    "tanim": "Beşik çatılı, iki katlı villa tasarımı: beyaz üst kat, koyu renk zemin kat ve koyu çerçeveli pencereler.",
+    "galeri": [
+      {
+        "gorsel": "/assets/img/tasarim/koyu-zeminli-semer-catili-villa/koyu-zeminli-semer-catili-villa-sokak-cephesi",
+        "genislikler": [
+          480,
+          960,
+          1600
+        ],
+        "en": 1600,
+        "boy": 893,
+        "baslik": "Sokak cephesi",
+        "alt": "Beşik Çatılı Modern Villa – sokak cephesi, firmamızın tasarımından 3D görselleştirme"
+      },
+      {
+        "gorsel": "/assets/img/tasarim/koyu-zeminli-semer-catili-villa/koyu-zeminli-semer-catili-villa-kose-cephe",
+        "genislikler": [
+          480,
+          960,
+          1600
+        ],
+        "en": 1600,
+        "boy": 893,
+        "baslik": "Köşe cephe",
+        "alt": "Beşik Çatılı Modern Villa – köşe cephe, firmamızın tasarımından 3D görselleştirme"
+      }
+    ]
+  },
+  {
+    "slug": "havuzlu-modern-villa",
+    "baslik": "Havuzlu Modern Villa",
+    "tip": "Villa",
+    "etiket": "3D görselleştirme",
+    "tanim": "İki katlı, havuzlu modern villa tasarımı: kolonlu teras, geniş cam açıklıklar ve peyzajlı giriş yolu.",
+    "galeri": [
+      {
+        "gorsel": "/assets/img/tasarim/havuzlu-modern-villa/havuzlu-modern-villa-giris-cephesi",
+        "genislikler": [
+          480,
+          960,
+          1600
+        ],
+        "en": 1600,
+        "boy": 2355,
+        "baslik": "Giriş cephesi",
+        "alt": "Havuzlu Modern Villa – giriş cephesi, firmamızın tasarımından 3D görselleştirme"
+      }
+    ]
+  },
+  {
+    "slug": "ahsap-kaplamali-modern-villa",
+    "baslik": "Ahşap Kaplamalı Modern Villa",
+    "tip": "Villa",
+    "etiket": "3D görselleştirme",
+    "tanim": "İki katlı modern villa tasarımı: ahşap kaplamalı orta bölüm, ince saçaklı çatı ve taş kaplama subasman.",
+    "galeri": [
+      {
+        "gorsel": "/assets/img/tasarim/ahsap-kaplamali-modern-villa/ahsap-kaplamali-modern-villa-on-cephe",
+        "genislikler": [
+          480,
+          960,
+          1600
+        ],
+        "en": 1600,
+        "boy": 900,
+        "baslik": "Ön cephe",
+        "alt": "Ahşap Kaplamalı Modern Villa – ön cephe, firmamızın tasarımından 3D görselleştirme"
+      }
+    ]
+  },
+  {
+    "slug": "sundurmali-semer-catili-ev",
+    "baslik": "Sundurmalı Müstakil Ev",
+    "tip": "Müstakil ev",
+    "etiket": "3D görselleştirme",
+    "tanim": "Beşik çatılı, iki katlı müstakil ev tasarımı: giriş saçağı ve bahçeye açılan sundurmalı teras.",
+    "galeri": [
+      {
+        "gorsel": "/assets/img/tasarim/sundurmali-semer-catili-ev/sundurmali-semer-catili-ev-kose-cephe",
+        "genislikler": [
+          480,
+          960,
+          1600
+        ],
+        "en": 1600,
+        "boy": 893,
+        "baslik": "Köşe cephe",
+        "alt": "Sundurmalı Müstakil Ev – köşe cephe, firmamızın tasarımından 3D görselleştirme"
+      }
+    ]
+  },
+  {
+    "slug": "cam-balkonlu-kirma-catili-ev",
+    "baslik": "Cam Balkonlu Müstakil Ev",
+    "tip": "Müstakil ev",
+    "etiket": "3D görselleştirme",
+    "tanim": "Kırma çatılı, iki katlı müstakil ev tasarımı: cam korkuluklu balkonlar ve köşe parsele göre düzenlenmiş bahçe.",
+    "galeri": [
+      {
+        "gorsel": "/assets/img/tasarim/cam-balkonlu-kirma-catili-ev/cam-balkonlu-kirma-catili-ev-kus-bakisi",
+        "genislikler": [
+          480,
+          960,
+          1600
+        ],
+        "en": 1600,
+        "boy": 900,
+        "baslik": "Kuş bakışı",
+        "alt": "Cam Balkonlu Müstakil Ev – kuş bakışı, firmamızın tasarımından 3D görselleştirme"
+      }
+    ]
+  },
+  {
+    "slug": "ahsap-balkonlu-uc-katli-ev",
+    "baslik": "Ahşap Balkonlu Üç Katlı Ev",
+    "tip": "Müstakil ev",
+    "etiket": "3D görselleştirme",
+    "tanim": "Üç katlı müstakil ev tasarımı: her katta ahşap döşemeli balkonlar, taş kaplama cephe bölümleri ve geniş pencereler.",
+    "galeri": [
+      {
+        "gorsel": "/assets/img/tasarim/ahsap-balkonlu-uc-katli-ev/ahsap-balkonlu-uc-katli-ev-kus-bakisi",
+        "genislikler": [
+          480,
+          960,
+          1600
+        ],
+        "en": 1600,
+        "boy": 893,
+        "baslik": "Kuş bakışı",
+        "alt": "Ahşap Balkonlu Üç Katlı Ev – kuş bakışı, firmamızın tasarımından 3D görselleştirme"
+      }
+    ]
+  },
+  {
+    "slug": "tek-katli-ticari-yapi",
+    "baslik": "Tek Katlı Ticari Yapı",
+    "tip": "Ticari yapı",
+    "etiket": "3D görselleştirme",
+    "tanim": "Tek katlı ticari yapı tasarımı: köşede geniş camlı vitrin bölümü ve koyu renk saçak bandı.",
+    "galeri": [
+      {
+        "gorsel": "/assets/img/tasarim/tek-katli-ticari-yapi/tek-katli-ticari-yapi-kose-cephe",
+        "genislikler": [
+          480,
+          960,
+          1600
+        ],
+        "en": 1600,
+        "boy": 893,
+        "baslik": "Köşe cephe",
+        "alt": "Tek Katlı Ticari Yapı – köşe cephe, firmamızın tasarımından 3D görselleştirme"
+      }
+    ]
+  },
+  {
+    "slug": "ahsap-detayli-apartman",
+    "baslik": "Ahşap Detaylı Apartman",
+    "tip": "Konut",
+    "etiket": "3D görselleştirme",
+    "tanim": "Köşe parselde çok katlı konut tasarımı: ahşap saçak altı, ahşap cephe panelleri ve taş kaplama zemin kat.",
+    "galeri": [
+      {
+        "gorsel": "/assets/img/tasarim/ahsap-detayli-apartman/ahsap-detayli-apartman-kose-cephe",
+        "genislikler": [
+          480,
+          960,
+          1600
+        ],
+        "en": 1600,
+        "boy": 893,
+        "baslik": "Köşe cephe",
+        "alt": "Ahşap Detaylı Apartman – köşe cephe, firmamızın tasarımından 3D görselleştirme"
+      }
+    ]
+  },
+  {
+    "slug": "ahsap-cepheli-apartman",
+    "baslik": "Ahşap Cepheli Apartman",
+    "tip": "Konut",
+    "etiket": "3D görselleştirme",
+    "tanim": "Çok katlı konut tasarımı: ahşap kaplamalı cephe bölümleri, cam korkuluklu balkonlar ve zemin katta ticari birimler.",
+    "galeri": [
+      {
+        "gorsel": "/assets/img/tasarim/ahsap-cepheli-apartman/ahsap-cepheli-apartman-kose-cephe",
+        "genislikler": [
+          480,
+          960,
+          1600
+        ],
+        "en": 1600,
+        "boy": 893,
+        "baslik": "Köşe cephe",
+        "alt": "Ahşap Cepheli Apartman – köşe cephe, firmamızın tasarımından 3D görselleştirme"
+      }
+    ]
+  },
+  {
+    "slug": "cati-pencereli-apartman",
+    "baslik": "Çatı Pencereli Apartman",
+    "tip": "Konut",
+    "etiket": "3D görselleştirme",
+    "tanim": "Kırma çatılı, çatı pencereli çok katlı konut tasarımı ve çevre düzenlemesi.",
+    "galeri": [
+      {
+        "gorsel": "/assets/img/tasarim/cati-pencereli-apartman/cati-pencereli-apartman-on-cephe",
+        "genislikler": [
+          480,
+          960,
+          1600
+        ],
+        "en": 1600,
+        "boy": 900,
+        "baslik": "Ön cephe",
+        "alt": "Çatı Pencereli Apartman – ön cephe, firmamızın tasarımından 3D görselleştirme"
+      }
+    ]
+  },
+  {
+    "slug": "koyu-cepheli-apartman",
+    "baslik": "Koyu Cepheli Apartman",
+    "tip": "Konut",
+    "etiket": "3D görselleştirme",
+    "tanim": "Çok katlı konut tasarımı: koyu tuğla görünümlü cephe bölümleri, beyaz çerçeveli pencereler ve camlı zemin kat.",
+    "galeri": [
+      {
+        "gorsel": "/assets/img/tasarim/koyu-cepheli-apartman/koyu-cepheli-apartman-kose-cephe",
+        "genislikler": [
+          480,
+          960,
+          1600
+        ],
+        "en": 1600,
+        "boy": 893,
+        "baslik": "Köşe cephe",
+        "alt": "Koyu Cepheli Apartman – köşe cephe, firmamızın tasarımından 3D görselleştirme"
+      }
+    ]
+  },
+  {
+    "slug": "beyaz-cepheli-apartman",
+    "baslik": "Beyaz Cepheli Apartman",
+    "tip": "Konut",
+    "etiket": "3D görselleştirme",
+    "tanim": "Çok katlı konut tasarımı: açık renk cephe, ferforje balkon korkulukları ve kapalı otopark girişi.",
+    "galeri": [
+      {
+        "gorsel": "/assets/img/tasarim/beyaz-cepheli-apartman/beyaz-cepheli-apartman-kose-cephe",
+        "genislikler": [
+          480,
+          960,
+          1600
+        ],
+        "en": 1600,
+        "boy": 893,
+        "baslik": "Köşe cephe",
+        "alt": "Beyaz Cepheli Apartman – köşe cephe, firmamızın tasarımından 3D görselleştirme"
+      }
     ]
   }
 ]

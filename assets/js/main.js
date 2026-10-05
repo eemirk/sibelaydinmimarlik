@@ -62,7 +62,6 @@ const WA_BASE = 'https://wa.me/905368475640';
 // Ayrı randevu sistemi yok: "Randevu Al/Alın" butonları bu hazır mesajla WhatsApp'a gider
 const WA_APPOINTMENT_MSG = 'Merhaba, Sibel Aydın İnşaat Mimarlık ile görüşme randevusu almak istiyorum. Uygun olduğum gün ve saat: ';
 const PROJECTS_URL = '/data/projects.json';
-const HOME_PROJECT_LIMIT = 6;
 const REVEAL_STAGGER_MS = 80;
 // Projenizi Anlatın: dosya kuralları (api/form.php ile aynı) ve ?hizmet=<hizmet sayfası slug'ı> → form seçeneği
 const PF_FILE_TYPES = ['jpg', 'jpeg', 'png', 'heic', 'webp', 'pdf', 'dwg', 'dxf'];
@@ -355,26 +354,27 @@ const MASCOT_SVG = '<svg class="mascot__svg" viewBox="0 0 80 120" aria-hidden="t
     });
   });
 
-  /* ---------------------------------------------------------------- Konsept çalışmalar (ana sayfa)
-     Kartlar HTML'de statik durur (SEO). /data/projects.json gelirse her karta "Görselleri inceleyin"
-     düğmesi eklenir; tıklanınca 3 görsellik detay penceresi (<dialog>) açılır. Kayıtlar temsilî
-     görselleştirmedir: etiket "Konsept çalışma · Temsilî görselleştirme" detayda da görünür. */
+  /* ---------------------------------------------------------------- Tasarım projeleri (ana sayfa + /projeler/)
+     Kartlar HTML'de statik durur (SEO). /data/projects.json gelirse her karta "… görseli inceleyin"
+     düğmesi eklenir; tıklanınca projenin tüm görsellerini gösteren detay penceresi (<dialog>) açılır.
+     Kayıtlar firmanın 3D görselleştirmeleridir; konum, yıl ve m² gösterilmez. */
   const projectList = $('[data-projects]');
   if (projectList && 'fetch' in window && typeof HTMLDialogElement === 'function') {
     fetch(PROJECTS_URL, { credentials: 'same-origin' })
       .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
-      .then((data) => initConcepts(projectList, (Array.isArray(data) ? data : data.projeler || []).slice(0, HOME_PROJECT_LIMIT)))
+      .then((data) => initConcepts(projectList, Array.isArray(data) ? data : data.projeler || []))
       .catch(() => { /* statik kartlar kalır */ });
   }
 
   function conceptPicture(g, sizes) {
-    const set = (ext) => [480, 960, 1600].map((w) => g.gorsel + '-' + w + '.' + ext + ' ' + w + 'w').join(', ');
+    const ws = g.genislikler || [480, 960, 1600];
+    const set = (ext) => ws.map((w, i) => g.gorsel + '-' + [480, 960, 1600][i] + '.' + ext + ' ' + w + 'w').join(', ');
     const pic = document.createElement('picture');
     const src = document.createElement('source');
     src.type = 'image/avif'; src.srcset = set('avif'); src.sizes = sizes;
     const img = document.createElement('img');
     img.src = g.gorsel + '-960.webp'; img.srcset = set('webp'); img.sizes = sizes;
-    img.width = 1600; img.height = 1200; img.loading = 'lazy'; img.decoding = 'async'; img.alt = g.alt;
+    img.width = g.en || 1600; img.height = g.boy || 900; img.loading = 'lazy'; img.decoding = 'async'; img.alt = g.alt;
     pic.append(src, img);
     return pic;
   }
@@ -415,7 +415,7 @@ const MASCOT_SVG = '<svg class="mascot__svg" viewBox="0 0 80 120" aria-hidden="t
       body.classList.add('dialog-open');
       dlg.showModal();
       dlg.scrollTop = 0;
-      window.dataLayer.push({ event: 'concept_open', concept: p.slug, page_path: location.pathname });
+      window.dataLayer.push({ event: 'project_open', project: p.slug, page_path: location.pathname });
     };
     $$('.project-card', list).forEach((li) => {
       const p = bySlug[li.dataset.slug];

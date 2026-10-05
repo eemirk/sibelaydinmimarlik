@@ -55,11 +55,11 @@ export default {
     h2: 'Kimler için hazırlıyoruz?',
     cards: [
       { h3: 'Ev sahipleri', text: 'Villanızın ya da evinizin nasıl görüneceğini inşaat başlamadan görmek, değişiklikleri erken aşamada ve masrafsız yapmak için.',
-        img: '/assets/img/hizmet/silivri-mimari-proje-tas-avlulu-villa', alt: 'Taş duvarlı, ahşap saçaklı tek katlı çağdaş villa ve zeytin ağaçlı çakıllı avlusu – mimari görselleştirme', ph: 'Görsel: ev sahibi için villa görselleştirmesi' },
+        img: '/assets/img/tasarim/ahsap-detayli-semer-catili-villa/ahsap-detayli-semer-catili-villa-on-cephe', alt: 'Ahşap detaylı, beşik çatılı iki katlı villa – firmamızın tasarımından 3D görselleştirme', ph: 'Görsel: ev sahibi için villa görselleştirmesi' },
       { h3: 'Müteahhitler ve yatırımcılar', text: 'Projeyi inşaat bitmeden tanıtmak, ön satış ve pazarlama çalışmalarında kullanmak için.',
-        img: '/assets/img/hizmet/konut-binasi-gorsellestirme', alt: 'Ahşap tavanlı girintili balkonları olan beş katlı çağdaş konut binası – mimari görselleştirme', ph: 'Görsel: konut projesi satış görseli' },
+        img: '/assets/img/tasarim/ahsap-detayli-apartman/ahsap-detayli-apartman-kose-cephe', alt: 'Ahşap detaylı çok katlı apartman – firmamızın tasarımından 3D görselleştirme', ph: 'Görsel: konut projesi satış görseli' },
       { h3: 'İşletmeler', text: 'Ofis, mağaza veya restoran iç mekânının müşteri gözünden nasıl algılanacağını önceden görmek için.',
-        img: '/assets/img/hizmet/ofis-ic-mekan-tasarimi', alt: 'Meşe toplantı masası, keçe duvar panelleri ve traverten bankosu olan ofis iç mekânı', ph: 'Görsel: işletme iç mekân görselleştirmesi' }
+        img: '/assets/img/tasarim/tek-katli-ticari-yapi/tek-katli-ticari-yapi-kose-cephe', alt: 'Köşede geniş vitrinli tek katlı ticari yapı – firmamızın tasarımından 3D görselleştirme', ph: 'Görsel: işletme iç mekân görselleştirmesi' }
     ]
   },
   steps: [

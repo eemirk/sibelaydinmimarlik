@@ -525,25 +525,31 @@ html:not(.motion) .hero__progress { display: none; }
 .project-card__info { font-variant-numeric: tabular-nums; display: flex; flex-wrap: wrap; gap: 4px 10px; margin: 0; font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
 .project-card__info span + span::before { content: "·"; margin-right: 10px; color: var(--accent); }
 @media (min-width: 900px) {
-  .project-card:nth-child(1) { grid-column: 1 / span 7; }
-  .project-card:nth-child(1) .media { aspect-ratio: 4 / 3; }
-  .project-card:nth-child(2) { grid-column: 9 / span 4; margin-top: clamp(64px, 10vw, 160px); }
-  .project-card:nth-child(2) .media { aspect-ratio: 4 / 5; }
-  .project-card:nth-child(3) { grid-column: 1 / span 5; }
-  .project-card:nth-child(3) .media { aspect-ratio: 4 / 5; }
-  .project-card:nth-child(4) { grid-column: 6 / span 7; margin-top: clamp(48px, 8vw, 128px); }
-  .project-card:nth-child(4) .media { aspect-ratio: 16 / 10; }
-  .project-card:nth-child(5) { grid-column: 2 / span 6; }
-  .project-card:nth-child(5) .media { aspect-ratio: 3 / 2; }
-  .project-card:nth-child(6) { grid-column: 9 / span 4; margin-top: clamp(40px, 7vw, 112px); }
-  .project-card:nth-child(6) .media { aspect-ratio: 1 / 1; }
+  .projects__grid .project-card:nth-child(1) { grid-column: 1 / span 7; }
+  .projects__grid .project-card:nth-child(1) .media { aspect-ratio: 4 / 3; }
+  .projects__grid .project-card:nth-child(2) { grid-column: 9 / span 4; margin-top: clamp(64px, 10vw, 160px); }
+  .projects__grid .project-card:nth-child(2) .media { aspect-ratio: 4 / 5; }
+  .projects__grid .project-card:nth-child(3) { grid-column: 1 / span 5; }
+  .projects__grid .project-card:nth-child(3) .media { aspect-ratio: 4 / 5; }
+  .projects__grid .project-card:nth-child(4) { grid-column: 6 / span 7; margin-top: clamp(48px, 8vw, 128px); }
+  .projects__grid .project-card:nth-child(4) .media { aspect-ratio: 16 / 10; }
+  .projects__grid .project-card:nth-child(5) { grid-column: 2 / span 6; }
+  .projects__grid .project-card:nth-child(5) .media { aspect-ratio: 3 / 2; }
+  .projects__grid .project-card:nth-child(6) { grid-column: 9 / span 4; margin-top: clamp(40px, 7vw, 112px); }
+  .projects__grid .project-card:nth-child(6) .media { aspect-ratio: 1 / 1; }
 }
 /* Konsept çalışmalar: açıklama, detay düğmesi; 5 kartta son kart ortalanır */
 .project-card__text { margin: 6px 0 0; max-width: 52ch; color: var(--muted); font-size: .9375rem; }
 .project-card__open { align-self: flex-start; margin-top: 10px; }
 .project-card__frame.is-interactive { cursor: pointer; }
 .project-card__frame.is-interactive:hover .media img { transform: scale(1.04); }
-@media (min-width: 900px) { .project-card:nth-child(5):last-child { grid-column: 3 / span 8; } }
+/* /projeler/: tüm tasarım projeleri, eşit kartlar */
+.projects__list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(40px, 5vw, 72px) clamp(20px, 2.5vw, 36px); align-items: start; }
+.projects__list .media { aspect-ratio: 16 / 10; }
+@media (max-width: 767px) { .projects__list { grid-template-columns: 1fr; } }
+/* Detay penceresi: görseller kendi oranında (yatay, kare, dikey render) */
+.concept-dialog__fig .media { aspect-ratio: auto; }
+.concept-dialog__fig .media img { position: static; display: block; height: auto; }
 
 /* Konsept detay penceresi (<dialog>) */
 body.dialog-open { overflow: hidden; }
@@ -569,7 +575,7 @@ body.dialog-open { overflow: hidden; }
 
 @media (min-width: 768px) and (max-width: 899px) {
   .projects__grid { grid-template-columns: 1fr 1fr; }
-  .project-card:nth-child(even) { margin-top: 64px; }
+  .projects__grid .project-card:nth-child(even) { margin-top: 64px; }
 }
 @media (max-width: 767px) { .projects__grid { grid-template-columns: 1fr; } }
 

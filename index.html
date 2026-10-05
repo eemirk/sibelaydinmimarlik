@@ -13,13 +13,9 @@
        göre güncelleyin (şimdiki alt metinler beklenen içeriği tarif ediyor).
      - og:image = /assets/img/og-paylasim.jpg (1200×630, logo + villa render; tools/generate-site-images.mjs og)
        (bazı platformlar WebP OG görselini göstermez → gerekirse 1200×630 JPG ekleyin)
-  3. Konsept çalışmalar: /data/projects.json içindeki 5 kayıt yapay zekâ ile üretilmiş
-     TEMSİLÎ görselleştirmedir (gerçek proje değil; konum/yıl/m² yazmayın). Gerçek projeler
-     geldiğinde ayrı bir "Projeler" bölümü/sayfası açın; bu kayıtları gerçek iş gibi sunmayın.
-     hero-villa.webp bir görselleştirmedir, proje olarak KULLANMAYIN.
-     /projeler/ ve /blog/ henüz yok: header/footer linkleri, "Tüm projelerimizi görün"
-     butonu ve eski site yönlendirmesi (/Icerik/Referanslar — .htaccess + netlify.toml)
-     "GİZLİ:" yorumuyla kapalı.
+  3. Tasarım projeleri: /data/projects.json — firmanın 3D render'ları (tools/process-renders.mjs).
+     Konum, yıl, m² ve "tamamlandı" yazmayın. Ana sayfada 6 kart, tümü /projeler/ sayfasında.
+     /blog/ henüz yok: header/footer linki "GİZLİ:" yorumuyla kapalı.
   4. Ekip bilgileri: /kurumsal/ekibimiz/ henüz yok; header ve footer'daki "Ekibimiz"
      linkleri "GİZLİ:" yorumuyla kapalı (sayfa yapılınca yorumu kaldırın, sitemap'e ekleyin).
      Kurumsal sayfalardaki alt menüye (.subnav) de eklenecek.
@@ -317,7 +313,7 @@
             </div>
           </div>
         </li>
-        <!-- GİZLİ: içerik gelince açılacak — <li class="nav__item"><a class="nav__link" href="/projeler/">Projeler</a></li> -->
+        <li class="nav__item"><a class="nav__link" href="/projeler/">Projeler</a></li>
         <!-- GİZLİ: içerik gelince açılacak — <li class="nav__item"><a class="nav__link" href="/blog/">Blog</a></li> -->
         <li class="nav__item"><a class="nav__link" href="/iletisim/">İletişim</a></li>
       </ul>
@@ -457,7 +453,7 @@
         <article class="service-card reveal">
           <a class="service-card__link" href="/hizmetler/3d-gorsellestirme/">
             <div class="media" data-ph="Hizmet görseli: 3D Görselleştirme">
-              <picture><source type="image/avif" srcset="/assets/img/hizmet/konut-binasi-gorsellestirme-480.avif 480w, /assets/img/hizmet/konut-binasi-gorsellestirme-960.avif 960w, /assets/img/hizmet/konut-binasi-gorsellestirme-1600.avif 1600w" sizes="(min-width: 900px) 30vw, 100vw"><img src="/assets/img/hizmet/konut-binasi-gorsellestirme-960.webp" srcset="/assets/img/hizmet/konut-binasi-gorsellestirme-480.webp 480w, /assets/img/hizmet/konut-binasi-gorsellestirme-960.webp 960w, /assets/img/hizmet/konut-binasi-gorsellestirme-1600.webp 1600w" sizes="(min-width: 900px) 30vw, 100vw" width="1600" height="1200" loading="lazy" decoding="async" alt="Ahşap tavanlı girintili balkonları olan beş katlı çağdaş konut binası – mimari görselleştirme"></picture>
+              <picture><source type="image/avif" srcset="/assets/img/tasarim/ahsap-detayli-semer-catili-villa/ahsap-detayli-semer-catili-villa-on-cephe-480.avif 480w, /assets/img/tasarim/ahsap-detayli-semer-catili-villa/ahsap-detayli-semer-catili-villa-on-cephe-960.avif 960w, /assets/img/tasarim/ahsap-detayli-semer-catili-villa/ahsap-detayli-semer-catili-villa-on-cephe-1600.avif 1600w" sizes="(min-width: 900px) 30vw, 100vw"><img src="/assets/img/tasarim/ahsap-detayli-semer-catili-villa/ahsap-detayli-semer-catili-villa-on-cephe-960.webp" srcset="/assets/img/tasarim/ahsap-detayli-semer-catili-villa/ahsap-detayli-semer-catili-villa-on-cephe-480.webp 480w, /assets/img/tasarim/ahsap-detayli-semer-catili-villa/ahsap-detayli-semer-catili-villa-on-cephe-960.webp 960w, /assets/img/tasarim/ahsap-detayli-semer-catili-villa/ahsap-detayli-semer-catili-villa-on-cephe-1600.webp 1600w" sizes="(min-width: 900px) 30vw, 100vw" width="1600" height="900" loading="lazy" decoding="async" alt="Ahşap detaylı, beşik çatılı iki katlı villa – firmamızın tasarımından 3D görselleştirme"></picture>
             </div>
             <h3 class="service-card__title">3D Görselleştirme</h3>
             <p class="service-card__text">Projenizi inşaat başlamadan gerçekçi görsellerle görün; kararlarınızı daha net ve güvenle verin.</p>
@@ -499,93 +495,105 @@
     </div>
   </section>
 
-  <!-- 4. KONSEPT ÇALIŞMALAR — temsilî görselleştirmeler (yapay zekâ). Gerçek proje/referans kaydı DEĞİL:
-       lokasyon, yıl, m² yazılmaz; JSON-LD'de Project/CreativeWork olarak işaretlenmez.
-       Statik kartlar /data/projects.json ile aynı; JS her karta 3 görsellik detay penceresi ekler. -->
-  <!-- GİZLİ: konsept görselleri üretilince hidden kaldırılacak -->
-  <section class="section projects" id="konsept-calismalar" aria-labelledby="projeler-baslik" hidden>
+  <!-- 4. TASARIM PROJELERİMİZ — firmanın 3D görselleştirmeleri (statik kartlar SEO için; JS /data/projects.json ile detay penceresi ekler).
+       Konum, yıl, m² ve "tamamlandı" bilgisi yazılmaz. Tüm projeler: /projeler/ -->
+  <section class="section projects" id="tasarim-projeleri" aria-labelledby="projeler-baslik">
     <div class="container">
       <header class="section__head section__head--split reveal">
         <div>
-          <p class="eyebrow">Tasarım yaklaşımımız</p>
-          <h2 id="projeler-baslik" class="section__title">Konsept Çalışmalar</h2>
+          <p class="eyebrow">3D görselleştirme</p>
+          <h2 id="projeler-baslik" class="section__title">Tasarım Projelerimiz</h2>
         </div>
-        <!-- GİZLİ: proje sayfaları yayına girince açılacak — <a class="btn btn--outline" href="/projeler/" data-cta="tum_projeler">Tüm projelerimizi görün<span class="btn__arrow" aria-hidden="true"><svg><use href="#i-arrow-ne"/></svg></span></a> -->
+        <a class="btn btn--outline" href="/projeler/" data-cta="tum_projeler">Tüm tasarım projelerimiz<span class="btn__arrow" aria-hidden="true"><svg><use href="#i-arrow-ne"/></svg></span></a>
       </header>
 
       <ul class="projects__grid" data-projects>
-        <li class="project-card reveal" data-slug="iki-katli-modern-villa">
+        <li class="project-card reveal" data-slug="ahsap-detayli-semer-catili-villa" id="ahsap-detayli-semer-catili-villa">
           <article>
             <div class="project-card__frame">
-              <div class="media" data-ph="Konsept: İki katlı modern villa">
-                <picture><source type="image/avif" srcset="/assets/img/konsept/iki-katli-modern-villa-cephe-480.avif 480w, /assets/img/konsept/iki-katli-modern-villa-cephe-960.avif 960w, /assets/img/konsept/iki-katli-modern-villa-cephe-1600.avif 1600w" sizes="(min-width: 900px) 56vw, 100vw"><img src="/assets/img/konsept/iki-katli-modern-villa-cephe-960.webp" srcset="/assets/img/konsept/iki-katli-modern-villa-cephe-480.webp 480w, /assets/img/konsept/iki-katli-modern-villa-cephe-960.webp 960w, /assets/img/konsept/iki-katli-modern-villa-cephe-1600.webp 1600w" sizes="(min-width: 900px) 56vw, 100vw" width="1600" height="1200" loading="lazy" decoding="async" alt="İki katlı modern villa görselleştirmesi: beyaz sıva ve traverten cephe, zeytin ağaçlı bahçe"></picture>
+              <div class="media">
+                <picture><source type="image/avif" srcset="/assets/img/tasarim/ahsap-detayli-semer-catili-villa/ahsap-detayli-semer-catili-villa-on-cephe-480.avif 480w, /assets/img/tasarim/ahsap-detayli-semer-catili-villa/ahsap-detayli-semer-catili-villa-on-cephe-960.avif 960w, /assets/img/tasarim/ahsap-detayli-semer-catili-villa/ahsap-detayli-semer-catili-villa-on-cephe-1600.avif 1600w" sizes="(min-width: 900px) 56vw, 100vw"><img src="/assets/img/tasarim/ahsap-detayli-semer-catili-villa/ahsap-detayli-semer-catili-villa-on-cephe-960.webp" srcset="/assets/img/tasarim/ahsap-detayli-semer-catili-villa/ahsap-detayli-semer-catili-villa-on-cephe-480.webp 480w, /assets/img/tasarim/ahsap-detayli-semer-catili-villa/ahsap-detayli-semer-catili-villa-on-cephe-960.webp 960w, /assets/img/tasarim/ahsap-detayli-semer-catili-villa/ahsap-detayli-semer-catili-villa-on-cephe-1600.webp 1600w" sizes="(min-width: 900px) 56vw, 100vw" width="1600" height="893" loading="lazy" decoding="async" alt="Ahşap Detaylı Villa – ön cephe, firmamızın tasarımından 3D görselleştirme"></picture>
               </div>
             </div>
             <div class="project-card__meta">
-              <h3 class="project-card__title">İki katlı modern villa</h3>
-              <p class="project-card__info"><span>Konsept çalışma</span><span>Temsilî görselleştirme</span></p>
-              <p class="project-card__text">Beyaz sıva ve traverten cepheli, geniş açıklıklı, havuzlu ve zeytin ağaçlı bahçesiyle iki katlı villa konsepti.</p>
+              <h3 class="project-card__title">Ahşap Detaylı Villa</h3>
+              <p class="project-card__info"><span>3D görselleştirme</span><span>Villa</span></p>
+              <p class="project-card__text">Beşik çatılı, iki katlı villa tasarımı: açık renk sıva cephe, ahşap kaplamalı bölümler ve ferforje balkon korkulukları.</p>
             </div>
           </article>
         </li>
-        <li class="project-card reveal" data-slug="deniz-manzarali-yazlik">
+        <li class="project-card reveal" data-slug="kirma-catili-iki-katli-ev" id="kirma-catili-iki-katli-ev">
           <article>
             <div class="project-card__frame">
-              <div class="media" data-ph="Konsept: Deniz manzaralı yazlık">
-                <picture><source type="image/avif" srcset="/assets/img/konsept/deniz-manzarali-yazlik-cephe-480.avif 480w, /assets/img/konsept/deniz-manzarali-yazlik-cephe-960.avif 960w, /assets/img/konsept/deniz-manzarali-yazlik-cephe-1600.avif 1600w" sizes="(min-width: 900px) 32vw, 100vw"><img src="/assets/img/konsept/deniz-manzarali-yazlik-cephe-960.webp" srcset="/assets/img/konsept/deniz-manzarali-yazlik-cephe-480.webp 480w, /assets/img/konsept/deniz-manzarali-yazlik-cephe-960.webp 960w, /assets/img/konsept/deniz-manzarali-yazlik-cephe-1600.webp 1600w" sizes="(min-width: 900px) 32vw, 100vw" width="1600" height="1200" loading="lazy" decoding="async" alt="Denize bakan eğimli arazide teraslı yazlık görselleştirmesi"></picture>
+              <div class="media">
+                <picture><source type="image/avif" srcset="/assets/img/tasarim/kirma-catili-iki-katli-ev/kirma-catili-iki-katli-ev-balkon-cephesi-480.avif 480w, /assets/img/tasarim/kirma-catili-iki-katli-ev/kirma-catili-iki-katli-ev-balkon-cephesi-960.avif 960w, /assets/img/tasarim/kirma-catili-iki-katli-ev/kirma-catili-iki-katli-ev-balkon-cephesi-1600.avif 1600w" sizes="(min-width: 900px) 32vw, 100vw"><img src="/assets/img/tasarim/kirma-catili-iki-katli-ev/kirma-catili-iki-katli-ev-balkon-cephesi-960.webp" srcset="/assets/img/tasarim/kirma-catili-iki-katli-ev/kirma-catili-iki-katli-ev-balkon-cephesi-480.webp 480w, /assets/img/tasarim/kirma-catili-iki-katli-ev/kirma-catili-iki-katli-ev-balkon-cephesi-960.webp 960w, /assets/img/tasarim/kirma-catili-iki-katli-ev/kirma-catili-iki-katli-ev-balkon-cephesi-1600.webp 1600w" sizes="(min-width: 900px) 32vw, 100vw" width="1600" height="893" loading="lazy" decoding="async" alt="Kırma Çatılı İki Katlı Ev – balkon cephesi, firmamızın tasarımından 3D görselleştirme"></picture>
               </div>
             </div>
             <div class="project-card__meta">
-              <h3 class="project-card__title">Deniz manzaralı yazlık</h3>
-              <p class="project-card__info"><span>Konsept çalışma</span><span>Temsilî görselleştirme</span></p>
-              <p class="project-card__text">Marmara'ya bakan eğimli arazide teraslarla yere oturan, geniş cam açıklıklı yazlık konsepti.</p>
+              <h3 class="project-card__title">Kırma Çatılı İki Katlı Ev</h3>
+              <p class="project-card__info"><span>3D görselleştirme</span><span>Müstakil ev</span></p>
+              <p class="project-card__text">Kırma çatılı, iki katlı müstakil ev tasarımı: ahşap dikey detaylar, cam korkuluklu balkon ve bahçe düzenlemesi.</p>
             </div>
           </article>
         </li>
-        <li class="project-card reveal" data-slug="tadilat-oncesi-sonrasi">
+        <li class="project-card reveal" data-slug="kis-bahceli-tek-katli-ev" id="kis-bahceli-tek-katli-ev">
           <article>
             <div class="project-card__frame">
-              <div class="media" data-ph="Konsept: Tadilat: öncesi ve sonrası">
-                <picture><source type="image/avif" srcset="/assets/img/konsept/tadilat-sonrasi-salon-480.avif 480w, /assets/img/konsept/tadilat-sonrasi-salon-960.avif 960w, /assets/img/konsept/tadilat-sonrasi-salon-1600.avif 1600w" sizes="(min-width: 900px) 40vw, 100vw"><img src="/assets/img/konsept/tadilat-sonrasi-salon-960.webp" srcset="/assets/img/konsept/tadilat-sonrasi-salon-480.webp 480w, /assets/img/konsept/tadilat-sonrasi-salon-960.webp 960w, /assets/img/konsept/tadilat-sonrasi-salon-1600.webp 1600w" sizes="(min-width: 900px) 40vw, 100vw" width="1600" height="1200" loading="lazy" decoding="async" alt="Tadilat sonrası açık mutfaklı daire salonu – görselleştirme"></picture>
+              <div class="media">
+                <picture><source type="image/avif" srcset="/assets/img/tasarim/kis-bahceli-tek-katli-ev/kis-bahceli-tek-katli-ev-sokak-cephesi-480.avif 480w, /assets/img/tasarim/kis-bahceli-tek-katli-ev/kis-bahceli-tek-katli-ev-sokak-cephesi-960.avif 960w, /assets/img/tasarim/kis-bahceli-tek-katli-ev/kis-bahceli-tek-katli-ev-sokak-cephesi-1600.avif 1024w" sizes="(min-width: 900px) 40vw, 100vw"><img src="/assets/img/tasarim/kis-bahceli-tek-katli-ev/kis-bahceli-tek-katli-ev-sokak-cephesi-960.webp" srcset="/assets/img/tasarim/kis-bahceli-tek-katli-ev/kis-bahceli-tek-katli-ev-sokak-cephesi-480.webp 480w, /assets/img/tasarim/kis-bahceli-tek-katli-ev/kis-bahceli-tek-katli-ev-sokak-cephesi-960.webp 960w, /assets/img/tasarim/kis-bahceli-tek-katli-ev/kis-bahceli-tek-katli-ev-sokak-cephesi-1600.webp 1024w" sizes="(min-width: 900px) 40vw, 100vw" width="1024" height="1024" loading="lazy" decoding="async" alt="Kış Bahçeli Tek Katlı Ev – sokak cephesi, firmamızın tasarımından 3D görselleştirme"></picture>
               </div>
             </div>
             <div class="project-card__meta">
-              <h3 class="project-card__title">Tadilat: öncesi ve sonrası</h3>
-              <p class="project-card__info"><span>Konsept çalışma</span><span>Temsilî görselleştirme</span></p>
-              <p class="project-card__text">Eski bir dairenin salonu ile mutfağını birleştiren ve depolama alanlarını yeniden düzenleyen tadilat konsepti.</p>
+              <h3 class="project-card__title">Kış Bahçeli Tek Katlı Ev</h3>
+              <p class="project-card__info"><span>3D görselleştirme</span><span>Müstakil ev</span></p>
+              <p class="project-card__text">Tek katlı, beşik çatılı ev tasarımı: taş kaplama subasman, yatay ahşap panel detayları ve camlı kış bahçesi.</p>
             </div>
           </article>
         </li>
-        <li class="project-card reveal" data-slug="mustakil-bahceli-ev">
+        <li class="project-card reveal" data-slug="teras-sundurmali-modern-villa" id="teras-sundurmali-modern-villa">
           <article>
             <div class="project-card__frame">
-              <div class="media" data-ph="Konsept: Müstakil bahçeli ev">
-                <picture><source type="image/avif" srcset="/assets/img/konsept/mustakil-bahceli-ev-cephe-480.avif 480w, /assets/img/konsept/mustakil-bahceli-ev-cephe-960.avif 960w, /assets/img/konsept/mustakil-bahceli-ev-cephe-1600.avif 1600w" sizes="(min-width: 900px) 56vw, 100vw"><img src="/assets/img/konsept/mustakil-bahceli-ev-cephe-960.webp" srcset="/assets/img/konsept/mustakil-bahceli-ev-cephe-480.webp 480w, /assets/img/konsept/mustakil-bahceli-ev-cephe-960.webp 960w, /assets/img/konsept/mustakil-bahceli-ev-cephe-1600.webp 1600w" sizes="(min-width: 900px) 56vw, 100vw" width="1600" height="1200" loading="lazy" decoding="async" alt="Kiremit çatılı, taş kaideli müstakil bahçeli ev görselleştirmesi"></picture>
+              <div class="media">
+                <picture><source type="image/avif" srcset="/assets/img/tasarim/teras-sundurmali-modern-villa/teras-sundurmali-modern-villa-bahce-cephesi-480.avif 480w, /assets/img/tasarim/teras-sundurmali-modern-villa/teras-sundurmali-modern-villa-bahce-cephesi-960.avif 960w, /assets/img/tasarim/teras-sundurmali-modern-villa/teras-sundurmali-modern-villa-bahce-cephesi-1600.avif 1600w" sizes="(min-width: 900px) 56vw, 100vw"><img src="/assets/img/tasarim/teras-sundurmali-modern-villa/teras-sundurmali-modern-villa-bahce-cephesi-960.webp" srcset="/assets/img/tasarim/teras-sundurmali-modern-villa/teras-sundurmali-modern-villa-bahce-cephesi-480.webp 480w, /assets/img/tasarim/teras-sundurmali-modern-villa/teras-sundurmali-modern-villa-bahce-cephesi-960.webp 960w, /assets/img/tasarim/teras-sundurmali-modern-villa/teras-sundurmali-modern-villa-bahce-cephesi-1600.webp 1600w" sizes="(min-width: 900px) 56vw, 100vw" width="1600" height="900" loading="lazy" decoding="async" alt="Teraslı Modern Villa – bahçe cephesi, firmamızın tasarımından 3D görselleştirme"></picture>
               </div>
             </div>
             <div class="project-card__meta">
-              <h3 class="project-card__title">Müstakil bahçeli ev</h3>
-              <p class="project-card__info"><span>Konsept çalışma</span><span>Temsilî görselleştirme</span></p>
-              <p class="project-card__text">Kiremit çatılı, taş kaideli ve ahşap panjurlu; ön ve arka bahçesiyle aile yaşamına göre kurgulanmış müstakil ev konsepti.</p>
+              <h3 class="project-card__title">Teraslı Modern Villa</h3>
+              <p class="project-card__info"><span>3D görselleştirme</span><span>Villa</span></p>
+              <p class="project-card__text">Düz çatılı, iki katlı modern villa tasarımı: ahşap tavanlı geniş teras sundurması ve üst katta ferforje korkuluklu balkon.</p>
             </div>
           </article>
         </li>
-        <li class="project-card reveal" data-slug="kucuk-ticari-yapi">
+        <li class="project-card reveal" data-slug="uc-katli-modern-konut" id="uc-katli-modern-konut">
           <article>
             <div class="project-card__frame">
-              <div class="media" data-ph="Konsept: Küçük ticari yapı">
-                <picture><source type="image/avif" srcset="/assets/img/konsept/kucuk-ticari-yapi-cephe-480.avif 480w, /assets/img/konsept/kucuk-ticari-yapi-cephe-960.avif 960w, /assets/img/konsept/kucuk-ticari-yapi-cephe-1600.avif 1600w" sizes="(min-width: 900px) 64vw, 100vw"><img src="/assets/img/konsept/kucuk-ticari-yapi-cephe-960.webp" srcset="/assets/img/konsept/kucuk-ticari-yapi-cephe-480.webp 480w, /assets/img/konsept/kucuk-ticari-yapi-cephe-960.webp 960w, /assets/img/konsept/kucuk-ticari-yapi-cephe-1600.webp 1600w" sizes="(min-width: 900px) 64vw, 100vw" width="1600" height="1200" loading="lazy" decoding="async" alt="Taş ve koyu metal cepheli, iki katlı küçük ticari yapı görselleştirmesi"></picture>
+              <div class="media">
+                <picture><source type="image/avif" srcset="/assets/img/tasarim/uc-katli-modern-konut/uc-katli-modern-konut-kose-cephe-480.avif 480w, /assets/img/tasarim/uc-katli-modern-konut/uc-katli-modern-konut-kose-cephe-960.avif 960w, /assets/img/tasarim/uc-katli-modern-konut/uc-katli-modern-konut-kose-cephe-1600.avif 1600w" sizes="(min-width: 900px) 48vw, 100vw"><img src="/assets/img/tasarim/uc-katli-modern-konut/uc-katli-modern-konut-kose-cephe-960.webp" srcset="/assets/img/tasarim/uc-katli-modern-konut/uc-katli-modern-konut-kose-cephe-480.webp 480w, /assets/img/tasarim/uc-katli-modern-konut/uc-katli-modern-konut-kose-cephe-960.webp 960w, /assets/img/tasarim/uc-katli-modern-konut/uc-katli-modern-konut-kose-cephe-1600.webp 1600w" sizes="(min-width: 900px) 48vw, 100vw" width="1600" height="893" loading="lazy" decoding="async" alt="Üç Katlı Modern Konut – köşe cephe, firmamızın tasarımından 3D görselleştirme"></picture>
               </div>
             </div>
             <div class="project-card__meta">
-              <h3 class="project-card__title">Küçük ticari yapı</h3>
-              <p class="project-card__info"><span>Konsept çalışma</span><span>Temsilî görselleştirme</span></p>
-              <p class="project-card__text">Zemin katta vitrinli satış alanı, üst katta ahşap panjurlu ofis bulunan köşe parsel ticari yapı konsepti.</p>
+              <h3 class="project-card__title">Üç Katlı Modern Konut</h3>
+              <p class="project-card__info"><span>3D görselleştirme</span><span>Konut</span></p>
+              <p class="project-card__text">Köşe parselde üç katlı konut tasarımı: geniş cam yüzeyler, taş görünümlü cephe panelleri ve beyaz kat silmeleri.</p>
+            </div>
+          </article>
+        </li>
+        <li class="project-card reveal" data-slug="ikiz-villa" id="ikiz-villa">
+          <article>
+            <div class="project-card__frame">
+              <div class="media">
+                <picture><source type="image/avif" srcset="/assets/img/tasarim/ikiz-villa/ikiz-villa-on-cephe-480.avif 480w, /assets/img/tasarim/ikiz-villa/ikiz-villa-on-cephe-960.avif 960w, /assets/img/tasarim/ikiz-villa/ikiz-villa-on-cephe-1600.avif 1600w" sizes="(min-width: 900px) 32vw, 100vw"><img src="/assets/img/tasarim/ikiz-villa/ikiz-villa-on-cephe-960.webp" srcset="/assets/img/tasarim/ikiz-villa/ikiz-villa-on-cephe-480.webp 480w, /assets/img/tasarim/ikiz-villa/ikiz-villa-on-cephe-960.webp 960w, /assets/img/tasarim/ikiz-villa/ikiz-villa-on-cephe-1600.webp 1600w" sizes="(min-width: 900px) 32vw, 100vw" width="1600" height="893" loading="lazy" decoding="async" alt="İkiz Villa – ön cephe, firmamızın tasarımından 3D görselleştirme"></picture>
+              </div>
+            </div>
+            <div class="project-card__meta">
+              <h3 class="project-card__title">İkiz Villa</h3>
+              <p class="project-card__info"><span>3D görselleştirme</span><span>Villa</span></p>
+              <p class="project-card__text">Simetrik iki bağımsız birimden oluşan ikiz villa tasarımı: çıkma pencereler, dikey ahşap çıtalar ve ayrı giriş merdivenleri.</p>
             </div>
           </article>
         </li>
       </ul>
-      <p class="projects__note reveal">Bu bölümdeki görseller, yaklaşımımızı anlatmak için yapay zekâ ile üretilmiş temsilî görselleştirmelerdir; gerçek bir proje ya da referans kaydı değildir.</p>
+      <p class="projects__note reveal">Görseller, firmamızın tasarladığı projelerin 3D görselleştirmeleridir.</p>
     </div>
   </section>
 
@@ -784,7 +792,7 @@
           <li><a href="/kurumsal/">Hakkımızda</a></li>
           <li><a href="/kurumsal/calisma-anlayisimiz/">Çalışma Anlayışımız</a></li>
           <!-- GİZLİ: Ekibimiz sayfası bilgiler gelince açılacak — <li><a href="/kurumsal/ekibimiz/">Ekibimiz</a></li> -->
-          <!-- GİZLİ: içerik gelince açılacak — <li><a href="/projeler/">Projeler</a></li> -->
+          <li><a href="/projeler/">Tasarım Projelerimiz</a></li>
           <!-- GİZLİ: içerik gelince açılacak — <li><a href="/blog/">Blog</a></li> -->
           <li><a href="/projenizi-anlatin/">Projenizi Anlatın</a></li>
         </ul>
