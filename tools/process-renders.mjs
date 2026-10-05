@@ -10,7 +10,7 @@
 
    Kararlar tools/output/tasarim-secim.json içinde: { "<dosya>": 0 | 1 | 2 } (0 = orijinal render).
    Bütçe tavanı BUDGET_USD; her çağrıdan önce kontrol, sonra tools/output/tasarim-butce.json.
-   IPTC: yapay zekâ ile işlenen → compositeWithTrainedAlgorithmicMedia, işlenmeyen → digitalCreation.
+   IPTC: yapay zekâ ile işlenen (ya da yz: true) → compositeWithTrainedAlgorithmicMedia, işlenmeyen → digitalCreation.
    Orijinaller tools/input/ altında kalır (.gitignore; repoya girmez).
    ========================================================================== */
 import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync, statSync } from 'node:fs';
@@ -33,10 +33,11 @@ const WIDTHS = [1600, 960, 480];
 export const PROMPT = 'Make this architectural render photorealistic. KEEP EXACTLY the same building geometry, proportions, window count and positions, roof shape, facade materials, colors, camera angle and composition. Only improve lighting realism, material textures, sky, vegetation and ground surfaces. Do not add or remove any building elements, people, cars, text or logos. Keep the exact same framing and camera position: the image must align pixel-for-pixel with the input. Keep every existing tree, palm, shrub, fence, gate, car and background landform in exactly the same position and size; only make their surfaces look real. Natural daylight, calm clear weather, natural vegetation typical of the Thrace region of Turkey. No exaggerated HDR, no sunset effect, no lens flare.';
 
 // Site için seçilen kareler (proje → dosya listesi, sıra = galeri sırası). islem: false → orijinal zaten gerçekçi.
+// yz: true → orijinal render firmaya yapay zekâ ile iyileştirilmiş olarak geldi (IPTC: compositeWithTrainedAlgorithmicMedia).
 export const PLAN = {
   'ahsap-detayli-semer-catili-villa': { islem: true, kareler: ['on-cephe-01', 'kose-cephe-02', 'bahce-cephesi-03'] },
   'kirma-catili-iki-katli-ev': { islem: true, kareler: ['balkon-cephesi-03', 'kus-bakisi-kose-01', 'kose-cephe-02'] },
-  'kis-bahceli-tek-katli-ev': { islem: false, kareler: ['sokak-cephesi-01', 'kis-bahcesi-02', 'bahce-cephesi-03', 'on-cephe-04'] },
+  'kis-bahceli-tek-katli-ev': { islem: false, yz: true, kareler: ['sokak-cephesi-01', 'kis-bahcesi-02', 'bahce-cephesi-03', 'on-cephe-04'] },
   'teras-sundurmali-modern-villa': { islem: true, kareler: ['bahce-cephesi-01'] },
   'uc-katli-modern-konut': { islem: true, kareler: ['kose-cephe-01', 'yan-cephe-02'] },
   'ikiz-villa': { islem: true, kareler: ['on-cephe-01'] },
@@ -62,7 +63,7 @@ const ledger = () => (existsSync(LEDGER) ? JSON.parse(readFileSync(LEDGER, 'utf8
 const spent = () => ledger().reduce((s, e) => s + e.usd, 0);
 const src = (p, k) => join(IN, p, `${p}-${k}.jpg`);
 const cand = (p, k, n) => join(CAND, p, `${p}-${k}_${n}.png`);
-const items = () => Object.entries(PLAN).flatMap(([p, v]) => v.kareler.map((k) => ({ p, k, islem: v.islem })));
+const items = () => Object.entries(PLAN).flatMap(([p, v]) => v.kareler.map((k) => ({ p, k, islem: v.islem, yz: !!v.yz })));
 
 function loadEnv() {
   const f = join(TOOLS, '.env');
@@ -161,7 +162,7 @@ async function build() {
   const decide = existsSync(DECIDE) ? JSON.parse(readFileSync(DECIDE, 'utf8')) : {};
   const ai = [], plain = [];
   const out = {};
-  for (const { p, k, islem } of items()) {
+  for (const { p, k, islem, yz } of items()) {
     const d = islem ? decide[`${p}-${k}`] : 0;
     if (d === undefined) { console.error(`karar yok: ${p}-${k}`); process.exit(1); }
     const file = d ? cand(p, k, d) : src(p, k);
@@ -174,7 +175,7 @@ async function build() {
       const img = sharp(file).resize({ width, withoutEnlargement: true });
       await img.clone().avif({ quality: 50, effort: 6 }).toFile(`${base}-${w}.avif`);
       await img.clone().webp({ quality: 70, effort: 6 }).toFile(`${base}-${w}.webp`);
-      (d ? ai : plain).push(`${base}-${w}.avif`, `${base}-${w}.webp`);
+      (d || yz ? ai : plain).push(`${base}-${w}.avif`, `${base}-${w}.webp`);
     }
     out[`${p}-${k}`] = { yol: '/assets/img/tasarim/' + p + '/' + basename(base), oran: +ratio.toFixed(4), islem: d ? `aday ${d}` : 'orijinal' };
   }
