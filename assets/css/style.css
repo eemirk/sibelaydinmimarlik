@@ -646,6 +646,9 @@ body.dialog-open { overflow: hidden; }
 .site-footer { background: var(--surface); border-top: 1px solid var(--line); padding-top: clamp(64px, 8vw, 112px); font-size: .9375rem; }
 .footer__grid { display: grid; grid-template-columns: 1.3fr 1.2fr 1fr 1.2fr; gap: 40px; }
 .footer__brand p { color: var(--muted); margin-top: 24px; max-width: 36ch; }
+/* Kayra logosu: Sibel Aydın logosunun altında, ~%56 genişlik, 18px boşluk */
+.footer__brand .logo--footer { display: block; width: fit-content; }
+.footer__partner { display: block; width: 56px; height: auto; margin-top: 18px; }
 .footer__title { font-family: var(--font-body); font-size: 11px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--accent-dark); margin-bottom: 18px; }
 .footer__title--sub { margin-top: 32px; }
 .footer__links li + li { margin-top: 8px; }
