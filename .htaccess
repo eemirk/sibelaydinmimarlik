@@ -40,7 +40,10 @@ AddType image/x-icon .ico
   # --- 4) Gizli/geliştirme dosyalarını dışarı kapat
   RewriteRule (^|/)\.(?!well-known/) - [F,L]
   RewriteRule ^(tools|_dev|node_modules)(/|$) - [R=404,L,NC]
-  RewriteRule ^api/(_data|lib)(/|$) - [R=404,L,NC]
+  RewriteRule ^api/(_data|lib|private_data|talepler|logs|uploads)(/|$) - [R=404,L,NC]
+  # Form ayar dosyaları (SMTP şifresi config.local.php'de) ve kayıt/log dosyaları dışarıdan okunamaz
+  RewriteRule ^api/config[^/]*.php$ - [R=404,L,NC]
+  RewriteRule ^api/.*.(log|json|txt|eml)$ - [R=404,L,NC]
 </IfModule>
 
 # Nokta dosyaları (.env, .git vb.) — mod_rewrite yoksa da kapalı
@@ -71,7 +74,7 @@ AddType image/x-icon .ico
 </IfModule>
 
 # --- Tarayıcı önbelleği --------------------------------------------------------
-# CSS/JS 1 yıl önbelleklenir: değiştiğinde HTML'deki ?v=YYYYMMDD değerini MUTLAKA artırın.
+# CSS/JS 1 yıl önbelleklenir: make-dist HTML'deki ?v= değerini dosya içeriğinin hash'iyle otomatik günceller.
 <IfModule mod_expires.c>
   ExpiresActive On
   ExpiresDefault "access plus 1 week"

@@ -4,4 +4,8 @@ Options -Indexes
 <FilesMatch "^config(\.local|\.example)?\.php$">
   Require all denied
 </FilesMatch>
-RedirectMatch 404 ^/api/(lib|_data)(/|$)
+RedirectMatch 404 ^/api/(lib|_data|private_data|talepler|logs|uploads)(/|$)
+# Kayıt ve log dosyaları (yedek veri klasörü api/_data kullanılırsa)
+<FilesMatch ".(log|json|txt|eml)$">
+  Require all denied
+</FilesMatch>

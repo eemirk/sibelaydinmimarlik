@@ -2,6 +2,7 @@
 //
 //   node tools/make-dist.mjs          → dist/site/
 //   node tools/make-dist.mjs --zip    → dist/site/ + dist/sibelaydin-site-YYYYMMDD.zip
+//   node tools/make-dist.mjs --zip=sibelaydinmimarlik-canli.zip → dist/<ad> (cPanel yayın paketi)
 //
 // 1) Siteyi dist/site/ içine kopyalar (tools/, dist/, .git, .env, netlify.toml vb. HARİÇ)
 // 2) Önbellek sürümü: style.css ve main.js'in içerik hash'i (SHA-256, ilk 8 karakter)
@@ -9,7 +10,8 @@
 //    Paylaşım etiketleri: og:title / og:description içindeki {{title}} ve {{description}},
 //    sayfanın <title> ve meta description değerleriyle doldurulur (tek kaynak).
 // 3) Güvenlik: çıktıda fal anahtarı / FAL_KEY izi ve dolu SMTP şifresi aranır; bulunursa paket üretilmez.
-//    api/config.local.php (SMTP şifresi) ve form çalışma verisi (_data, private_data) hiçbir derinlikte kopyalanmaz.
+//    api/config.local.php (SMTP şifresi) ve form çalışma verisi (_data, private_data, talepler, logs) hiçbir derinlikte kopyalanmaz.
+// 4) HTML yorumları (<!-- … -->; geliştirici notları, GİZLİ bloklar) yayın çıktısından çıkarılır; kaynakta kalır.
 import { createHash } from 'node:crypto';
 import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join, relative, resolve } from 'node:path';
@@ -21,7 +23,7 @@ const DIST = join(ROOT, 'dist');
 const SITE = join(DIST, 'site');
 const EXCLUDE = new Set(['tools', 'dist', 'node_modules', '.git', '.gitignore', '.env', '.claude', '.vscode', '.netlify', 'netlify.toml', 'README.md']);
 // Her derinlikte hariç: SMTP şifresi içeren yerel ayar dosyası ve form çalışma verisi
-const NESTED_EXCLUDE = new Set(['config.local.php', '_data', 'private_data']);
+const NESTED_EXCLUDE = new Set(['config.local.php', '_data', 'private_data', 'talepler', 'logs']);
 const ASSETS = { 'style.css': 'assets/css/style.css', 'main.js': 'assets/js/main.js' };
 
 // 1) Kopyala
@@ -62,6 +64,9 @@ for (const f of files.filter((p) => p.endsWith('.html'))) {
     if (/\{\{(title|description)\}\}/.test(s)) { console.error(`HATA: ${relative(SITE, f)} içinde çözülmemiş {{…}} kaldı (yalnızca content="…" içinde kullanın).`); process.exit(1); }
     ogCount++;
   }
+  // Geliştirici yorumlarını çıkar (<script>/<style> içeriğine dokunmadan), oluşan boş satırları topla
+  s = s.replace(/(<script\b[\s\S]*?<\/script>|<style\b[\s\S]*?<\/style>)|<!--[\s\S]*?-->/g, (x, keep) => keep || '')
+    .replace(/^[ \t]+$/gm, '').replace(/\n{3,}/g, '\n\n');
   if (s !== before) { writeFileSync(f, s); htmlCount++; }
 }
 
@@ -86,9 +91,10 @@ console.log(`  style.css?v=${hash['style.css']}  main.js?v=${hash['main.js']}  (
 console.log('  anahtar taraması: temiz');
 
 // 4) İsteğe bağlı ZIP (cPanel). Windows'un bsdtar'ı ZIP'i "/" yollarıyla yazar.
-if (process.argv.includes('--zip')) {
+const zipArg = process.argv.find((a) => a === '--zip' || a.startsWith('--zip='));
+if (zipArg) {
   const stamp = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-  const zip = join(DIST, `sibelaydin-site-${stamp}.zip`);
+  const zip = join(DIST, zipArg.includes('=') ? basename(zipArg.split('=')[1]) : `sibelaydin-site-${stamp}.zip`);
   if (existsSync(zip)) rmSync(zip);
   const entries = readdirSync(SITE);
   const r = process.platform === 'win32'
