@@ -804,6 +804,17 @@ body.dialog-open { overflow: hidden; }
 .two-col { display: grid; grid-template-columns: 7fr 5fr; gap: clamp(32px, 6vw, 96px); align-items: start; }
 .two-col .prose-p { font-size: 1.0625rem; max-width: var(--measure); margin-top: 24px; }
 @media (max-width: 899px) { .two-col { grid-template-columns: 1fr; } }
+/* Hizmet sayfası ek bölümleri (make-service-page.mjs: intro, metin + ara görsel, görselsiz hero) */
+.split-head--top { margin-bottom: 0; }
+.prose-stack p { color: var(--muted); font-size: 1.0625rem; max-width: var(--measure); margin: 0; }
+.prose-stack p + p { margin-top: 16px; }
+.two-col--media { grid-template-columns: 6fr 6fr; align-items: center; }
+.two-col--solo { grid-template-columns: minmax(0, 1fr); max-width: calc(var(--measure) + 40px); }
+.media-fig { margin: 0; }
+.media-fig figcaption { margin-top: 10px; font-size: .8125rem; color: var(--muted); }
+.svc-hero--solo { grid-template-columns: minmax(0, 1fr); }
+.svc-hero--solo > div { max-width: 820px; }
+@media (max-width: 899px) { .two-col--media { grid-template-columns: 1fr; } }
 
 .note { padding: 28px; background: var(--surface); border: 1px solid var(--line); border-left: 2px solid var(--accent); border-radius: var(--radius); }
 .note p { margin: 0 0 14px; font-size: 1.0625rem; font-weight: 500; }
@@ -821,6 +832,9 @@ body.dialog-open { overflow: hidden; }
 /* /hizmetler/ kartları: üstte hizmet görseli (kart kenarına taşar) */
 .related .media { margin: -24px -24px 6px; aspect-ratio: 16 / 10; border-radius: var(--radius) var(--radius) 0 0; }
 .related a:hover .media img { transform: scale(1.04); }
+/* Görseli henüz olmayan kart: petrol tonlu zemin + ince çizgi ikon (gri yer tutucu değil) */
+.media--icon { display: grid; place-items: center; background: rgba(0, 117, 128, .07); }
+.media--icon svg { width: 72px; height: 72px; fill: none; stroke: var(--accent); stroke-width: 1.1; stroke-linecap: round; stroke-linejoin: round; }
 @media (max-width: 899px) { .related { grid-template-columns: 1fr; } }
 
 /* Kurumsal sayfa bileşenleri --------------------------------------------------- */

@@ -50,6 +50,8 @@ function pic(base, alt, { cls = '', eager = false, priority = false, defer = fal
   return `<picture${cls ? ` class="${cls}"` : ''}${attrs}><source type="image/avif" ${s}="${set(base, 'avif')}" sizes="${SIZES}">${img}</picture>`;
 }
 
+// Hero görseli: içerik dosyasında hero.optional: true ise ve dosya henüz yoksa görsel alanı hiç yazılmaz (tek kolon)
+const heroReady = !c.hero.optional || hasImage(c.hero.img);
 // HERO: standart (görsel sağda) veya röntgen merceği (metin üstte, tam genişlik tel kafes + render)
 const heroText = `<p class="eyebrow">Hizmetler</p>
         <h1 class="page-hero__title">${esc(c.hero.h1)}</h1>
@@ -88,13 +90,18 @@ const heroHtml = c.xray ? `  <!-- HERO: röntgen merceği (masaüstü: imleci ta
     </div>
   </section>` : `  <!-- HERO -->
   <section class="page-hero">
-    <div class="container svc-hero">
+    <div class="container svc-hero${heroReady ? '' : ' svc-hero--solo'}">
       <div>
         ${heroText}
       </div>
-      <div class="media media--4x3" data-ph="${attr(c.hero.ph)}">
+${heroReady ? (c.hero.caption ? `      <figure class="media-fig">
+        <div class="media media--4x3" data-ph="${attr(c.hero.ph)}">
+          ${mediaPic(c.hero.img, c.hero.alt, { sizes: MEDIA_SIZES.hero, priority: true })}
+        </div>
+        <figcaption>${esc(c.hero.caption)}</figcaption>
+      </figure>` : `      <div class="media media--4x3" data-ph="${attr(c.hero.ph)}">
         ${mediaPic(c.hero.img, c.hero.alt, { sizes: MEDIA_SIZES.hero, priority: true })}
-      </div>
+      </div>`) : `      <!-- GİZLİ: görsel üretilince sayfayı yeniden üretin (${c.hero.img}) -->`}
     </div>
   </section>`;
 
@@ -163,10 +170,13 @@ const ld = {
 
 // Kart satırı: görsellerden biri bile henüz yoksa satırdaki tüm kart görselleri gizlenir (hidden);
 // görseller eklenip sayfa yeniden üretilince kendiliğinden görünür olur.
-const cardsReady = c.types.cards.every((k) => hasImage(k.img));
+const cards = c.types.cards || [];
+const cardsReady = cards.every((k) => hasImage(k.img));
+const typesImgReady = !!(c.types.img && hasImage(c.types.img));
 const imgComment = [
   `    ${c.hero.img.padEnd(46)} (hero, 4:3 — ana sayfadaki kartla aynı dosya)`,
-  ...c.types.cards.map((k) => `    ${k.img.padEnd(46)} (kart, 4:3)`)
+  ...cards.map((k) => `    ${k.img.padEnd(46)} (kart, 4:3)`),
+  ...(c.types.img ? [`    ${c.types.img.padEnd(46)} (ara görsel, 4:3)`] : [])
 ].join('\n');
 
 const html = `<!doctype html>
@@ -192,7 +202,7 @@ ${imgComment}
   <meta property="og:title" content="{{title}}">
   <meta property="og:description" content="{{description}}">
   <meta property="og:url" content="${URL}">
-  <meta property="og:image" content="${SITE}/assets/img/hero-villa.webp">
+  <meta property="og:image" content="${SITE}/assets/img/og-paylasim.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@mimarsibelaydin">
   <link rel="icon" href="/favicon.ico" sizes="32x32">
@@ -225,16 +235,29 @@ ${ind(JSON.stringify(ld, null, 2), 2)}
   </nav>
 
 ${heroHtml}
-
+${c.intro ? `
+  <!-- BÖLÜM 0 -->
+  <section class="section section--surface" aria-labelledby="giris-baslik">
+    <div class="container split-head split-head--top reveal">
+      <div>
+        <p class="eyebrow">${esc(c.intro.eyebrow)}</p>
+        <h2 id="giris-baslik" class="section__title">${esc(c.intro.h2)}</h2>
+      </div>
+      <div class="prose-stack">
+${c.intro.paras.map((p) => `        <p>${esc(p)}</p>`).join('\n')}
+      </div>
+    </div>
+  </section>
+` : ''}
   <!-- BÖLÜM 1 -->
   <section class="section" aria-labelledby="kapsam-baslik">
     <div class="container">
       <div class="split-head reveal">
         <div>
-          <p class="eyebrow">Kapsam</p>
+          <p class="eyebrow">${esc(c.scope.eyebrow || 'Kapsam')}</p>
           <h2 id="kapsam-baslik" class="section__title">${esc(c.scope.h2)}</h2>
         </div>
-        <p>${esc(c.scope.text)}</p>
+        ${c.scope.text ? `<p>${esc(c.scope.text)}</p>` : ''}
       </div>
       <ul class="icon-list">
 ${c.scope.items.map(([term, text, path]) => `        <li class="reveal">
@@ -245,7 +268,22 @@ ${c.scope.items.map(([term, text, path]) => `        <li class="reveal">
     </div>
   </section>
 ${studioHtml}
-  <!-- BÖLÜM 2 -->
+${c.types.text ? `  <!-- BÖLÜM 2 -->
+  <section class="section" aria-labelledby="turler-baslik">
+    <div class="container two-col two-col--media${typesImgReady ? '' : ' two-col--solo'}">
+      <div class="reveal">
+        <p class="eyebrow">${esc(c.types.eyebrow)}</p>
+        <h2 id="turler-baslik" class="section__title">${esc(c.types.h2)}</h2>
+        <p class="prose-p">${esc(c.types.text)}</p>
+      </div>
+${typesImgReady ? `      <figure class="media-fig reveal">
+        <div class="media media--4x3" data-ph="${attr(c.types.ph)}">
+          ${mediaPic(c.types.img, c.types.alt, { sizes: MEDIA_SIZES.hero })}
+        </div>
+        ${c.types.caption ? `<figcaption>${esc(c.types.caption)}</figcaption>` : ''}
+      </figure>` : `      <!-- GİZLİ: ara görsel üretilince sayfayı yeniden üretin (${c.types.img}) -->`}
+    </div>
+  </section>` : `  <!-- BÖLÜM 2 -->
   <section class="section projects" aria-labelledby="turler-baslik">
     <div class="container">
       <header class="section__head reveal">
@@ -253,7 +291,7 @@ ${studioHtml}
         <h2 id="turler-baslik" class="section__title">${esc(c.types.h2)}</h2>
       </header>
       <div class="cards-3">
-${c.types.cards.map((k) => `        <article class="info-card reveal">
+${cards.map((k) => `        <article class="info-card reveal">
           <div class="media media--4x3" data-ph="${attr(k.ph)}"${cardsReady ? '' : ' hidden'}>
             ${mediaPic(k.img, k.alt)}
           </div>
@@ -262,19 +300,19 @@ ${c.types.cards.map((k) => `        <article class="info-card reveal">
         </article>`).join('\n')}
       </div>
     </div>
-  </section>
+  </section>`}
 
   <!-- BÖLÜM 3 -->
   <section class="section" aria-labelledby="surec-baslik">
     <div class="container">
       <header class="section__head reveal">
         <p class="eyebrow">Süreç</p>
-        <h2 id="surec-baslik" class="section__title">Süreç nasıl ilerler?</h2>
+        <h2 id="surec-baslik" class="section__title">${esc(c.stepsH2 || 'Süreç nasıl ilerler?')}</h2>
       </header>
       <ol class="steps">
 ${c.steps.map(([h3, text]) => `        <li class="reveal">
-          <h3>${esc(h3)}</h3>
-          <p>${esc(text)}</p>
+          <h3>${esc(h3)}</h3>${text ? `
+          <p>${esc(text)}</p>` : ''}
         </li>`).join('\n')}
       </ol>
     </div>
@@ -284,7 +322,7 @@ ${c.steps.map(([h3, text]) => `        <li class="reveal">
   <section class="section process" aria-labelledby="erken-baslik">
     <div class="container two-col">
       <div class="reveal">
-        <p class="eyebrow">Doğru başlangıç</p>
+        <p class="eyebrow">${esc(c.why.eyebrow || 'Doğru başlangıç')}</p>
         <h2 id="erken-baslik" class="section__title">${esc(c.why.h2)}</h2>
         <p class="prose-p">${esc(c.why.text)}</p>
       </div>

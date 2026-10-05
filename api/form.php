@@ -79,7 +79,7 @@ const EXEC_EXT = ['php', 'php3', 'php4', 'php5', 'php7', 'php8', 'phtml', 'phar'
 
 const PROJE_TURLERI = ['villa' => 'Villa / Müstakil', 'konut' => 'Konut / Apartman', 'ticari' => 'Ticari Yapı', 'tadilat' => 'Tadilat', 'ic-mekan' => 'İç Mekân', 'diger' => 'Diğer'];
 const HIZMETLER = ['mimari-proje' => 'Mimari Proje', 'ruhsat' => 'Ruhsat', 'iskan' => 'İskân', 'ic-mimari' => 'İç Mimari', '3d-gorsellestirme' => '3D Görselleştirme',
-    'uygulama' => 'İnşaat ve Uygulama', 'santiye-teknik' => 'Şantiye / Teknik', 'mimari-danismanlik' => 'Mimari Danışmanlık', 'kentsel-donusum' => 'Kentsel Dönüşüm',
+    'uygulama' => 'İnşaat ve Uygulama', 'prefabrik-yapilar' => 'Prefabrik Yapılar', 'santiye-teknik' => 'Şantiye / Teknik', 'mimari-danismanlik' => 'Mimari Danışmanlık', 'kentsel-donusum' => 'Kentsel Dönüşüm',
     'ekb' => 'EKB', 'bina-akustigi' => 'Bina Akustiği', 'bilirkisilik' => 'Bilirkişilik'];
 const ASAMALAR = ['arsa' => 'Arsam var, proje aşamasındayım', 'ruhsat' => 'Ruhsat aşamasındayım', 'insaat' => 'İnşaat sürüyor',
     'mevcut' => 'Mevcut yapı (tadilat, iskân vb.)', 'fikir' => 'Henüz fikir aşamasında'];
