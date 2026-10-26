@@ -1,4 +1,6 @@
 // Header ve footer'ı ana sayfadan (index.html) tüm diğer sayfalara kopyalar.
+// Google etiketi (<!-- GTAG START --> … <!-- GTAG END -->) de buradan kopyalanır: sayfada yoksa <head>'in hemen
+// sonrasına eklenir, varsa güncellenir (sayfa başına tek etiket).
 // Kullanım (proje kökünde):  node tools/sync-partials.mjs
 // Her sayfada <!-- HEADER START --> … <!-- HEADER END --> ve
 // <!-- FOOTER START --> … <!-- FOOTER END --> işaretleri bulunmalıdır.
@@ -28,6 +30,9 @@ function walk(dir, out = []) {
   return out;
 }
 
+const GTAG = (src.match(/<!-- GTAG START -->[\s\S]*?<!-- GTAG END -->/) || [])[0];
+if (!GTAG) throw new Error('index.html içinde GTAG işaretleri yok');
+
 let changed = 0;
 for (const file of walk(ROOT)) {
   let html = readFileSync(file, 'utf8');
@@ -36,6 +41,10 @@ for (const file of walk(ROOT)) {
     if (re(b).test(html)) html = html.replace(re(b), () => parts[b]);
     else console.warn(`! ${relative(ROOT, file)}: ${b} işareti yok, atlandı`);
   }
+  if (/<!-- GTAG START -->[\s\S]*?<!-- GTAG END -->/.test(html)) html = html.replace(/<!-- GTAG START -->[\s\S]*?<!-- GTAG END -->/, () => GTAG);
+  else if (/^<head>\r?\n/m.test(html)) html = html.replace(/^<head>\r?\n/m, (m) => m + GTAG + '\n');
+  else console.warn(`! ${relative(ROOT, file)}: <head> satırı yok, Google etiketi eklenmedi`);
+  if ((html.match(/googletagmanager\.com\/gtag\/js/g) || []).length > 1) throw new Error(`${relative(ROOT, file)}: birden fazla Google etiketi`);
   if (html !== before) { writeFileSync(file, html); changed++; console.log(`✓ ${relative(ROOT, file)}`); }
 }
 console.log(`${changed} dosya güncellendi.`);
