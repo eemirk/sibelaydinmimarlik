@@ -679,7 +679,13 @@ body.dialog-open { overflow: hidden; }
 .footer__links a:hover, .footer__contact a:hover { text-decoration: underline; }
 .footer__contact p { margin-bottom: 12px; font-variant-numeric: tabular-nums; }
 /* İki ofis: etiket + adres, sıkı aralık (footer yüksekliği gereksiz büyümesin) */
-.footer-office { margin-bottom: 14px; }
+.footer-office { display: grid; grid-template-columns: 18px minmax(0, 1fr); column-gap: 10px; align-items: start; margin-bottom: 14px; }
+.footer-office > :not(.footer-icon) { grid-column: 2; }
+.footer-office > .footer-icon { grid-row: 1 / span 3; }
+/* Footer ikonları: konum pini, telefon, GSM (metin ikonun sağında hizalı) */
+.footer-icon { width: 18px; height: 18px; margin-top: 1px; color: var(--accent); }
+.footer__contact .footer-line { display: grid; grid-template-columns: 18px minmax(0, 1fr); column-gap: 10px; align-items: center; margin-bottom: 4px; }
+.footer__contact .footer-line--last { margin-bottom: 12px; }
 .footer__contact .footer-office__label { margin-bottom: 2px; font-size: .8125rem; font-weight: 600; letter-spacing: .01em; }
 .footer__contact .footer-address { margin-bottom: 0; }
 .map-embed {
