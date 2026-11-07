@@ -441,8 +441,59 @@ const MASCOT_SVG = '<svg class="mascot__svg" viewBox="0 0 80 120" aria-hidden="t
   initProjectForm();
   initCareerForm();
   initDocs();
+  initDirections();
   initThanks();
   initMascot();
+
+  /* ---------------------------------------------------------------- YOL TARİFİ: Google / Apple / Yandex seçimi
+     [data-directions="silivri|mimaroba"] bağlantıları (iletişim kartları, Konum bölümü, Projenizi Anlatın, footer).
+     JS yoksa bağlantı Google Haritalar'ı açar. Silivri: Google İşletme kaydı "hizmet bölgesi" türünde (konumu ofis
+     değil) → üç uygulama da Osmanoğlu İş Merkezi koordinatına yönlenir. dataLayer: directions_open / directions_app. */
+  const OFFICES = {
+    silivri: { ad: 'Silivri Merkez Ofis', adres: 'Piri Mehmet Paşa Mah. Şerif Sk. Osmanoğlu İş Merkezi No:1 İç Kapı No:10, 34570 Silivri / İstanbul',
+      lat: 41.0746121, lng: 28.2483007, google: 'https://www.google.com/maps/dir/?api=1&destination=41.0746121,28.2483007' },
+    mimaroba: { ad: 'Büyükçekmece (Mimaroba) Ofis', adres: 'Mimaroba Mah. Mustafa Kemal Bulvarı No:2 J Blok Daire:22, 34535 Büyükçekmece / İstanbul',
+      lat: 41.010845, lng: 28.5350046, google: 'https://maps.app.goo.gl/B2mf46YAcGZ1KzaM9' }
+  };
+  function initDirections() {
+    const links = $$('[data-directions]');
+    if (!links.length || typeof HTMLDialogElement !== 'function') return;
+    const arrow = '<svg class="i-arrow" aria-hidden="true"><use href="#i-arrow-r"/></svg>';
+    const dlg = document.createElement('dialog');
+    dlg.className = 'dir-dialog';
+    dlg.setAttribute('aria-labelledby', 'yol-baslik');
+    dlg.innerHTML = '<button class="doc-dialog__close" type="button" aria-label="Pencereyi kapat"><span aria-hidden="true">×</span></button>' +
+      '<div class="dir-dialog__inner"><p class="eyebrow">Yol tarifi</p><h2 class="dir-dialog__title" id="yol-baslik"></h2><p class="dir-dialog__addr"></p>' +
+      '<p class="dir-dialog__ask">Hangi uygulamayla açmak istersiniz?</p><div class="dir-dialog__list">' +
+      ['google:Google Haritalar', 'apple:Apple Haritalar', 'yandex:Yandex Haritalar'].map((x) => {
+        const [k, t] = x.split(':');
+        return '<a class="dir-dialog__app" data-app="' + k + '" target="_blank" rel="noopener"><span class="dir-dialog__dot dir-dialog__dot--' + k + '" aria-hidden="true"></span>' + t + arrow + '</a>';
+      }).join('') + '</div></div>';
+    body.appendChild(dlg);
+    let opener = null, current = null;
+    links.forEach((a) => a.addEventListener('click', (e) => {
+      const o = OFFICES[a.dataset.directions];
+      if (!o || e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;
+      e.preventDefault();
+      opener = a; current = a.dataset.directions;
+      $('.dir-dialog__title', dlg).textContent = o.ad;
+      $('.dir-dialog__addr', dlg).textContent = o.adres;
+      const q = encodeURIComponent('Sibel Aydın İnşaat Mimarlık – ' + o.ad);
+      $('[data-app="google"]', dlg).href = o.google;
+      $('[data-app="apple"]', dlg).href = 'https://maps.apple.com/?daddr=' + o.lat + ',' + o.lng + '&q=' + q;
+      $('[data-app="yandex"]', dlg).href = 'https://yandex.com.tr/harita/?rtext=~' + o.lat + '%2C' + o.lng + '&rtt=auto';
+      body.classList.add('dialog-open');
+      dlg.showModal();
+      window.dataLayer.push({ event: 'directions_open', office: current, page_path: location.pathname });
+    }));
+    $$('.dir-dialog__app', dlg).forEach((a) => a.addEventListener('click', () => {
+      window.dataLayer.push({ event: 'directions_app', office: current, app: a.dataset.app, page_path: location.pathname });
+      setTimeout(() => dlg.close(), 0);
+    }));
+    $('.doc-dialog__close', dlg).addEventListener('click', () => dlg.close());
+    dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+    dlg.addEventListener('close', () => { body.classList.remove('dialog-open'); if (opener) opener.focus(); });
+  }
 
   /* ---------------------------------------------------------------- BELGELER: lightbox
      Kimdir sayfası ızgarası (data-doc-group="belgeler") ve hizmet sayfalarındaki "Yetki belgemiz" kartı.

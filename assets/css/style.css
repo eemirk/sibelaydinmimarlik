@@ -670,8 +670,8 @@ body.dialog-open { overflow: hidden; }
 .footer__brand p { color: var(--muted); margin-top: 24px; max-width: 36ch; }
 /* Marka kolonu: Sibel Aydın logosu → 24px → açıklama → 32px → Kayra logosu (orijinal renkler) */
 .footer__brand .logo--footer { display: block; width: fit-content; }
-.footer__partner { display: block; width: auto; height: 100px; margin-top: 32px; }
-@media (max-width: 767px) { .footer__partner { height: 84px; } }
+.footer__partner { display: block; width: auto; height: 180px; margin-top: 32px; }
+@media (max-width: 767px) { .footer__partner { height: 150px; } }
 .footer__title { font-family: var(--font-body); font-size: 11px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--accent-dark); margin-bottom: 18px; }
 .footer__title--sub { margin-top: 32px; }
 .footer__links li + li { margin-top: 8px; }
@@ -1015,6 +1015,34 @@ body.dialog-open { overflow: hidden; }
   border-radius: 50%; background: var(--surface); font-size: 26px; line-height: 1; color: var(--ink);
 }
 .doc-dialog__close:hover { background: var(--bg); }
+/* Yol tarifi seçici (main.js initDirections): Google / Apple / Yandex */
+.dir-dialog {
+  width: min(440px, calc(100% - 32px)); max-width: none; padding: 0; border: 0;
+  border-radius: var(--radius); background: var(--surface); color: var(--ink);
+}
+.dir-dialog::backdrop { background: rgba(var(--shade), .6); }
+.dir-dialog__inner { padding: 28px 24px 24px; }
+.dir-dialog .eyebrow { margin-bottom: 10px; }
+.dir-dialog__title { font-size: 1.375rem; margin: 0 0 8px; padding-right: 40px; }
+.dir-dialog__addr { color: var(--muted); font-size: .9375rem; margin: 0 0 20px; }
+.dir-dialog__ask { font-size: .9375rem; font-weight: 500; margin: 0 0 12px; }
+.dir-dialog__list { display: grid; gap: 10px; }
+.dir-dialog__app {
+  display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 0 16px;
+  border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg);
+  color: var(--ink); font-weight: 500; text-decoration: none; transition: border-color .3s var(--ease);
+}
+.dir-dialog__app:hover, .dir-dialog__app:focus-visible { border-color: var(--accent); color: var(--ink); }
+.dir-dialog__app .i-arrow { margin-left: auto; width: 16px; height: 16px; }
+.dir-dialog__dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+.dir-dialog__dot--google { background: #34A853; }
+.dir-dialog__dot--apple { background: #1E1E1E; }
+.dir-dialog__dot--yandex { background: #FC3F1D; }
+.map-directions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px; }
+.map-directions .i-arrow { width: 14px; height: 14px; margin-left: 6px; }
+.footer-office__dir { display: inline-flex; align-items: center; gap: 6px; margin-top: 6px; font-size: .875rem; font-weight: 500; color: var(--accent-dark); text-decoration: none; }
+.footer-office__dir:hover { color: var(--accent); }
+.footer-office__dir .i-arrow { width: 14px; height: 14px; }
 .contact-item > :not(svg) { grid-column: 2; }
 .contact-item__note { margin: 2px 0 0; font-size: .8125rem; color: var(--muted); }
 /* Harita sekmeleri (İletişim): yalnızca yüklenecek iframe adresini değiştirir */
