@@ -686,6 +686,8 @@ body.dialog-open { overflow: hidden; }
 .footer-icon { width: 18px; height: 18px; margin-top: 1px; color: var(--accent); }
 .footer__contact .footer-line { display: grid; grid-template-columns: 18px minmax(0, 1fr); column-gap: 10px; align-items: center; margin-bottom: 4px; }
 .footer__contact .footer-line--last { margin-bottom: 12px; }
+.footer__contact .footer-line--top { align-items: start; }
+.footer-line--top .footer-icon { margin-top: 3px; }
 .footer__contact .footer-office__label { margin-bottom: 2px; font-size: .8125rem; font-weight: 600; letter-spacing: .01em; }
 .footer__contact .footer-address { margin-bottom: 0; }
 .map-embed {
