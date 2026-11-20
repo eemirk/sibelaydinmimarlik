@@ -442,8 +442,53 @@ const MASCOT_SVG = '<svg class="mascot__svg" viewBox="0 0 80 120" aria-hidden="t
   initCareerForm();
   initDocs();
   initDirections();
+  initNotice();
   initThanks();
   initMascot();
+
+  /* ---------------------------------------------------------------- DUYURU (kısa süreli bildirim)
+     Ziyaret başına bir kez (sessionStorage), sayfa açıldıktan 1,5 sn sonra görünür, 4 sn sonra kendiliğinden
+     kaybolur; fare üstündeyken ya da odaktayken süre durur. × ile kapatılabilir. Masaüstünde sol alt,
+     mobilde header'ın altı (WhatsApp karakteri ve mobil alt çubukla çakışmaz). Duyuruyu kaldırmak için NOTICE = null. */
+  function initNotice() {
+    // (fonksiyon içinde: init sırasında çağrıldığı için dışarıdaki const henüz tanımlı olmazdı)
+    const NOTICE = {
+      id: 'odeal-2026-11',
+      title: 'Kredi kartıyla ödeme',
+      text: 'Sibel Aydın proje ödemeleriniz artık çok kolay: Ödeal ile kredi kartıyla ödeyebilirsiniz.'
+    };
+    if (!NOTICE) return;
+    const KEY = 'sa-duyuru';
+    try { if (sessionStorage.getItem(KEY) === NOTICE.id) return; sessionStorage.setItem(KEY, NOTICE.id); } catch (e) { /* depolama kapalı: yine göster */ }
+    const SHOW_AFTER = 1500, VISIBLE = 4000;
+    const box = document.createElement('div');
+    box.className = 'notice';
+    box.setAttribute('role', 'status');
+    box.innerHTML = '<svg class="notice__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.75 6.25h16.5v11.5H3.75zM3.75 9.75h16.5M7 14.5h3"/></svg>' +
+      '<p class="notice__body"><strong class="notice__title"></strong><span class="notice__text"></span></p>' +
+      '<button class="notice__close" type="button" aria-label="Duyuruyu kapat"><span aria-hidden="true">×</span></button>';
+    $('.notice__title', box).textContent = NOTICE.title;
+    $('.notice__text', box).textContent = NOTICE.text;
+    body.appendChild(box);
+    let timer = null, gone = false;
+    const hide = () => {
+      if (gone) return;
+      gone = true;
+      box.classList.remove('is-in');
+      setTimeout(() => box.remove(), 600);
+    };
+    const arm = () => { clearTimeout(timer); timer = setTimeout(hide, VISIBLE); };
+    $('.notice__close', box).addEventListener('click', hide);
+    box.addEventListener('mouseenter', () => clearTimeout(timer));
+    box.addEventListener('mouseleave', () => { if (!gone) arm(); });
+    box.addEventListener('focusin', () => clearTimeout(timer));
+    box.addEventListener('focusout', () => { if (!gone) arm(); });
+    setTimeout(() => {
+      box.classList.add('is-in');
+      window.dataLayer.push({ event: 'notice_view', notice: NOTICE.id, page_path: location.pathname });
+      arm();
+    }, SHOW_AFTER);
+  }
 
   /* ---------------------------------------------------------------- YOL TARİFİ: Google / Apple / Yandex seçimi
      [data-directions="silivri|mimaroba"] bağlantıları (iletişim kartları, Konum bölümü, Projenizi Anlatın, footer).
@@ -1453,10 +1498,7 @@ const MASCOT_SVG = '<svg class="mascot__svg" viewBox="0 0 80 120" aria-hidden="t
 
     let OFF = 170;                                 // ekran dışı başlangıç (px, --k ile ölçeklenir)
     const SHIFT = { big: -64, small: -50 };        // karakter görünürken butonun sola kayması (px, --k = 1 için)
-    // Bayrak duyurusu (kampanya bitince eski metne dönmek için: FLAG_TITLE = '', FLAG_TEXT = 'Size nasıl yardımcı olabiliriz?')
-    const FLAG_TITLE = 'Kredi kartıyla ödeme';
-    const FLAG_TEXT = 'Sibel Aydın proje ödemeleriniz artık çok kolay: Ödeal ile kredi kartıyla ödeyebilirsiniz.';
-    const FLAG_MS = 12000;                         // bayrağın açık kalma süresi (sonra katlanır)
+    const FLAG_TEXT = 'Size nasıl yardımcı olabiliriz?';
     const root = document.createElement('div');
     root.className = 'mascot';
     root.innerHTML = MASCOT_SVG +
@@ -1527,10 +1569,7 @@ const MASCOT_SVG = '<svg class="mascot__svg" viewBox="0 0 80 120" aria-hidden="t
     };
     const openFlag = () => {
       flag.hidden = false;
-      if (!flagText.textContent) {                 // ekran okuyucu bir kez okur
-        if (FLAG_TITLE) { const t = document.createElement('strong'); t.className = 'mascot__flag-title'; t.textContent = FLAG_TITLE; flagText.append(t, ' '); }
-        flagText.append(FLAG_TEXT);
-      }
+      if (!flagText.textContent) flagText.textContent = FLAG_TEXT;   // ekran okuyucu bir kez okur
     };
 
     // Daha önce oynadı (masaüstü): doğrudan son pozisyon
@@ -1553,7 +1592,7 @@ const MASCOT_SVG = '<svg class="mascot__svg" viewBox="0 0 80 120" aria-hidden="t
         flag.hidden = true;
         root.classList.remove('is-pose');
         if (mobile) root.remove(); else showSmall();
-      }, FLAG_MS);
+      }, 8000);
     }
     function play(gsap) {
       g = gsap;
@@ -1625,7 +1664,7 @@ const MASCOT_SVG = '<svg class="mascot__svg" viewBox="0 0 80 120" aria-hidden="t
           };
           const onScroll = () => { if (Math.abs(scrollY - y0) > 160) fold(); };
           setTimeout(() => { y0 = scrollY; addEventListener('scroll', onScroll, { passive: true }); }, 600);
-          setTimeout(fold, FLAG_MS);
+          setTimeout(fold, 8000);
         }, null, 'yuru+=3.0');
     }
 
