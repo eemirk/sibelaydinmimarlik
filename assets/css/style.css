@@ -756,6 +756,9 @@ body.dialog-open { overflow: hidden; }
   white-space: nowrap; pointer-events: auto; cursor: pointer; transform-origin: 100% 100%;
 }
 .mascot__flag-text { margin: 0; font: 500 15px/1.35 var(--font-body); color: var(--ink); }
+/* Duyuru başlığı (FLAG_TITLE) + çok satırlı metin */
+.mascot__flag { white-space: normal; width: max-content; max-width: 300px; }
+.mascot__flag-title { display: block; margin-bottom: 2px; font-size: .8125rem; font-weight: 600; letter-spacing: .02em; color: var(--accent-dark); }
 @media (max-height: 699px) { .mascot { --k: 1; } .mascot__flag-text { font-size: 13px; } }
 .mascot__close { display: grid; place-items: center; flex: none; width: 28px; height: 28px; border-radius: 50%; color: var(--muted); font-size: 18px; line-height: 1; }
 .mascot__close:hover { color: var(--ink); background: var(--bg); }

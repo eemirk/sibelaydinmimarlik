@@ -1453,7 +1453,10 @@ const MASCOT_SVG = '<svg class="mascot__svg" viewBox="0 0 80 120" aria-hidden="t
 
     let OFF = 170;                                 // ekran dışı başlangıç (px, --k ile ölçeklenir)
     const SHIFT = { big: -64, small: -50 };        // karakter görünürken butonun sola kayması (px, --k = 1 için)
-    const FLAG_TEXT = 'Size nasıl yardımcı olabiliriz?';
+    // Bayrak duyurusu (kampanya bitince eski metne dönmek için: FLAG_TITLE = '', FLAG_TEXT = 'Size nasıl yardımcı olabiliriz?')
+    const FLAG_TITLE = 'Kredi kartıyla ödeme';
+    const FLAG_TEXT = 'Sibel Aydın proje ödemeleriniz artık çok kolay: Ödeal ile kredi kartıyla ödeyebilirsiniz.';
+    const FLAG_MS = 12000;                         // bayrağın açık kalma süresi (sonra katlanır)
     const root = document.createElement('div');
     root.className = 'mascot';
     root.innerHTML = MASCOT_SVG +
@@ -1524,7 +1527,10 @@ const MASCOT_SVG = '<svg class="mascot__svg" viewBox="0 0 80 120" aria-hidden="t
     };
     const openFlag = () => {
       flag.hidden = false;
-      if (!flagText.textContent) flagText.textContent = FLAG_TEXT;   // ekran okuyucu bir kez okur
+      if (!flagText.textContent) {                 // ekran okuyucu bir kez okur
+        if (FLAG_TITLE) { const t = document.createElement('strong'); t.className = 'mascot__flag-title'; t.textContent = FLAG_TITLE; flagText.append(t, ' '); }
+        flagText.append(FLAG_TEXT);
+      }
     };
 
     // Daha önce oynadı (masaüstü): doğrudan son pozisyon
@@ -1547,7 +1553,7 @@ const MASCOT_SVG = '<svg class="mascot__svg" viewBox="0 0 80 120" aria-hidden="t
         flag.hidden = true;
         root.classList.remove('is-pose');
         if (mobile) root.remove(); else showSmall();
-      }, 8000);
+      }, FLAG_MS);
     }
     function play(gsap) {
       g = gsap;
@@ -1619,7 +1625,7 @@ const MASCOT_SVG = '<svg class="mascot__svg" viewBox="0 0 80 120" aria-hidden="t
           };
           const onScroll = () => { if (Math.abs(scrollY - y0) > 160) fold(); };
           setTimeout(() => { y0 = scrollY; addEventListener('scroll', onScroll, { passive: true }); }, 600);
-          setTimeout(fold, 8000);
+          setTimeout(fold, FLAG_MS);
         }, null, 'yuru+=3.0');
     }
 
