@@ -449,23 +449,23 @@ const MASCOT_SVG = '<svg class="mascot__svg" viewBox="0 0 80 120" aria-hidden="t
   /* ---------------------------------------------------------------- REKLAM / DUYURU GÖRSELİ
      Alttan kayarak açılan sabit kart (görsel + × tuşu). Ziyaret başına bir kez (sessionStorage), sayfa açıldıktan
      1,5 sn sonra; kullanıcı kapatmazsa 5 sn sonra kendiliğinden kapanır (fare üstündeyken / odaktayken süre durur).
-     Masaüstü sol alt (WhatsApp karakteri sağda), mobil alt çubuğun üstünde tam genişlik. Görsel yüklenmeden gösterilmez.
-     Görseller: node tools/process-reklam.mjs <kaynak> <ad> → /assets/img/duyuru/<ad>-{400,720,1080}.{avif,webp}.
+     Yatay banner (3:1): masaüstünde ekranın alt ortası, mobilde alt çubuğun üstünde tam genişlik. Görsel yüklenmeden gösterilmez.
+     Görseller: node tools/process-reklam.mjs <kaynak> <ad> → /assets/img/duyuru/<ad>-{480,640,960,1280}.{avif,webp}.
      Kampanya bitince: PROMO = null. dataLayer: promo_view, promo_close (kapatma: x | otomatik). */
   function initPromo() {
     // (fonksiyon içinde: init sırasında çağrılır, dışarıdaki const henüz tanımlı olmazdı)
     const PROMO = {
       id: 'odeal-2026-11',
-      img: '/assets/img/duyuru/odeal-kredi-karti-odeme',
-      en: 1080, boy: 1350,
+      img: '/assets/img/duyuru/odeal-kredi-karti-odeme-banner',
+      en: 1280, boy: 427,
       alt: "Sibel Aydın İnşaat Mimarlık ve Ödeal: Proje ödemeleriniz artık çok kolay! Sibel Aydın İnşaat Mimarlık'a yapacağınız proje ödemelerini artık Ödeal üzerinden kredi kartınızla gerçekleştirebilirsiniz."
     };
     if (!PROMO) return;
     const KEY = 'sa-duyuru';
     try { if (sessionStorage.getItem(KEY) === PROMO.id) return; } catch (e) { /* depolama kapalı: yine göster */ }
     const SHOW_AFTER = 1500, VISIBLE = 5000;
-    const set = (ext) => [400, 720, 1080].map((w) => PROMO.img + '-' + w + '.' + ext + ' ' + w + 'w').join(', ');
-    const sizes = '(max-width: 767px) calc(100vw - 24px), 360px';
+    const set = (ext) => [480, 640, 960, 1280].map((w) => PROMO.img + '-' + w + '.' + ext + ' ' + w + 'w').join(', ');
+    const sizes = '(max-width: 767px) calc(100vw - 24px), min(760px, calc(100vw - 240px))';
     const box = document.createElement('aside');
     box.className = 'promo';
     box.setAttribute('aria-label', 'Duyuru: kredi kartıyla ödeme');
@@ -473,7 +473,7 @@ const MASCOT_SVG = '<svg class="mascot__svg" viewBox="0 0 80 120" aria-hidden="t
       '<picture><source type="image/avif"><img class="promo__img" decoding="async"></picture>';
     const src = $('source', box), img = $('img', box);
     src.srcset = set('avif'); src.sizes = sizes;
-    img.srcset = set('webp'); img.sizes = sizes; img.src = PROMO.img + '-720.webp';
+    img.srcset = set('webp'); img.sizes = sizes; img.src = PROMO.img + '-960.webp';
     img.width = PROMO.en; img.height = PROMO.boy; img.alt = PROMO.alt;
     body.appendChild(box);
     let timer = null, gone = false;

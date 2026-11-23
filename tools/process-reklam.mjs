@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Duyuru/reklam görseli: tools/input/reklam/<dosya> → assets/img/duyuru/<ad>-{400,720,1080}.{avif,webp}
+// Duyuru/reklam görseli: tools/input/reklam/<dosya> → assets/img/duyuru/<ad>-{480,640,960,1280}.{avif,webp}
 //   node tools/process-reklam.mjs "<tools/input/reklam/dosya.jpg>" <ad>
 // Metadata yazılmaz. Görsel main.js initPromo'da kullanılır (PROMO.img = '/assets/img/duyuru/<ad>').
 import { mkdirSync, statSync, existsSync } from 'node:fs';
@@ -13,7 +13,7 @@ if (!src || !name || !existsSync(src)) { console.error('Kullanım: node tools/pr
 const OUT = join(ROOT, 'assets', 'img', 'duyuru');
 mkdirSync(OUT, { recursive: true });
 const m = await sharp(src).metadata();
-for (const w of [400, 720, 1080]) {
+for (const w of [480, 640, 960, 1280]) {
   const r = sharp(src).resize({ width: Math.min(w, m.width), withoutEnlargement: true });
   await r.clone().avif({ quality: 62, effort: 6 }).toFile(join(OUT, `${name}-${w}.avif`));
   await r.clone().webp({ quality: 82, effort: 6 }).toFile(join(OUT, `${name}-${w}.webp`));
