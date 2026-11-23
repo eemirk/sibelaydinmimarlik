@@ -442,52 +442,64 @@ const MASCOT_SVG = '<svg class="mascot__svg" viewBox="0 0 80 120" aria-hidden="t
   initCareerForm();
   initDocs();
   initDirections();
-  initNotice();
+  initPromo();
   initThanks();
   initMascot();
 
-  /* ---------------------------------------------------------------- DUYURU (kısa süreli bildirim)
-     Ziyaret başına bir kez (sessionStorage), sayfa açıldıktan 1,5 sn sonra görünür, 4 sn sonra kendiliğinden
-     kaybolur; fare üstündeyken ya da odaktayken süre durur. × ile kapatılabilir. Masaüstünde sol alt,
-     mobilde header'ın altı (WhatsApp karakteri ve mobil alt çubukla çakışmaz). Duyuruyu kaldırmak için NOTICE = null. */
-  function initNotice() {
-    // (fonksiyon içinde: init sırasında çağrıldığı için dışarıdaki const henüz tanımlı olmazdı)
-    const NOTICE = {
+  /* ---------------------------------------------------------------- REKLAM / DUYURU GÖRSELİ
+     Alttan kayarak açılan sabit kart (görsel + × tuşu). Ziyaret başına bir kez (sessionStorage), sayfa açıldıktan
+     1,5 sn sonra; kullanıcı kapatmazsa 5 sn sonra kendiliğinden kapanır (fare üstündeyken / odaktayken süre durur).
+     Masaüstü sol alt (WhatsApp karakteri sağda), mobil alt çubuğun üstünde tam genişlik. Görsel yüklenmeden gösterilmez.
+     Görseller: node tools/process-reklam.mjs <kaynak> <ad> → /assets/img/duyuru/<ad>-{400,720,1080}.{avif,webp}.
+     Kampanya bitince: PROMO = null. dataLayer: promo_view, promo_close (kapatma: x | otomatik). */
+  function initPromo() {
+    // (fonksiyon içinde: init sırasında çağrılır, dışarıdaki const henüz tanımlı olmazdı)
+    const PROMO = {
       id: 'odeal-2026-11',
-      title: 'Kredi kartıyla ödeme',
-      text: 'Sibel Aydın proje ödemeleriniz artık çok kolay: Ödeal ile kredi kartıyla ödeyebilirsiniz.'
+      img: '/assets/img/duyuru/odeal-kredi-karti-odeme',
+      en: 1080, boy: 1350,
+      alt: "Sibel Aydın İnşaat Mimarlık ve Ödeal: Proje ödemeleriniz artık çok kolay! Sibel Aydın İnşaat Mimarlık'a yapacağınız proje ödemelerini artık Ödeal üzerinden kredi kartınızla gerçekleştirebilirsiniz."
     };
-    if (!NOTICE) return;
+    if (!PROMO) return;
     const KEY = 'sa-duyuru';
-    try { if (sessionStorage.getItem(KEY) === NOTICE.id) return; sessionStorage.setItem(KEY, NOTICE.id); } catch (e) { /* depolama kapalı: yine göster */ }
-    const SHOW_AFTER = 1500, VISIBLE = 4000;
-    const box = document.createElement('div');
-    box.className = 'notice';
-    box.setAttribute('role', 'status');
-    box.innerHTML = '<svg class="notice__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.75 6.25h16.5v11.5H3.75zM3.75 9.75h16.5M7 14.5h3"/></svg>' +
-      '<p class="notice__body"><strong class="notice__title"></strong><span class="notice__text"></span></p>' +
-      '<button class="notice__close" type="button" aria-label="Duyuruyu kapat"><span aria-hidden="true">×</span></button>';
-    $('.notice__title', box).textContent = NOTICE.title;
-    $('.notice__text', box).textContent = NOTICE.text;
+    try { if (sessionStorage.getItem(KEY) === PROMO.id) return; } catch (e) { /* depolama kapalı: yine göster */ }
+    const SHOW_AFTER = 1500, VISIBLE = 5000;
+    const set = (ext) => [400, 720, 1080].map((w) => PROMO.img + '-' + w + '.' + ext + ' ' + w + 'w').join(', ');
+    const sizes = '(max-width: 767px) calc(100vw - 24px), 360px';
+    const box = document.createElement('aside');
+    box.className = 'promo';
+    box.setAttribute('aria-label', 'Duyuru: kredi kartıyla ödeme');
+    box.innerHTML = '<button class="promo__close" type="button" aria-label="Duyuruyu kapat"><span aria-hidden="true">×</span></button>' +
+      '<picture><source type="image/avif"><img class="promo__img" decoding="async"></picture>';
+    const src = $('source', box), img = $('img', box);
+    src.srcset = set('avif'); src.sizes = sizes;
+    img.srcset = set('webp'); img.sizes = sizes; img.src = PROMO.img + '-720.webp';
+    img.width = PROMO.en; img.height = PROMO.boy; img.alt = PROMO.alt;
     body.appendChild(box);
     let timer = null, gone = false;
-    const hide = () => {
+    const hide = (how) => {
       if (gone) return;
       gone = true;
+      clearTimeout(timer);
       box.classList.remove('is-in');
-      setTimeout(() => box.remove(), 600);
+      window.dataLayer.push({ event: 'promo_close', promo: PROMO.id, how: how, page_path: location.pathname });
+      setTimeout(() => box.remove(), 700);
     };
-    const arm = () => { clearTimeout(timer); timer = setTimeout(hide, VISIBLE); };
-    $('.notice__close', box).addEventListener('click', hide);
+    const arm = () => { clearTimeout(timer); timer = setTimeout(() => hide('otomatik'), VISIBLE); };
+    $('.promo__close', box).addEventListener('click', () => hide('x'));
     box.addEventListener('mouseenter', () => clearTimeout(timer));
     box.addEventListener('mouseleave', () => { if (!gone) arm(); });
     box.addEventListener('focusin', () => clearTimeout(timer));
     box.addEventListener('focusout', () => { if (!gone) arm(); });
-    setTimeout(() => {
+    const ready = img.decode ? img.decode() : new Promise((r, x) => { img.onload = r; img.onerror = x; });
+    const wait = new Promise((r) => setTimeout(r, SHOW_AFTER));
+    Promise.all([ready, wait]).then(() => {
+      if (gone) return;
+      try { sessionStorage.setItem(KEY, PROMO.id); } catch (e) { /* yok say */ }
       box.classList.add('is-in');
-      window.dataLayer.push({ event: 'notice_view', notice: NOTICE.id, page_path: location.pathname });
+      window.dataLayer.push({ event: 'promo_view', promo: PROMO.id, page_path: location.pathname });
       arm();
-    }, SHOW_AFTER);
+    }, () => box.remove());                        // görsel yüklenemezse hiç gösterme
   }
 
   /* ---------------------------------------------------------------- YOL TARİFİ: Google / Apple / Yandex seçimi
