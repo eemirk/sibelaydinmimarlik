@@ -447,11 +447,11 @@ const MASCOT_SVG = '<svg class="mascot__svg" viewBox="0 0 80 120" aria-hidden="t
   initMascot();
 
   /* ---------------------------------------------------------------- REKLAM / DUYURU GÖRSELİ
-     Alttan kayarak açılan sabit kart (görsel + × tuşu). Ziyaret başına bir kez (sessionStorage), sayfa açıldıktan
-     1,5 sn sonra; kullanıcı kapatmazsa 5 sn sonra kendiliğinden kapanır (fare üstündeyken / odaktayken süre durur).
+     Alttan kayarak açılan sabit kart (görsel + × tuşu), sayfa açıldıktan 1,5 sn sonra. Kendiliğinden KAPANMAZ:
+     kullanıcı × ile kapatana kadar her sayfada görünür; kapatınca o ziyaret boyunca tekrar çıkmaz (sessionStorage).
      Yatay banner (3:1): masaüstünde ekranın alt ortası, mobilde alt çubuğun üstünde tam genişlik. Görsel yüklenmeden gösterilmez.
      Görseller: node tools/process-reklam.mjs <kaynak> <ad> → /assets/img/duyuru/<ad>-{480,640,960,1280}.{avif,webp}.
-     Kampanya bitince: PROMO = null. dataLayer: promo_view, promo_close (kapatma: x | otomatik). */
+     Kampanya bitince: PROMO = null. dataLayer: promo_view, promo_close. */
   function initPromo() {
     // (fonksiyon içinde: init sırasında çağrılır, dışarıdaki const henüz tanımlı olmazdı)
     const PROMO = {
@@ -463,7 +463,7 @@ const MASCOT_SVG = '<svg class="mascot__svg" viewBox="0 0 80 120" aria-hidden="t
     if (!PROMO) return;
     const KEY = 'sa-duyuru';
     try { if (sessionStorage.getItem(KEY) === PROMO.id) return; } catch (e) { /* depolama kapalı: yine göster */ }
-    const SHOW_AFTER = 1500, VISIBLE = 5000;
+    const SHOW_AFTER = 1500;
     const set = (ext) => [480, 640, 960, 1280].map((w) => PROMO.img + '-' + w + '.' + ext + ' ' + w + 'w').join(', ');
     const sizes = '(max-width: 767px) calc(100vw - 24px), min(760px, calc(100vw - 240px))';
     const box = document.createElement('aside');
@@ -476,29 +476,22 @@ const MASCOT_SVG = '<svg class="mascot__svg" viewBox="0 0 80 120" aria-hidden="t
     img.srcset = set('webp'); img.sizes = sizes; img.src = PROMO.img + '-960.webp';
     img.width = PROMO.en; img.height = PROMO.boy; img.alt = PROMO.alt;
     body.appendChild(box);
-    let timer = null, gone = false;
+    let gone = false;
     const hide = (how) => {
       if (gone) return;
       gone = true;
-      clearTimeout(timer);
+      try { sessionStorage.setItem(KEY, PROMO.id); } catch (e) { /* yok say */ }
       box.classList.remove('is-in');
       window.dataLayer.push({ event: 'promo_close', promo: PROMO.id, how: how, page_path: location.pathname });
       setTimeout(() => box.remove(), 700);
     };
-    const arm = () => { clearTimeout(timer); timer = setTimeout(() => hide('otomatik'), VISIBLE); };
     $('.promo__close', box).addEventListener('click', () => hide('x'));
-    box.addEventListener('mouseenter', () => clearTimeout(timer));
-    box.addEventListener('mouseleave', () => { if (!gone) arm(); });
-    box.addEventListener('focusin', () => clearTimeout(timer));
-    box.addEventListener('focusout', () => { if (!gone) arm(); });
     const ready = img.decode ? img.decode() : new Promise((r, x) => { img.onload = r; img.onerror = x; });
     const wait = new Promise((r) => setTimeout(r, SHOW_AFTER));
     Promise.all([ready, wait]).then(() => {
       if (gone) return;
-      try { sessionStorage.setItem(KEY, PROMO.id); } catch (e) { /* yok say */ }
       box.classList.add('is-in');
       window.dataLayer.push({ event: 'promo_view', promo: PROMO.id, page_path: location.pathname });
-      arm();
     }, () => box.remove());                        // görsel yüklenemezse hiç gösterme
   }
 
